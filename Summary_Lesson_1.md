@@ -1,4 +1,4 @@
-* Connor - Programming Review Lesson 1 and notes *
+**Connor - Programming Review Lesson 1 and notes**  
 
 This is a simple review of the first 6 hours coding we've done together so far. If you want we can use this site deliberately to build up a record of the ideas and syntax you've had to learn so far. 
 
@@ -6,7 +6,7 @@ This actual page will be updated with bits of code and maybe some pictures as ne
 
 Finally, we can also work out a means of summarising our maths lessons and your own maths knowledge here if you want.
 
-* This is the stuff we covered last week and previously: *
+**This is the stuff we covered last week and previously:**  
 
 
 1.   Unity - Window layout and the console
@@ -14,7 +14,7 @@ Finally, we can also work out a means of summarising our maths lessons and your 
 1.   Unity - adding a script to a game object (new empty)
 1.   Editing a script in Visual Studio and saving it.
  
-** Programming ideas: **
+**Programming ideas:**
 
 1.    Startonce and update
 1.    Writing things to the screen
