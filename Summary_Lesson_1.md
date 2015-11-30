@@ -29,5 +29,5 @@ Finally, we can also work out a means of summarising our maths lessons and your 
 1.    2D arrays - remember how annoying it was to find out what the numbers were going to be? 
 1.    Drawing squares
 
-This is a bonus bit: I think you should consider knowing this :).
+This is a bonus bit: I think you should consider knowing this u:.
 [http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1](http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1 "Github Basics")
