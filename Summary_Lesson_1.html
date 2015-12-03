@@ -18,7 +18,12 @@
 	});
 	</script>
 	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
-
+	<STYLE TYPE="text/css">
+	 
+		@page { margin: 10px }
+	    body { margin: 10px ;}
+	     
+	</STYLE>
 </head>
 <body>
 <p><strong>Connor - Programming Review Lesson 1 and notes</strong>  
@@ -32,18 +37,87 @@
 </div>
 <div class="box">
 <p><strong>This is the stuff we covered last week and previously:</strong>  
-<ol>
+<ul>
 <li>Unity - Window layout and the console</li>
 <li>Running a game</li>
 <li>Unity - adding a script to a game object (new empty)</li>
 <li>Editing a script in Visual Studio and saving it.</li>
-</ol>
+</ul>
 </div>
+
 <div class="box">
 <p><strong>Programming ideas:</strong></p>
-<ol>
+<ul>
 <li>Startonce and update - Unity specific</li>
+</ul>
+<pre class="brush: csharp;">
+	//A class is a cookie cutter for an object
+public class NumberWizard : MonoBehaviour
+    {
+    //Some boxes to hold our min/max and initial guess
+    int max = 1000;
+    int min = 1;
+    int guess = 500;
+    
+    //This only happens once, when you first play the game in Unity
+    void Start()
+        {
+        print("Welcome to Number Wizard");
+        print("Pick a number in your head but don't tell me.");
+        print("The highest number you can pick is " + max); //Remember we could add the contents of a box, the value within to be printed out.
+        print("The minimum number you can pick is " + min);
+
+        print("Is the number higher or lower than 500?");
+        print("Up = for higher, down = lower, return = equals");
+        
+        }
+
+    //We decided that this is being used twice, so we made a new function. It's selfish (Void). It does it's job but gives nothing back.
+    void Guess()
+        {
+            guess = (max + min) / 2;
+            print("Higher or lower than" + guess);
+        }
+
+    // Update is called once per frame - this is specific to Unity
+    void Update()
+        {
+        if (Input.GetKeyDown(KeyCode.UpArrow)) //What key did we press?
+            {
+                min = guess; //Notice we use a different box to put our guess in depending if you hit up or down arrow.
+                Guess(); //Call our Guess function
+            } else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                max = guess;
+                Guess();
+            }
+        else if (Input.GetKeyDown(KeyCode.Return))
+            {
+                print("I won so na na ne na nah!!!");
+            }
+        }
+
+
+    }
+</pre>
+</div>
+
+<div class="box">
+<ul>
 <li>Variables - a box to store one thing in.</li>
+<pre class="brush: csharp;">
+	void HelloWorld()
+		{
+			//Box for a whole number
+			int a = 10;
+			//Box for a floating point number - there are a few of these
+			float b = 10.1;
+			//Box for a string of charactors
+			string name = "Hello World";
+			//Print out the stuff stored in the box called name
+			Console.WriteLine(name);
+		}
+</pre>
 <li>What on earth is a Type? It's a special type of thing you know. 
 <li>Writing things to the screen</li>
 <li>Checking what key was pressed and responding -Tests and events</li>
@@ -55,27 +129,16 @@
 <li>Arrays - they're just a bunch of variables with a house number attached to each right?</li>
 <li>2D arrays - remember how annoying it was to find out what the numbers were going to be? </li>
 <li>Drawing squares</li>
-</ol>
+</ul>
+ 
 </div>
+
 <p>This is a bonus bit: I think you should consider knowing this :).
+
 <a href="http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1" title="Github Basics">http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1</a></p>
-<pre class="brush: csharp;">
-	void HelloWorld()
-		{
-			Console.WriteLine("Hello World - and why not?");
-		}
-</pre>
-<div class="box">
-<p>Can you remember what this is?<p>
-<p>
- $$f(x)= nK^{n-1} $$
-</p>	
-<p>
-When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
-$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$  
-</p>
-</div>
+
+
 <p></p>
 </body>
 </html>
-
+
