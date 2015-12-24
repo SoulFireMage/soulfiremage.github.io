@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Painstakingly hand written using VSCode, BlueGriffon and Stylizer -->
+    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+    <title>Advent 2015 - Monogame SnowFlakes</title>
+    <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
+    <link  type="text/css"  rel="stylesheet"  href="css/lesson.css">
+    <link  type="text/css"  rel="stylesheet"  href="css/main.css">
+    <script  type="text/javascript">SyntaxHighlighter.all();</script>
+    <!--     <STYLE TYPE="text/css">
+             @page { margin: 10px }        body { margin: 10px ;}             </STYLE> -->
+  </head>
+  <body>
+    <div  class="box">
+     	<nav  class="navbar navbar-full navbar-dark bg-inverse">
+      	<div class="col-xs-3">
+          <div  class="col-xs-3"  align="center"><img src="images/RightAktarian75.jpg"/> </div>
+  	      <div  class="col-xs-6"  align="center">
+            <ul  class="nav navbar-nav">
+              <li  class="nav-item"> <a  class="nav-link"  href="index.html"><img src="images/RightAktarian75.jpg"/>Home<img src="images/LeftAktarian75.jpg"/></a></li>
+            </ul>
+          </div>
+      	<div  class="col-xs-3"  align="left"> <img src="images/LeftAktarian75.jpg"/> </div>
+       
+      	</div>
+      <div class="col-xs-9"></div>
+     </nav>
+    </div>
+    
+    <div  class="box">
+      <div  class="row row-centered">
+        <div  class="col-xs-3 col-centered"  align="center"> <img  src="images/BlogImages/fsharpflakesmall.jpg">
+        </div>
+        <div  class="col-xs-6 col-centered"  align="center">
+          <h1>Monogame SnowFlakes - 2015 #FsAdvent Entry</h1>
+        </div>
+        <div  class="col-xs-3 col-centered"  align="center"> <img  src="images/BlogImages/flakesmall.jpg">
+        </div>
+      </div>
+    </div>
+    <div  class="box">
+      <a id="Top" name="Top"></a>
+      <p>Welcome to my #FSAdvent blog entry for the <a  href="https://sergeytihon.wordpress.com/2015/10/25/f-advent-calendar-in-english-2015/">F#
+          Advent event 2015</a> and thank you Sergey Tihon for organising it!.
+        Last week <a  href="http://trelford.com/blog/">Phillip Trelford</a>
+        introduced me to Monogame by way of a worked example using sprites. </p>
+      <p>So I decided building on his help wasn't enough, I thought I'd pinch a
+        little more of his code and build a simple snowflake program. This post
+        perhaps fits in nicely with <a  href="http://stevenpemberton.net/blog/2015/12/19/Let-it-snow-FSharp-Advent-2015/">Steve
+          Pemberton's who had time to work out how to do this in WPF but not
+          Monogame</a>.</p>
+      <p> One nice selling point with F# is it's pragmatic paradigm programming
+        practical philosophy (I ran out of P words!). In other words, I get to
+        abuse mutable values, override some OOP stuff whilst working with more
+        functional types. This makes using the language with Monogame quite
+        accessible.</p>
+      <p> The complete solution is either <a  href="https://gist.github.com/SoulFireMage/11af769f811f1c4f36d0">
+          as a Gist</a> or you can have the <a  href="https://github.com/SoulFireMage/MonoGameSnowFlakes">visual
+          studio solution.</a> For the blog, I've omitted much boilerplate, see
+        the full gist above to get your own working sample!</p>
+      <p> </p>
+     
+      <div>
+        <div  class="col-xs-4 col-centered"  align="left"> <b>The unique
+            selling points are:</b>
+          <ul>
+            <li>Spinning flakes - each with their own spin (yay!)</li>
+            <li> There are two types of flake - the idea for the first type came
+              from my partner who said "why don't you have falling F#'s?". So I
+              did - only here the flakes in question are somewhat 3D and rotated
+              6 ways. You might have to look closely however. </li>
+            <li>Unique flakes AND F# flakes.</li>
+            <li>Control of flake size - also affects complexity</li>
+            <li>Some control over speed, wind direction, flakes etc.</li>
+            <li>Uses monogame and sharpDx for GPU goodness</li>
+            <li>Mildly lengthy code crying out for code golf - <em>ok full on
+                refactoring.</em></li>
+          </ul>
+        </div>
+        	<div  class="col-xs-4 col-centered"  align="center"> <img  src="images/BlogImages/randomart.gif"></div>
+          <div  class="col-xs-4 col-centered"  align="left"> <b>To control things
+              a little:</b>
+            <ul>
+              <li><strong>Up </strong>: Speed flakes up</li>
+              <li> <strong>Down </strong>: Slow flakes down</li>
+              <li><strong>Left </strong>: Blow flakes to the left</li>
+              <li> <strong>Right </strong>: Blow flakes to the right</li>
+              <li> <strong>Add </strong>: Increase flake size &amp; complexity</li>
+              <li> <strong>emMinus :</strong> Decrease flake size &amp;
+                complexity</li>
+              <li> <strong>F </strong>: Decrease flake count (also reset the
+                letter in the flake!)</li>
+              <li> <strong>Space </strong>: Increase flake count</li>
+              <li><strong>S,E,B</strong> : Each one changes the content in the 3D
+                flake</li>
+            </ul>
+          </div>
+        
+      </div>
+       <div  class="col-xs-12 col-centered"  align="left"> 
+     
+       <ul>
+        
+        <li><a  href="#MonogameBasics">World's briefest intro to Monogame</a></li>
+        <li><a  href="#MemoryStream">Bitmap to Memorystream</a></li>
+        <li><a  href="#Flakes">Making flakes</a></li>
+        <li><a  href="#FlakeType">Nested flake type</a></li>
+        <li><a  href="#InitiateMonogame">See the bottom of this post for the
+            world's briefest intro to Monogame</a></li>
+        <li><a  href="#Forces">Adding spin function, wind, velocity and size</a></li>
+        <li><a  href="#FlakesOnScreen">How do we know a flake is on the screen
+            or not?</a></li>
+        <li><a  href="#SpriteParty">Lets draw the flakes: have a sprite party!</a></li>
+      </ul>
+      
+    </div>
+    </div>
+    <div  class="box" >
+      <p><b>Stuff I tried before Monogame</b></p>
+      <p>I started looking at a graphics idea a few weeks back when Sergey
+        announced the <a  href="https://twitter.com/search?q=%23FsAdvent&amp;src=tyah">#FsAdvent</a>.
+        In between prepping for job interviews (in C#!) and other things, I
+        started looking at <a  href="https://gist.github.com/SoulFireMage/c87494a8bdbdb12989d7">
+          WriteableBitmapEx (see sample) </a> as well as <a  href="https://gist.github.com/SoulFireMage/6f87b9b3815643026efa"><span>SlimDX</span></a>.
+      </p>
+      <p>Whilst this led down some interesting by-ways, I didn't master how to
+        do actual animation this way in the time I had left. This led to a
+        Twitter exchange with Phil who did my ego the world of good by solving
+        the problem on a train journey; thanks Phil :). However, he also kindly
+        gave me the starting point for using Mono for the same purpose. The work
+        here has been built from that starting point. Below is a snip showing
+        the fun use of some inline shader language code for those that are
+        interested:</p>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/dffbbd8d8f7992db65d2.js"></script>
+      </div>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <p><br>
+      </p>
+    </div>
+  
+    <div  class="box">
+      <a id="MemoryStream" name="MemoryStream"></a>
+      <p><b>Text to Bitmap to Memorystream.</b></p>
+      <p>A nice way to build the required textures is first create a bitmap then
+        save it to a memory stream. </p>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/6539f8deb99522346703.js"></script>
+      </div>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+   
+      
+    </div>
+  
+    <div  class="box">
+      <a id="Flakes" name="Flakes"></a>
+      <p><b>The Flakes!</b></p>
+      <p>Here I've used three different routines each returning a bitmap saved
+        as a stream. The first is a P-Flake - generate random polygons then
+        reflect them to produce a flake; it uses a transparency of 128 to
+        achieve the ghost effect.</p>
+      <p>The second uses straight forward TextRender.DrawText to take some text
+        and plot it onto a bitmap. Here, the fake 3D effect is achieved zipping
+        up a couple of ascending lists to produce co-ordinates.</p>
+      <p>The third is simply accessing a random art generator picked up from
+        Phil Trelford's random art session at Cambridge.</p>
+      <p> </p>
+      <div  class="col-xs-4 col-centered"  align="center"> <img  src="images/BlogImages/flake.jpg"
+
+           height="250"> </div>
+      <div  class="col-xs-4 col-centered"  align="center"> <img  src="images/BlogImages/fsharpflake.jpg">
+      </div>
+      <div  class="col-xs-4 col-centered"  align="center"> <img  src="images/BlogImages/ranartflake.jpg">
+      </div>
+      <p> </p>
+      <p><br>
+      </p>
+      <!--Advent 2015 Blog Source Part 1-->
+      <div  class="col-xs-6 col-centered"  align="center">
+        <p><strong>Code for the P-Flake</strong></p>
+        <script  src="https://gist.github.com/SoulFireMage/3f1b4c7b91acaa8d5266.js"></script>
+      </div>
+      <div  class="col-xs-6 col-centered"  align="center">
+        <p><strong>The 3D F# code</strong></p>
+        <script  src="https://gist.github.com/SoulFireMage/c62005d7a025285d5ea1.js"></script>
+      </div>
+       <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+  
+    <div  class="box">
+    <a id="FlakeType" name="FlakeType"></a>
+      <p><b>Nested Flake Type<br>
+        </b></p>
+      <p>Each instance of the flake type is a bit of a cheat as I nest a second
+        flake within it with it's own spinfunction <em>(some flakes spin the
+          other way)</em> and other values. Version 2 of this program needs to
+        wrap up the texture creation and present a simpler type. But simplicity
+        in code is usually an exchange of time available to achieve it. I ran
+        out of that!</p>
+      <p>The nested record approach isn't the prettiest way to do this, but I
+        didn't want multiple arrays of flakes. This all started when I realised
+        that for each flake type, I may have to have a new texture2d. It
+        occurred to me I wanted unique snowflakes, NOT a cache of a few
+        different ones to be repeated. So, the innerflake here is where I store
+        my new flake.</p>
+      <p>Here I also setup basic screen dimensions and implement float2 random
+        number generator that takes a min &amp; max.</p>
+      <!--Advent 2015 Blog Source Part 3-->
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/431760c2d1d6004ff77e.js"></script>
+      </div>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <p> </p>
+       <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+  
+    <div  class="box">
+      <a id="InitiateMonogame" name="InitiateMonogame"></a>
+      <p><b>Start the Monogame engine and handle keys<br>
+        </b></p>
+      <p>Setup the monogame type and initiate the content. Here the various
+        method overrides give you access to the Loadcontent, Update and Draw
+        methods of the game instance.</p>
+      <p>I wanted to give folks a chance to play with the snow and got irritated
+        with all the IF statements needed to handle keys. To do this, you need
+        to get the keyboard state during the update operation. Adding protection
+        to my forces here added code irony to my statement regarding IFs too :).</p>
+      <!--Advent 2015 Blog Source Part 4-->
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/6e0137fa97e203c17ffb.js"></script>
+      </div>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+       <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+  
+    <div  class="box">
+      <a id="Forces" name="Forces"></a>
+      <p><strong>Force Control</strong></p>
+      <p>Here we can alter the density of snowfall by reducing the range of
+        random numbers we generate and test. Need some actual flakes now, each
+        with their own spinfactor, x, y, wind and velocity. We also get a
+        separate position for the F# flake and the inner P-Flake here. Add them
+        to the array of flake objects - somewhat misnamed now that I've added a
+        second structure representing a P-Flake, position and other values.</p>
+      <p>Here a simple random function to decides whether to give you a P-flake
+        or an R-flake as your inner flake.</p>
+      <!--Advent 2015 Blog Source Part 5-->
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/c607890a50e18abe75e6.js"></script>
+      </div>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+       <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+  
+    <div  class="box">
+      <a id="FlakesOnScreen" name="FlakesOnScreen"></a>
+      <p><strong>Are you in the picture?</strong></p>
+      <p>Increment our flakes positions: First partition the flakes into
+        onscreen or not giving us two lists. Remove those in the second list
+        whilst we also increment the positions of the ones that are still
+        onscreen. </p>
+      <!--Advent 2015 Blog Source Part 6-->
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/f6ec29c1a1da9b4a6c15.js"></script>
+      </div>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+       <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+ 
+    <div  class="box">
+       <a id="SpriteParty" name="SpriteParty"></a>
+      <p><strong>Time to Draw</strong></p>
+      <p>We have our flakes, we have means of removing flakes, now have to do
+        make sprites out of our flakes. Here I cheat a little with the F# flake.
+        I wanted to pre-draw the F#'s however after spending some time on it, I
+        hadn't got it worked out in time for this blog. The approach below works
+        well enough, though you'll see I've added the same sprite 6 times,
+        rotating the position each time giving us a reasonable delusion of a six
+        sided shape. One side effect of this approach is it was trivial to allow
+        the character used to be altered, see the controls above. Randomizing
+        the layer depth was another approach I took to try and make the flakes
+        slightly more natural. </p>
+      <p>It took me a while to get my mind around the fact that here during each
+        Update call, we are incrementing various values for each item in the
+        array - rotation, angle, downward movement - drawing it, then moving to
+        the next one.</p>
+      <!--Advent 2015 Blog Source Part 7-->
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+      <div  class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/fdfb8ef3c77a882bd243.js"></script>
+      </div>
+      <div  class="col-xs-2 col-centered"  align="center"> </div>
+       <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+  
+    <div  class="box">
+      <p><b>Monogame Brief Basics</b></p>
+      <a  id="MonogameBasics"  name="MonogameBasics"></a>
+      <p>Having never used monogame before, I've had to hack about to work out
+        what happens when. Here is a rough simplistic outline of it's structure:</p>
+      <ul>
+        <li><b>Initialise an instance of the Game type. If you inherit this
+            type, you'll need to provide some overrides.</b></li>
+        <li><b>LoadContent</b> Generally used to load the basic content and
+          assets used in the game. Here I initialise the spritebatch.</li>
+        <li><b>Update</b> A good place to handle keyboard input as well as
+          updates to the state of the game world - collision detection, input,
+          scores etc. This is where I check what flakes should be on the screen
+          or not as well.</li>
+        <li><b>Draw</b> Is called roughly 30 times per second, so is the place
+          to redraw sprite positions. </li>
+        <li><b>game.Run</b></li>
+      </ul>
+       <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+  <div  class="box">
+    <p> Page built manually with the following tools:</p>
+    <ul>
+     
+      <li><a href= "http://www.skybound.ca/">Stylizer - Brilliant CSS tool</a></li>
+      <li><a href= "https://code.visualstudio.com/" >Nice code editor</a></li>
+      <li><a href= "http://bluegriffon.org/" >BlueGriffon: WYSIWYG HTML Editor</a></li>
+      <li>Abundant supply of coffee, cake and curse words</li>
+          </ul>
+    <p>
+     Me:
+    <ul>
+      <li><a href= "http://www.richardkg.com" >My old Wordpress blog</a></li>
+      <li><a href= "https://twitter.com/SoulFireMage" >Follow me on Twitter</a></li>
+    </ul>
+    </p>
+      <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+    <title>Richard Griffiths - Main Github Hub</title>
+    <meta  http-equiv="X-UA-Compatible"  content="IE=edge">
+    <meta  name="viewport"  content="width=device-width, initial-scale=1">
+    <link  rel="icon"  href="../../favicon.ico">
+    <style>
+        .navbar {
+         margin-bottom: 20px;
+    }
+    </style>
+    <!--<link href="css/navbar.css" rel="stylesheet">-->
+    <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
+    <link  rel="stylesheet"  type="text/css"  href="css/lesson.css">
+    <meta  http-equiv="X-UA-Compatible"  content="IE=edge">
+  </head>
+  <body>
+    <div  class="container-fluid">
+      <nav  class="navbar navbar-full navbar-dark bg-inverse">
+        <ul  class="nav navbar-nav">
+          <li  class="nav-item"> <a  class="nav-link"  href="AIDream.html"> <img
+
+                 src="images/RightAktarian75.jpg"> AI Companion - A personal
+              goal <img  src="images/LeftAktarian75.jpg"></a> </li>
+          <li  class="nav-item"> <a  class="nav-link"  href="GoalsAndLinks.html">
+              <img  src="images/RightAktarian75.jpg">Link Collection<img  src="images/LeftAktarian75.jpg">
+            </a></li>
+          <a  class="nav-link"  href="GoalsAndLinks.html"> </a>
+        </ul>
+        <a  class="nav-link"  href="GoalsAndLinks.html"> </a></nav>
+      <a  class="nav-link"  href="GoalsAndLinks.html"> </a></div>
+    <a  class="nav-link"  href="GoalsAndLinks.html">
+      <div  class="container-fluid">
+        <div  class="row">
+          <div  class="col-md-3"> <img  src="images/RightAktarian.jpg"> </div>
+          <div  class="col-md-6"  align="center">
+            <h1>Richard Griffiths - Home</h1>
+          </div>
+          <div  class="col-md-3"> <img  src="images/LeftAktarian.jpg"> </div>
+        </div>
+      </div>
+    </a>
+    <div  class="container-fluid"> 
+        <p>This site will become a central demo and link site for any of my
+          content and interest.</p>
+        <p>Code snippets in various language will be added as they come up as
+          will various articles</p>
+        <p>About me: I taught myself coding in 2010, in and around a day job
+          that ultimately needed the skill at times. It was VB and SQL. Since
+          then I've crossed into the wider .Net world using all three main
+          languages.</p>
+        <p>The repositories listed are mostly examples I've built up over time
+          rather than a coherent demonstration or shop window. However, this
+          will change.</p>
+     
+      <p><a  href="http://www.starship-whisperer.com">Please watch out for stray
+          starships!</a> </p>
+      <p><a  href="StarShips.html">The little ones tend to get everywhere!</a></p>
+    </div>
+    <p> </p>
+    <div  class="container-fluid">
+      <div  class="row">
+        <div  class="col-lg-6">
+          <h2>My blog and other links</h2>
+          <a  href="http://www.richardkg.com">My main blog since 2012</a> <a  href="https://github.com/SoulFireMage?tab=repositories">My
+            repositories</a> <br>
+          <a  href="https://github.com/SoulFireMage/Katiya_TheAktarianStarShip">My
+            Aktarian ships - a blender project</a> <br>
+        </div>
+        <div  class="col-lg-6">
+          <h3>Review Lessons - For Connor</h3>
+          <a  href="Summary_Lesson_1.html">Tutorial Lesson One Summary</a> <a  href="Calculus_Review.html">Calculus
+            Review 1</a> </div>
+      </div>
+    </div>
+    <div  class="container-fluid">
+      <div  class="row">
+        <div  class="col-lg-12">
+          <h3>Personal Essays</h3>
+          <p>Occasionally I wake up with a bee in my bonnet, so I'll write it
+            up. Here are a few of the results.</p>
+          <ul>
+            <li><a  href="Mental%20Models.html">Building Mental Models</a></li>
+            <li><a  href="Self_Driving_Cars_1.html">Consciousness in AI - Self
+                driving cars</a></li>
+          </ul>
+        </div>
+        <br>
+        <p> </p>
+      </div>
+    </div>
+    <div  class="container-fluid"> <strong>Katiya_starship on Twitter
+        <div  class="row">
+          <div  class="col-md-12"  align="center"> <a  class="twitter-timeline"
+
+               href="https://twitter.com/Katiya_Starship"  data-widget-id="677417365366288384">Tweets
+              by @Katiya_Starship</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          </div>
+        </div>
+      </strong></div>
+    <strong>
+      <div  class="row-fluid">
+        <div  class="span12"  align="center"> <img  src="images/Gemima.jpg"  height="250">
+          <img  src="images/MyeliaSmall.jpg"  height="250"> <img  src="images/Myelia.jpg"
+
+             height="250"> </div>
+      </div>
+      <script  src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+
+ "=""></script>
+      <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    </strong> 
+    --BG----BG--
+  </body>
+</html>
