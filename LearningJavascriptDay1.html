@@ -1,0 +1,166 @@
+
+<!DOCTYPE html5>
+<html>
+<head>
+<title>Javascript Beginner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
+    <link  type="text/css"  rel="stylesheet"  href="css/lesson.css">
+    <link  type="text/css"  rel="stylesheet"  href="css/main.css">   
+ 
+    
+</head>
+<body>
+    <!-- Navigation -->
+    <div  class="box">
+      <nav  class="navbar navbar-full navbar-dark bg-inverse">
+             <ul  class="nav navbar-nav">
+              <li  class="nav-item"> <a  class="nav-link"  href="index.html"><img src="images/RightAktarian75.jpg"/>Home<img src="images/LeftAktarian75.jpg"/></a></li>
+            </ul>
+      </nav>
+    </div>
+       <!--Title section -->
+      <div class="box-black" align="center">
+        <div  class="row">
+          <div  class="col-xs-3"> <img  src="images/RightAktarian.jpg" height="100"> </div>
+          <div  class="col-xs-6"  align="center"><h3>Javascript Study ScratchPad - Day 1</h3></div>
+          <div  class="col-xs-3"> <img  src="images/LeftAktarian.jpg" height="100"> </div>
+        </div>
+      </div>
+<div class="box-black">
+    <script>//Yes, yes, I violated DRY with a large spiky stick but what do you expect on the first day?
+        var items = { 
+            printItems : ["Overview",
+                        "Reflect on context",
+                        "Read about basics",
+                        "Compare and Contrast with prior knowledge",
+                        "Concept map core ideas - briefly",
+                        "Try out the ideas!"],
+            printElements : function (){ //note to self, abstract this function out tomorrow!
+                                document.writeln("<ul> \n"); //wander if the order is guaranteed on this foreach?
+                                items.printItems.forEach((i)=>document.writeln("<li>"+ i + "</li>"));  //Ok so now I don't always need loops then? :).
+                                document.writeln("</ul> \n");
+                                }  
+        }
+    </script>
+<p><b>Expect strange stuff here - it's where I'm teaching myself Javascript basics</b> other pages will be created for jQuery, Angular 2 etc</p>
+  
+  <p><b>January 5th 2015 8:30am:</b></P>
+  <p>This is the first of a series of pages (one per day) that will log my initial progress with learning basic javascript. </p>
+  <p>It's laid out this way for my own future reference and reminder how I actually tackled various concepts. </p>
+  <p>My experience with Javascript up till this point was merely knowing where to add scripts into the html from other sources.</p>
+  
+    <p>My primary resource at time of writing is a copy of Javascript the good parts. </p>
+     
+    <p>The strategy is straight forward enough - <i>Examine the source to see the "Linq" style list maker</i>: <script> items.printElements(); </script> 
+      This page represents the latter part.</p>
+    
+   <p>Why this approach? Most authorities say the best way to learn is by doing after all. However, I already have programming skills and conceptual knowledge.
+     By taking the time to handwrite the basic elements and discuss them on paper, I'm hoping to gain several advantages when it comes to code wrangling.</p>
+     <p>Shorten the time between seeing the concept and understanding why it will help. Make it easier to remember the essentials by using more than one sensory route to take in the information. Have a log of notes that I can use to teach or remind myself in future.</p>
+     <p>Knowing javascript alone isn't enough for most of the commercial work either - there are several essential libraries that need digesting: jquery, angular are two I'm choosing to go with later on.</p>
+     <p>End of Day 1 of teaching myself Javascript from scratch:</p> 
+     <p>It helps to have learn .Net languages like F# and C#, because the ES6 version of Javascript has syntax familiar to both languages.</p>
+     
+     <script>
+     //honestly, there was no need to do this for a list! :) but practice makes perfect
+         var moreItems = {
+              printItems : ["Fat Arrow ()=> Lambdas",
+                            "Linq style statements",
+                            "String interpolation vs concatonation",
+                            "Typeof - reflection",
+                            "Simple object model-No classes were harmed in my code mangling!"],
+             printElements : function (){ //note to self, abstract this function out tomorrow!
+                                document.writeln("<ul> \n"); //wander if the order is guaranteed on this foreach?
+                                moreItems.printItems.forEach((i)=>document.writeln("<li>"+ i + "</li>"));  //Ok so now I don't always need loops then? :).
+                                document.writeln("</ul> \n");
+                                }  
+         }
+          moreItems.printElements();
+    </script>
+    <p>Tomorrow, no cheating - a page a day seems a reasonable approach for review reasons!</p>
+  </div>
+  <div class="box-black">
+    <p>
+<script type="text/javascript">
+   
+  var myobject = {
+      somenumber : 0,
+      increment : function(inc){
+        this.somenumber += typeof inc === 'number' ? inc : 1; //ternary if and type check. Code by convention used here for the type checking
+      }
+    
+  }
+  var somesum = function(a,b){
+    return a+b;
+  };
+  
+//es6 and we get lambdas here!
+
+  document.writeln("A first shot at a function. Specifically this one<br><pre>" + somesum);
+  document.writeln("</pre><br>I'm hoping that 3 + 15 = " + somesum(3,15) );
+  myobject.increment(4);
+  document.writeln("<br> Quick go at method invocation pattern of function invocation:<br><pre>"+ myobject.increment + 
+                    "</pre><br>The result of my first function is: " +  myobject.somenumber+ " <i> Wow...</i>" )  ;
+                    //before you say it - these are both hacks :). The first has a schoolboy error can you see it? The clue is why have I got two similar?
+    function getRange(start, end, interval) {
+        return Array(end+1).fill().map((_, i) => i).filter((_, i) => i >= start).map((i)=> i * interval).filter((i)=> i <= end + 1);
+      };
+  
+    function getRange2(start, end, interval) {
+        return Array(end+1).fill().map((_, i) => i).filter((_, i) => i >= start).map((i)=> i * interval);
+  
+    };
+  var result = getRange2(3,8,10);  
+  document.writeln("<br>3 hours in and I find Linq and Lambdas? Excellent news - here's how to get a ranged array with interval: <pre>" + getRange + "</pre><br>And the result of getRange(3,8,10) = "  + result);
+ </script>
+ </p>
+ </div>
+ 
+ <div class="box-black">
+   <p><b>January 5th 2015 15:21pm:</b></P> 
+   <p>A dive into the canvas yields oppurtunity to learn a bit more about the ES6 Javascript stuff. Perhaps I'm mildly allergic to nested loops when I can do LINQ style code :).</p>
+   <p>The time format on these logs is for my future reference. Previous skills that have come handy on this first day are specifics like lambdas (Fat Arrows!) and .Net's LINQ. </p>   
+ </div>
+ 
+ <div class="box-black" align="center">
+     
+     <p>And now because it's a nice way to learn, lets try drawing in Javascript</p>
+       <canvas id="mycanvas" width="1000" height="1000" style="border:1px solid #c3c3c3;"></canvas>
+       <script>
+          var c = document.getElementById("mycanvas");
+          var ctx = c.getContext("2d");
+          
+          var xs = getRange(1, c.width, 25);
+          var ys = getRange(1, c.height,25);
+        //Yay for fat arrows. Just like C# :)
+          var drawLine = (x,y,o1,o2)=>{
+              var c = Math.floor((Math.sqrt(x)  ))  ;
+              var oddball = Math.floor((Math.random() * 255) + 1);
+              var col = `rgba(${c * 8} , ${c * 3}, ${oddball},  ${c / 50} )`;  //why not have string interpolation!
+            //   document.writeln(col2 + "<br>");
+            //   var col = "rgba("+ c * 8 +", "+ c * 3 +", "+ oddball +", "+ c / 50 +")";
+              ctx.beginPath();
+              ctx.strokeStyle = col;
+              ctx.moveTo(o1,o2);
+              ctx.lineTo(x,y);
+              ctx.stroke();
+          
+          };
+          
+          xs.forEach((x)=>ys.forEach((y)=> drawLine(x,y,0,0)));
+          
+          xs.forEach((x)=>ys.forEach((y)=> drawLine(x,y,c.width,0)));
+          xs.forEach((x)=>ys.forEach((y)=> drawLine(x,y,c.width,c.height)));
+          xs.forEach((x)=>ys.forEach((y)=> drawLine(x,y,0,c.height)));
+       
+       </script>
+   </div>
+ 
+     
+
+
+</body>
+</html>
+
+ 

@@ -1,6 +1,6 @@
 ﻿
 <!--Template for a Connor lesson :) -->
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html>
 <head>
 <title>Summary_Lesson_1</title>
@@ -9,7 +9,9 @@
 	<script type="text/javascript" src="scripts/shCore.js"></script>
 	<script type="text/javascript" src="scripts/shBrushCSharp.js"></script>
 	<link type="text/css" rel="stylesheet" href="css/shCoreDefault.css"/>
-	 <link type="text/css" rel="stylesheet" href="css/main.css"/> 
+    <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
+    <link  rel="stylesheet"  type="text/css"  href="css/lesson.css">
+    <link  type="text/css"  rel="stylesheet"  href="css/main.css">
 	
 	<script type="text/javascript">SyntaxHighlighter.all();</script>
 	<script type="text/x-mathjax-config">
@@ -26,30 +28,44 @@
 	</STYLE>
 </head>
 <body>
-<p><strong>Connor - Programming Review Lesson 1 and notes</strong>  
-</p>
-<div class="box">
-<p>This is a simple review of the first 6 hours coding we've done together so far. If you want we can use this site deliberately to build up a record of the ideas and syntax you've had to learn so far. </p>
-<p>This actual page will be updated with bits of code and maybe some pictures as necessary. We can also build you a site of your own to play with if you want to do html/css.</p>
-<p>Finally, we can also work out a means of summarising our maths lessons and your own maths knowledge here if you want.</p>
+     <div  class="box">
+      <nav  class="navbar navbar-full navbar-dark bg-inverse">
+             <ul  class="nav navbar-nav">
+              <li  class="nav-item"> <a  class="nav-link"  href="index.html"><img src="images/RightAktarian75.jpg"/>Home<img src="images/LeftAktarian75.jpg"/></a></li>
+            </ul>
+      </nav>
+    </div>
+          <div class="box-black" align="center">
+        <div  class="row">
+          <div  class="col-xs-3"> <img  src="images/RightAktarian.jpg" height="100"> </div>
+          <div  class="col-xs-6"  align="center"><h3>Connor - Programming Review Lesson 1 and notes</h3></div>
+          <div  class="col-xs-3"> <img  src="images/LeftAktarian.jpg" height="100"> </div>
+        </div>
+      </div>
+ 
 
-
+<div class="box-black">
+    <p>This is a simple review of the first 6 hours coding we've done together so far. If you want we can use this site deliberately to build up a record of the ideas and syntax you've had to learn so far. </p>
+    <p>This actual page will be updated with bits of code and maybe some pictures as necessary. We can also build you a site of your own to play with if you want to do html/css.</p>
+    <p>Finally, we can also work out a means of summarising our maths lessons and your own maths knowledge here if you want.</p>
 </div>
-<div class="box">
-<p><strong>This is the stuff we covered last week and previously:</strong>  
-<ul>
-<li>Unity - Window layout and the console</li>
-<li>Running a game</li>
-<li>Unity - adding a script to a game object (new empty)</li>
-<li>Editing a script in Visual Studio and saving it.</li>
-</ul>
+
+<div class="box-black">
+    <p><strong>This is the stuff we covered last week and previously:</strong>  
+    <ul>
+    <li>Unity - Window layout and the console</li>
+    <li>Running a game</li>
+    <li>Unity - adding a script to a game object (new empty)</li>
+    <li>Editing a script in Visual Studio and saving it.</li>
+    </ul>
 </div>
 
-<div class="box">
-<p><strong>Programming ideas:</strong></p>
-<ul>
-<li>Startonce and update - Unity specific</li>
-</ul>
+<div class="box-black">
+    <p><strong>Programming ideas:</strong></p>
+    <p>
+    <ul>
+        <li>Startonce and update - Unity specific</li>
+    </ul>
 <pre class="brush: csharp;">
 	//A class is a cookie cutter for an object
 public class NumberWizard : MonoBehaviour
@@ -100,24 +116,28 @@ public class NumberWizard : MonoBehaviour
 
     }
 </pre>
+</p>
 </div>
 
-<div class="box">
+<div class="box-black">
+    <p>Some terminalogy used so far:</p>
 <ul>
 <li>Variables - a box to store one thing in.</li>
-<pre class="brush: csharp;">
-	void HelloWorld()
-		{
-			//Box for a whole number
-			int a = 10;
-			//Box for a floating point number - there are a few of these
-			float b = 10.1;
-			//Box for a string of charactors
-			string name = "Hello World";
-			//Print out the stuff stored in the box called name
-			Console.WriteLine(name);
-		}
-</pre>
+ 
+    <pre class="brush: csharp;">
+        void HelloWorld()
+            {
+                //Box for a whole number
+                int a = 10;
+                //Box for a floating point number - there are a few of these
+                float b = 10.1;
+                //Box for a string of charactors
+                string name = "Hello World";
+                //Print out the stuff stored in the box called name
+                Console.WriteLine(name);
+            }
+    </pre>
+ 
 <li>What on earth is a Type? It's a special type of thing you know. 
 <li>Writing things to the screen</li>
 <li>Checking what key was pressed and responding -Tests and events</li>
