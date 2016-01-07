@@ -2,6 +2,8 @@
 <!DOCTYPE html5>
 <html>
 <head>
+    <!--Nope, I've provided nothing for non es6 browsers but this ain't commercial :). Just got fedup of the 
+    lenghty syntax in non ES6 javascript-->
 <title>Javascript Beginner</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
@@ -41,56 +43,65 @@
    <p>Welcome to my second day learning basic javascript. The aim here will be to implement simple form elements, evaluate the input and respond accordingly. </p>
    <p>Page is far from complete if you land here by accident</p>
    <p>Slide out style side menu is another aim for this page!</p>
+   <p><b>If there's not much on this page or it's messed up, it is because you need a more modern browser. I've used ECMAscript 6 with no fallback at all at time of writing.</b></p>
+   <p>I will be looking at shims and other "old" browser handling later</p>
  </div>
  
- <div class="box-black">
-    <div class="box=black" align="center"><h4>Power rule practice</h4></div>
-<p><b>This is the most simple minded implementation of a power rule setup</b></p>
-<p>For the calculation below, please enter the answer required:</p>
-
-<script>
-    function Calculation(){
-        let base = Math.floor((Math.random() * 100) + 1);
-        let exp = Math.floor((Math.random() * 20) + 1);
-        this.printQuestion = function(){
-                    let calcString = `$$f(x)=${base}x^{${exp}}$$`;
-                    document.writeln(calcString);
-             };
-        this.printAnswer= function(){
-                    let answer = `$$${base * exp}x^{${exp - 1}}$$`;
-                    document.getElementById('answer').innerHTML = answer;
-                    MathJax.Hub.Queue(["Typeset",MathJax.Hub,'answer']); //must call MathJax on the element!
-                    };
-    }             
-    var calc = new Calculation();
-    calc.printQuestion();
-    calc.printAnswer();
-    
-</script>
-    
-    <!--must fiddle the CSS for the background colour of the input box-->
-    <div align="center">
-        <form >
-        <input type="text" name="answer"  >
-        <INPUT TYPE="button" NAME="answerSubmit" Value="Submit Answer" onClick="calc.printAnswer()">
-          
-        </form>
+<div class="box-black">
+<div class="box=black" align="center"><h4>Power rule practice</h4></div>
+    <p><b>This is the most simple minded implementation of a power rule setup</b></p>
+    <p>For the calculation below, please enter the answer required:</p>
+    <div class="mathBox">
+        Griffiths don't you dare publish this with this box left here. Test box only 
+        $\frac{dy}{dx}  33x^45$
+        Test with centred
+        $$\frac{dy}{dx}  33x^45$$
+        
+        </div>
+    <div class="mathBox" id="content">
+        <script>
+            //So let gives me block scope eh? 
+            function Calculation(){
+                
+                let base = Math.floor((Math.random() * 100) + 1);
+                let exp = Math.floor((Math.random() * 20) + 1);
+        
+                    //I'm sure there's a "Proper way" to do this :).
+                let formCreatePart1 =`
+                                        <form  > `
+                                    
+                let formCreatePart2 =`    <input type="text" name="answer">
+                                          <INPUT TYPE="button" NAME="answerSubmit" Value="Submit Answer" onClick="calc.printAnswer()">
+                                        </form>
+                                     `
+                                      
+                let divAnswer = `<div    id="answer"> </div>`
+                let questionPre = "What is: ";
+                let answerPre = "<br>Answer: "
+                //place note you MUST have \\ in the LaTex where normally you have \
+                this.printQuestion = function(){
+                            let calcString = `$\\frac{dy}{dx} ${base}x^{${exp}}$`;  //note, must abstract this and do multiple calc types.
+                            document.getElementById('content').innerHTML=formCreatePart1 + questionPre + calcString + formCreatePart2 + divAnswer; 
+                            };
+                        
+                this.printAnswer= function(){
+                            let answer = `$ ${base * exp}x^{${exp - 1}}$`;
+                            document.getElementById('answer').innerHTML = answerPre + answer + divAnswer;
+                            MathJax.Hub.Queue(["Typeset",MathJax.Hub,'answer']); //must call MathJax on the element to parse it.!
+                            };
+            }             
+            var calc = new Calculation();
+            calc.printQuestion();
+        
+    </script>
+       $$\frac{dy}{dx}  33x^45$$
     </div>
-
- <div id="answer">
+ </div>
+ 
+<div class="box-black" align="center">
      
 </div>
-
- </div>
  
- <div class="box-black" align="center">
-     
-     
-   </div>
- 
-     
-
-
 </body>
 </html>
 
