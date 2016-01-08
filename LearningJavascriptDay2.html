@@ -76,17 +76,17 @@
             })();
 
             function Calculation(){
-                let base = Math.floor((Math.random() * 100) + 1);
-                let exp = Math.floor((Math.random() * 20) + 1);
-                let questionPre="What is : ";
-                let questionPost="<br>";
+                var base = Math.floor((Math.random() * 100) + 1);
+                var exp = Math.floor((Math.random() * 20) + 1);
+                var questionPre="What is : ";
+                var questionPost="<br>";
                 this.printQuestion = function(){
-                            let calcString = `$\\frac{dy}{dx} ${base}x^{${exp}}$`;  //note, must abstract this and do multiple calc types.
+                            var calcString = `$\\frac{dy}{dx} ${base}x^{${exp}}$`;  //note, must abstract this and do multiple calc types.
                             document.getElementById('question').innerHTML= questionPre + calcString +questionPost; 
                             };
                         
                 this.printAnswer= function(){
-                            let answer = `  <p>The answer is: $ ${base * exp}x^{${exp - 1}}$ </p>`;
+                            var answer = `  <p>The answer is: $ ${base * exp}x^{${exp - 1}}$ </p>`;
                             document.getElementById('actualAnswer').innerHTML=answer; 
                             MathJax.Hub.Queue(["Typeset",MathJax.Hub,'actualAnswer']); //must call MathJax on the element to parse it.!
                             };
