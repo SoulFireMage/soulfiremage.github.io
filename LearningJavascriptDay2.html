@@ -9,12 +9,16 @@
    <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
     <link  type="text/css"  rel="stylesheet"  href="css/lesson.css">
     <link  type="text/css"  rel="stylesheet"  href="css/main.css">   
- <script type="text/x-mathjax-config">
-	MathJax.Hub.Config({
-		tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
-	});
-	</script>
-	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [["$","$"],["\\(","\\)"]]
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
     
 </head>
 <body>
@@ -42,59 +46,86 @@
    <p>January 7th 2016:</p>
    <p>Welcome to my second day learning basic javascript. The aim here will be to implement simple form elements, evaluate the input and respond accordingly. </p>
    <p>Page is far from complete if you land here by accident</p>
-   <p>Slide out style side menu is another aim for this page!</p>
-   <p><b>If there's not much on this page or it's messed up, it is because you need a more modern browser. I've used ECMAscript 6 with no fallback at all at time of writing.</b></p>
-   <p>I will be looking at shims and other "old" browser handling later</p>
+
+   <p><b>This page uses ECMA6 Javascript and no shims for older browsers. That will happen on a later version of the whole site. </b></p>
+   <p>This page demonstrates basic use of MathJax as well as giving users a way to practice the very simplest type of differentials.</p>
+   <p>I couldn't find anyone offering differential calculus mental arithmetic practice so this is a start</p>
  </div>
  
 <div class="box-black">
-<div class="box=black" align="center"><h4>Power rule practice</h4></div>
+    <div class="box=black" align="center"><h4>Power rule practice</h4></div>
     <p><b>This is the most simple minded implementation of a power rule setup</b></p>
+    <p>There is no true evaluation here where you could check the results of $2x^{x-2}$ for example</p>
     <p>For the calculation below, please enter the answer required:</p>
-    <div class="mathBox">
-        Griffiths don't you dare publish this with this box left here. Test box only 
-        $\frac{dy}{dx}  33x^45$
-        Test with centred
-        $$\frac{dy}{dx}  33x^45$$
+
         
-        </div>
     <div class="mathBox" id="content">
+           <div id="question">
+           </div>
         <script>
-            //So let gives me block scope eh? 
+         
+            (function () {
+                var QUEUE = MathJax.Hub.queue;  // shorthand for the queue
+                var math = null;
+                               // the element jax for the math output.
+                QUEUE.Push(function () {
+                math = MathJax.Hub.getAllJax("userAnswer")[0];
+                });
+
+                window.UpdateMath = function (TeX) {QUEUE.Push(["Text",math,"\\displaystyle{"+TeX+"}"]);}
+            })();
+
             function Calculation(){
-                
                 let base = Math.floor((Math.random() * 100) + 1);
                 let exp = Math.floor((Math.random() * 20) + 1);
-        
-                    //I'm sure there's a "Proper way" to do this :).
-                let formCreatePart1 =`
-                                        <form  > `
-                                    
-                let formCreatePart2 =`    <input type="text" name="answer">
-                                          <INPUT TYPE="button" NAME="answerSubmit" Value="Submit Answer" onClick="calc.printAnswer()">
-                                        </form>
-                                     `
-                                      
-                let divAnswer = `<div    id="answer"> </div>`
-                let questionPre = "What is: ";
-                let answerPre = "<br>Answer: "
-                //place note you MUST have \\ in the LaTex where normally you have \
+                let questionPre="What is : ";
+                let questionPost="<br>";
                 this.printQuestion = function(){
                             let calcString = `$\\frac{dy}{dx} ${base}x^{${exp}}$`;  //note, must abstract this and do multiple calc types.
-                            document.getElementById('content').innerHTML=formCreatePart1 + questionPre + calcString + formCreatePart2 + divAnswer; 
+                            document.getElementById('question').innerHTML= questionPre + calcString +questionPost; 
                             };
                         
                 this.printAnswer= function(){
-                            let answer = `$ ${base * exp}x^{${exp - 1}}$`;
-                            document.getElementById('answer').innerHTML = answerPre + answer + divAnswer;
-                            MathJax.Hub.Queue(["Typeset",MathJax.Hub,'answer']); //must call MathJax on the element to parse it.!
+                            let answer = `  <p>The answer is: $ ${base * exp}x^{${exp - 1}}$ </p>`;
+                            document.getElementById('actualAnswer').innerHTML=answer; 
+                            MathJax.Hub.Queue(["Typeset",MathJax.Hub,'actualAnswer']); //must call MathJax on the element to parse it.!
                             };
             }             
             var calc = new Calculation();
             calc.printQuestion();
         
     </script>
-       $$\frac{dy}{dx}  33x^45$$
+    
+     <div  class="row">
+         
+            <div  class="col-xs-6"  > 
+                    <input id="MathInput" type="text" name="answer" onchange="UpdateMath(this.value)">
+                    <p>To get $x^2$ just type x^2<br></p>
+                    <INPUT TYPE="button" NAME="answerSubmit" Value="Submit Answer" onClick="calc.printAnswer()">
+                
+                        <div id="userAnswer">
+                            <p>You typed ${}$</p>
+                        </div>
+                        <div id="actualAnswer">
+                            ${}$</p>
+                        </div>
+            </div>
+            
+          <div  class="col-xs-6"> 
+              <!--<p>If I can work out how to abstract the Javascript cleanly, this will be integration practice :) </p>
+              <input id="MathInput2" type="text" name="answer" onchange="UpdateMath(this.value)">
+                    <p>To get $x^2$ just type x^2<br></p>
+                    <INPUT TYPE="button" NAME="answerSubmit" Value="Submit Answer" onClick="calc.printAnswer()">
+                
+                        <div id="userAnswer2">
+                            <p>You typed ${}$</p>
+                        </div>
+                        <div id="actualAnswer2">
+                            ${}$</p>
+                        </div>-->
+          </div>
+        </div>
+   
     </div>
  </div>
  
