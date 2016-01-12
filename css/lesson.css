@@ -61,6 +61,7 @@ body > *:last-child {
 =============================================================================*/
 p, blockquote, ul, ol, dl, table, pre {
   margin: 15px 0;
+  font-size: 14px;
 }
 
 /* HEADERS
