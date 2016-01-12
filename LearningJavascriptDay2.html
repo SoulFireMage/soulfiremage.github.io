@@ -87,6 +87,7 @@
                         
                 this.printAnswer= function(){
                             var answer = `  <p>The answer is: $ ${base * exp}x^{${exp - 1}}$ </p>`;
+                            UpdateMath(document.getElementById('MathInput').value);
                             document.getElementById('actualAnswer').innerHTML=answer; 
                             MathJax.Hub.Queue(["Typeset",MathJax.Hub,'actualAnswer']); //must call MathJax on the element to parse it.!
                             };
@@ -97,7 +98,7 @@
     </script>
     
      <div  class="row">
-         
+      <!--Don't use a form tage here, we aren't sending stuff to a server-->   
             <div  class="col-xs-6"  > 
                     <input id="MathInput" type="text" name="answer" onchange="UpdateMath(this.value)">
                     <p>To get $x^2$ just type x^2<br></p>
@@ -125,14 +126,8 @@
                         </div>-->
           </div>
         </div>
-   
-    </div>
+       </div>
  </div>
- 
-<div class="box-black" align="center">
-     
-</div>
- 
 </body>
 </html>
 

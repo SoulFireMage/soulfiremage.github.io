@@ -1,0 +1,130 @@
+<!--Template for blog -->
+<!DOCTYPE html5>
+<html>
+  <head>
+    <!-- Painstakingly hand written using VSCode, BlueGriffon and Stylizer -->
+    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+    <title>Advent 2015 - Monogame SnowFlakes</title>
+    <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
+    <link  type="text/css"  rel="stylesheet"  href="css/lesson.css">
+    <link  type="text/css"  rel="stylesheet"  href="css/main.css">
+    <style>
+        .gist iframe.render-viewer {
+    width: 100%;
+    height: 480px;
+    
+    overflow: hidden
+}</style>
+   </head>
+<body>
+
+
+<!--Navigation-->
+<div  class="box">
+    <nav  class="navbar navbar-full navbar-dark bg-inverse">
+        <ul  class="nav navbar-nav">
+            <li  class="nav-item"> <a  class="nav-link"  href="index.html"><img src="images/RightAktarian75.jpg"/>Home<img src="images/LeftAktarian75.jpg"/></a></li>
+        </ul>
+    </nav>
+</div>
+<!--End Navigation-->
+
+<!--Title-->
+<div  class="box" id="Top">
+    <div  class="row row-centered">
+        <div  class="col-xs-3 col-centered"  align="center"> <img  src="images/RightAktarian75.jpg"> </div>
+    <div  class="col-xs-6 col-centered"  align="center">
+        <h3>F# Cambridge Meetup - 11th January 2015</h3>
+    </div>
+    <div class="col-xs-3 col-centered"  align="center"> <img  src="images/LeftAktarian75.jpg"> </div>
+    </div>
+</div>
+<!--end Title-->
+
+
+<!-- Begin Section 0-->
+<div class="box-black">
+    <p>This was an action packed evening full of code, drink and pizza, peppered with a touch of Trelford trolling all organised by <a href="http://www.meetup.com/Cambridge-F-Community/">F# Cambridge Community  guys</a>. 
+We started the evening with a few <a href="https://sergeytihon.wordpress.com/2015/10/25/f-advent-calendar-in-english-2015/">FsAdvent</a> blog post talks.</p>
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 1-->
+<div class="box-black">
+    <h3>Tomas Petricek - Happy New Year 2016</h3>
+<p><a href="http://tomasp.net/blog/2015/happy-new-year-tweets/">Happy New Year 2016 around the World</a> post.</p>
+<p>Watch the world waking up to a Happy New year via twitter, live, courtesy of twitter streaming API, <a href="https://suave.io/">Suave.io webserver</a>, <a href="http://d3js.org/">D3 datamaps</a> and reactive programming all wrapped in a single fsx file!.
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 2-->
+<div class="box-black">
+    <h3>Evelina Gabasova - Star Wars social network: Using D3.js, R (ggplot) and F#.  </h3>
+
+<p>If you wanted to know anything about the relationship between the central characters of these films, start here.<br> 
+<a href= "http://evelinag.com/blog/2015/12-15-star-wars-social-network/">From Evelina's blog</a>: "I extracted social networks from all the movies and found some interesting relations."  </p>
+<p>Example graph: <img src="http://evelinag.com/blog/2015/12-15-star-wars-social-network/episode1.png" height = "175"/></p>
+
+<p>One tweeter - F♭lunt (‏@F__Blunt): "@evelgab proving scientifically that the star wars prequels suck. this was the funniest use of f# i've seen so far :)"</p>    
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 3-->
+<div class="box-black">
+    <h3>My own Advent blog</h3>
+
+<p>Short demo of <a href="http://soulfiremage.github.io/Advent2015.html">Mono driven snowflakes</a> : Phil Trelford decided to pick on me with little warning for a contribution to the evening's festivities. However with the help of an understanding audience, I was able to ramble out some vague explanation of how I got my snowflakes working with Mono.</p>  
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 4-->
+<div class="box-black">
+    <h3>Mathias - The Main event "Crunching through big data with MBrace, Azure & F#". </h3>
+
+<p>Mathias demonstrates using Azure clusters to spread heavy workloads such as digit recognition, or Phil Trelford's favourite, word count. The demo illustrated that the use of mbrace made the actual development work as straight forward as any other F# coding.</p>
+
+<p>He took the fun route of doing two time honored "No-No's" to deliver this talk: Relied on the internet and wrote code live. This made for an interesting experience, for all concerned as he provisioned clusters, dispatched jobs and awaited results - sometimes with bated breath. </p>
+
+<p>tarting with, quite possibly be, the world's longest running version of "Hello World" (5 seconds I believe), he soon progressed onto scenarios that really do benefit from this approach. </p>
+
+<p>Also mentioned was how you can actually use the R provider or other type providers yet get it all to work on provisioned clusters <a href="http://mbrace.io/starterkit/HandsOnTutorial/examples/200-using-r-provider.html">example</a>.
+The mBrace starter kit has a very comprehensive set of examples if you <a href="https://github.com/mbraceproject/MBrace.StarterKit">clone the repo</a>.</p>   
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 5-->
+<div class="box-black">
+    <h3>Daniel Fabian and his PInvoke Wrapper - get types inferred for native libraries.</h3>
+
+<p>This was an enthusiastic side conversation that should have been at least a lightning talk - however, do lookout for a full talk by Daniel on this subject in the coming months!</p>
+
+<p>Daniel Fabian of MS Research on his <a href="https://github.com/DanielFabian/FSharp.InteropServices.Dynamic">PInvoke wrapper  (FSharp.InteropServices.Dynamic)</a> utilising F# type inference and the (?) operator to allow you to use a wide variety of native libraries within F#. This uses the DLR, reflection, interop libraries and would easily allow one to use C++ nvidia dlls for example. 
+Simple usage:</p>
+<div class="row">
+    <div class="col-xs-2 col-centered"  align="center"> </div>
+      <div class="col-xs-8 col-centered"  align="center">
+        <script  src="https://gist.github.com/SoulFireMage/7aa4429c5f42602aa5c9.js"  ></script>
+      </div>
+    <div class="col-xs-2 col-centered"  align="center"> </div>
+ </div>
+ 
+
+<p>From <a href="https://msdn.microsoft.com/en-us/library/aa288468%28v=vs.71%29.aspx?f=255&MSPPError=-2147217396">MSDN Platform Invoke (Pinvoke)</a> for those that don't know: “Platform Invocation Services (PInvoke) allows managed code to call unmanaged functions that are implemented in a DLL.
+This tutorial shows you what you need to do to be able to call unmanaged DLL functions from C#. The attributes discussed in the tutorial allow you to call these functions and have data types be marshaled correctly.</p>
+ 
+<p>He also introduced me to the idea of <a href="https://support.office.com/en-nz/article/Use-Clutter-to-sort-low-priority-messages-in-Outlook-2016-for-Windows-7b50c5db-7704-4e55-8a1b-dfc7bf1eafa0?ui=en-US&rs=en-NZ&ad=NZ">Clutter</a> - an outlook add on that learns from you what junk is.</p> 
+
+<p>Finally he talked about another MS Research project: <a href="http://research.microsoft.com/en-us/um/cambridge/projects/infernet/"> infer.net - a framework that offers Bayesian inference in graphical models and probablistic programming. </a>. This looks like a fascinating yet very underplayed project as a quick glance at the tutorials and examples will tell you. The list of possibilities on offer is substantial - a subject for another post!</p>
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+</body>
+</html>
+
+
