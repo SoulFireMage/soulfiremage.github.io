@@ -1,0 +1,152 @@
+<!DOCTYPE html5>
+<html>
+  <head>
+    <!-- Painstakingly hand written using VSCode, BlueGriffon and Stylizer -->
+    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+    <title>Advent 2015 - Monogame SnowFlakes</title>
+    <link  rel="stylesheet"  type="text/css"  href="css/bootstrap.min.css"  media="screen">
+    <link  type="text/css"  rel="stylesheet"  href="css/lesson.css">
+    <link  type="text/css"  rel="stylesheet"  href="css/main.css">
+    <link  type="text/css"  rel="stylesheet"  href="css/charts.css">
+    <script src="scripts/dist/vis.js"></script>
+    <link href="scripts/dist/vis.css" rel="stylesheet" type="text/css" />
+  </script>
+  <style type="text/css">
+    #mynetwork {
+      max-width: 1200px;
+      max-height: 1200px;
+      border: 1px solid lightgray;
+    }
+    p {
+      max-width:1200px;
+    }
+    </style>
+    <STYLE TYPE="text/css">
+     
+        @page { margin: 10px }
+        body { margin: 10px ;}
+         
+    </STYLE>
+   </head>
+<body>
+
+
+<!--Navigation-->
+<div  class="box">
+    <nav  class="navbar navbar-full navbar-dark bg-inverse">
+        <ul  class="nav navbar-nav">
+            <li  class="nav-item"> <a  class="nav-link"  href="index.html"><img src="images/RightAktarian75.jpg"/>Home<img src="images/LeftAktarian75.jpg"/></a></li>
+        </ul>
+    </nav>
+</div>
+<!--End Navigation-->
+
+<!--Title-->
+<div  class="box" id="Top">
+    <div  class="row row-centered">
+        <div  class="col-xs-3 col-centered"  align="center"> <img  src="images/RightAktarian75.jpg"> </div>
+    <div  class="col-xs-6 col-centered"  align="center">
+        <h3>Richard Griffiths - Visual CV</h3>
+    </div>
+    <div class="col-xs-3 col-centered"  align="center"> <img  src="images/LeftAktarian75.jpg"> </div>
+    </div>
+</div>
+<!--end Title-->
+ 
+<!-- Begin Section 0-->
+<div class="box-black-chart">
+    <p>After numerous discussions regarding X years of experience*, I decided to kill two birds with one stone.</p>
+              <p>I wanted to learn to use D3.js and felt I'd like to illustrate the ground I have covered since I began learning to code.</p>
+              <p>Of course, what is ommitted are the lengths of time where, frankly, I didn't code at all. Either due to my job at the time or because I did actually <b>give up</b>. There I said it. There were times I quit coding for all kinds of reasons. However, as I hope to illustrate, the graphic below will illustrate what experience I have.
+              Like any CV - it is designed to make it easier for potential employers to decide if I'm the right individual to help their business at this time.</p>
+              <p><i>Yes, I disagree completely with the black and white filter many recruiters and hiring managers use in this field. I've sat with coders of a decade or two experience and been as equals. I've also sat next to a 17 year old kid who'd got far fewer years experience and was seriously impressed. What you did with your years of experience is far more important than their length!</p>
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section Time Line-->
+<div class="box-black-chart"  align="center">
+   <div id="visualization"></div>
+
+<script type="text/javascript">
+  // DOM element where the Timeline will be attached
+  var container = document.getElementById('visualization');
+
+  // Create a DataSet (allows two way data-binding)
+  var items = new vis.DataSet([
+    {id: 1, content: 'item 1', start: '2014-04-20'},
+    {id: 2, content: 'item 2', start: '2014-04-14'},
+    {id: 3, content: 'item 3', start: '2014-04-18'},
+    {id: 4, content: 'item 4', start: '2014-04-16', end: '2014-04-19'},
+    {id: 5, content: 'item 5', start: '2014-04-25'},
+    {id: 6, content: 'item 6', start: '2014-04-27', type: 'point'}
+  ]);
+
+  // Configuration for the Timeline
+  var options = {};
+
+  // Create a Timeline
+  var timeline = new vis.Timeline(container, items, options);
+</script>    
+</div>
+<!-- End section -->
+
+<!-- Begin Section 2-->
+<div class="box-black-chart">
+    <div id="mynetwork"></div>
+
+<script type="text/javascript">
+  // create an array with nodes
+  
+  var nodes = [
+    {id: 1, label: 'C# Program'},
+    {id: 2, label: 'Classes 2'},
+    {id: 3, label: 'Methods 3'},
+    {id: 4, label: 'Types'},
+    {id: 5, label: 'Special boxes'}
+  ];
+
+  // create an array with edges
+  var edges = [
+    {from: 1, to: 2, label: 'built from',     font: {align: 'middle'}},
+    {from: 2, to: 3, label: 'have',        font: {align: 'top'}},
+    {from: 4, to: 5, label: 'are like', font: {align: 'horizontal'}},
+    {from: 2, to: 5, label: 'bottom',     font: {align: 'bottom'}}
+  ];
+
+  // create a network
+  var container = document.getElementById('mynetwork');
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+</script>
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 3-->
+<div class="box-black-chart">
+    Section Content
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 4-->
+<div class="box-black-chart">
+    Section Content
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+<!-- Begin Section 5-->
+<div class="box-black-chart">
+    Section Content
+    <div  class="col-xs-12 col-centered"  align="right"><a  href="#Top">Top</a></div>
+</div>
+<!-- End section -->
+
+</body>
+</html>
