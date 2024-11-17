@@ -1,18 +1,28 @@
 ---
-title: "Home"
-date: 2023-11-22
+title: "About Me"
+date: 2024-11-21
 draft: false
 ---
 
-This site will become a central demo and link site for any of my contents and interests. Code snippets in various languages will be added as they come up as will various articles.
+A revamped version of my original site. Upgrades! Now using Hugo as I was finding the idea of sitting writing raw html a little dreary at best.
 
-About me: I taught myself coding in 2010, in and around a day job that ultimately needed the skill at times. It was VB and SQL. Since then I've crossed into the wider .Net world using all three main languages.
+About me: I began learning to code in 2010, in and around a day job that needed. The languages were Visual Basic and SQL. Persistance and exploration meant, that despite starting approximately 15 years later than most programmers I've spoken with since, I managed to turn it into my day job since roughly 2014.
 
-The repositories listed are mostly examples I've built up over time rather than a coherent demonstration or shop window. However, this will change.
+I'm not a terribly diligent Github contributor as most code is actually for my job. However, I intend to post gists, odd bits of exploration, stories and articles here.
 
-This year I promised myself I'd learn Javascript then the most useful frameworks, to stick to this, I've started doing log pages. These are a day's exploration of the language. This gives me a reference point for each part of the language and what I did in learning it. The pages are not intended as tutorials as such! That may come eventually.
+The subjects will vary as I, like many coders, get cycles of different enthusiasms -often a bit short lived and intense. An article may come of this point in its own right.
 
-Recent Posts:
+*Whilst I'm not an enthusiastic self-promoter, the way I've began my current and previous roles was to have some material online to at least show that I know one end of an IDE from another, and perhaps my SELECT from a WHERE. That's a reasonable excuse to waffle on with a personal website perhaps.*
+
+As for the starships - these are characters I created in 2015 and, for some reason, didn't evict from my head. Consequently they don't pay rent and they hang about. 
+
+This site now has stories and articles that will come from my Google documents. 
+
+*NB: There won't be politics.*
+
+Possible tags may include maths, AI, writing and rhetoric, programming and possibly boats. 
+
+Distant History:
 - [Quick write-up of the Jan 12th Fsharp Cambridge Meetup](/posts/fsharp-meetup/)
 - [F# Snowflakes in Monogame - an #FsAdvent entry](/posts/fsharp-snowflakes/)
 - [Please watch out for stray starships - the little ones tend to get everywhere!](/posts/starships/)
