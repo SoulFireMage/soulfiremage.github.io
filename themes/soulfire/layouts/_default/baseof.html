@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-item">
+            <img src="/images/wing-left.jpg" alt="Wing decoration" class="wing">
+            <a href="/">About Me</a>
+            <img src="/images/wing-right.jpg" alt="Wing decoration" class="wing">
+        </div>
+        <div class="nav-item">
+            <img src="/images/wing-left.jpg" alt="Wing decoration" class="wing">
+            <a href="/posts">Posts</a>
+            <img src="/images/wing-right.jpg" alt="Wing decoration" class="wing">
+        </div>
+        <div class="nav-item">
+            <img src="/images/wing-left.jpg" alt="Wing decoration" class="wing">
+            <a href="/stories">Stories</a>
+            <img src="/images/wing-right.jpg" alt="Wing decoration" class="wing">
+        </div>
+        <div class="nav-item">
+            <img src="/images/wing-left.jpg" alt="Wing decoration" class="wing">
+            <a href="/non-fiction">Non Fiction</a>
+            <img src="/images/wing-right.jpg" alt="Wing decoration" class="wing">
+        </div>
+        <div class="nav-item">
+            <img src="/images/wing-left.jpg" alt="Wing decoration" class="wing">
+            <a href="/links">Link Collection</a>
+            <img src="/images/wing-right.jpg" alt="Wing decoration" class="wing">
+        </div>
+    </nav>
+
+    <header>
+        <div class="title-container">
+            <img src="/images/wing-left.jpg" alt="Wing decoration" class="wing">
+            <h1>{{ .Title }}</h1>
+            <img src="/images/wing-right.jpg" alt="Wing decoration" class="wing">
+        </div>
+    </header>
+
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+</body>
+</html>

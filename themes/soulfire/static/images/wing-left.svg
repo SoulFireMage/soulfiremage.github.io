@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40" height="40" version="1.1" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main body -->
+  <path d="M38,20 L30,15 L25,12 L20,10 L15,12 L8,15 L2,20 L8,25 L15,28 L20,30 L25,28 L30,25 L38,20" 
+        fill="black" 
+        stroke="white" 
+        stroke-width="1"/>
+  
+  <!-- Cockpit -->
+  <circle cx="15" cy="20" r="4" fill="black" stroke="white"/>
+  <circle cx="15" cy="20" r="2" fill="#00a2ff"/>
+  
+  <!-- Engine glow -->
+  <path d="M2,20 L5,18 L4,20 L5,22 L2,20" 
+        fill="#00a2ff"/>
+  
+  <!-- Wing details -->
+  <path d="M25,12 L28,15 L30,20 L28,25 L25,28" 
+        fill="none"
+        stroke="white"
+        stroke-width="0.5"/>
+        
+  <!-- Additional tech details -->
+  <line x1="20" y1="15" x2="25" y2="15" stroke="white" stroke-width="0.5"/>
+  <line x1="20" y1="25" x2="25" y2="25" stroke="white" stroke-width="0.5"/>

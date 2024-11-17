@@ -1,0 +1,13 @@
+A personal website that I host on Github pages that will allow me to add new content, easily, using Markdown. 
+
+As far as I know, I don't have access (for free) to any database backend, so I intend to just upload markdown pages to expand the site or a similar simple solution.
+
+I've heard Hugo is a good choice for this.
+
+Please examine https://soulfiremage.github.io/index.html for the style and graphics. This is how I'd like it to look.
+
+It is my existing site and I'll likely incorporate it. If I need to download it for you to examine locally, please let me know.
+
+Develop locally, then I need the site to end up on my github pages, so remind me the best way to do that as well please.
+
+Thank you.

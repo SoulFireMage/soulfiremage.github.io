@@ -1,0 +1,30 @@
+baseURL = 'https://soulfiremage.github.io/'
+languageCode = 'en-us'
+title = 'Richard Griffiths - Home'
+theme = 'soulfire'
+
+[permalinks]
+  posts = '/posts/:filename/'
+
+[menu]
+  [[menu.main]]
+    name = 'About Me'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    name = 'Posts'
+    url = '/posts'
+    weight = 2
+  [[menu.main]]
+    name = 'Stories'
+    url = '/stories'
+    weight = 3
+  [[menu.main]]
+    name = 'Link Collection'
+    url = '/links'
+    weight = 4
+
+[markup]
+  [markup.highlight]
+    style = 'monokai'
+    lineNos = true
