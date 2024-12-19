@@ -24,10 +24,42 @@ For me, the whole idea is a spectrum (no, I cannot prove this!) in two specific 
 
 Self-consistency in this discussion would be, currently, context length and represents possibly one of the larger barriers to any sustained awareness phenomena. In the [AGISteps][2] post I discuss this in much more depth for those that are interested.
 
+See below for a new item I found this afternoon.
+
+# [MASK] is All You Need
+
+Authors: Vincent Tao Hu, Björn Ommer
+
+Published: December 9, 2024
+
+In the realm of generative models, two prominent paradigms have emerged:
+
+Masked Generative Models (MGMs): These models predict the next set of data by masking certain parts and training the model to reconstruct them.
+
+Non-Autoregressive Models (e.g., Diffusion Models): These models predict the next noise component in a sequence, enabling efficient data generation without relying on previous outputs.
+
+The authors propose a novel framework, Discrete Interpolants, that leverages discrete-state models to bridge the gap between these paradigms, particularly within the vision domain.
+
+**Key Contributions:**
+
+Unified Design Space Analysis: The paper conducts a comprehensive analysis across both model types, considering factors like timestep independence, noise schedules, temperature settings, and guidance strength. This analysis aims to enhance scalability and performance in vision tasks.
+
+Recasting Discriminative Tasks: By treating tasks such as image segmentation as an unmasking process using [MASK] tokens within a discrete-state model, the authors enable flexible sampling processes. This approach allows for conditional sampling after a single training session modeling the joint distribution.
+
+Discrete Interpolants Framework: This framework achieves state-of-the-art or competitive performance compared to previous discrete-state methods across various benchmarks, including ImageNet256, MS COCO, and the FaceForensics video dataset.
+
+**Implications:**
+
+By utilizing [MASK] tokens in discrete-state models, the authors effectively bridge the methodologies of Masked Generative Models and Non-Autoregressive Diffusion Models. This integration facilitates advancements in both generative and discriminative tasks, contributing to more efficient and versatile AI models.
+
+For a deeper dive into the technical details, you can access the [full paper here][3].
+
 ## References
 
 1. [High Dimensional Geometric Structures in the Human Brain][1]
 2. [AGI Steps][2]
+3. [Mask is all you need][3]
 
 [1]: https://bigthink.com/hard-science/our-brains-think-in-11-dimensions-discover-scientists/ "High Dimensional Geometric Structures in the Human Brain"
 [2]: https://soulfiremage.github.io/posts/agisteps/ "Step to AGI Overview"
+[3]: https://arxiv.org/pdf/2412.06787 "Mask is all you need"
