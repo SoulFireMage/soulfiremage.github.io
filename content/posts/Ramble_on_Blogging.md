@@ -1,8 +1,9 @@
 ---
-title: "Ramble_on_Blogging"
+title: "Ramble On Blogging"
 date: 2024-12-19T09:01:38Z
 draft: true
 ---
+
 # Thursday morning Ramble
 
 It is taking me a little while to adjust to the idea that my rather old blog site now just requires me to write and commit a MarkDown document.
@@ -30,4 +31,3 @@ Self-consistency in this discussion would be, currently, context length and repr
 
 [1]: https://bigthink.com/hard-science/our-brains-think-in-11-dimensions-discover-scientists/ "High Dimensional Geometric Structures in the Human Brain"
 [2]: https://soulfiremage.github.io/posts/agisteps/ "Step to AGI Overview"
-
