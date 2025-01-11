@@ -10,6 +10,6 @@ I'm enthuastic user of chatgpt, claude, perplexity and lmstudio for local models
 
 After my experiment with a story called The Keepers, by ChatGPT, I felt it was an easy way to have new fiction made for me if I really wanted it but a poor way to experience writing. I'm not a dedicated author of any form, but the times I've wanted to write some fiction, the driver is trying to experience the world of the characters and ideas that decide to inhabit my imagination for a while.
 
-That's the sole driver. 
+That's the sole driver.
 
 ***So, any and all blame for the fiction on this site, other than ordinary grammar/spell check assistance (not often enough!), lies in my own grey matter only.***
