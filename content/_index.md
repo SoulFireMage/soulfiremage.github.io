@@ -25,4 +25,8 @@ The focus will vary, but I have an active interest in AI and AI Ethics, so expec
 
 Possible tags may include maths, AI, writing and rhetoric, programming and possibly boats.
 
-[1](https://soulfiremage.github.io/posts/tulpaepersonae/)
+## **References**
+
+1. ["Tulpae!"][1]
+
+[1]: https://soulfiremage.github.io/posts/tulpaepersonae/ "Tulpae!"
