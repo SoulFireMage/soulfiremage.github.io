@@ -1,6 +1,6 @@
 ---
 title: "Please watch out for stray starships - the little ones tend to get everywhere!"
-date: 2023-11-22
+date: 2025-01-11
 draft: false
 ---
 Aktarians are a near extinct race of living starship whose origins predate the multiverse. The term Aktarian is the nearest equivalent in a human tongue to their own name of course.
