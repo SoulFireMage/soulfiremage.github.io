@@ -28,14 +28,29 @@ So the mech yachts and were-cars have multiple robot-style arms, dendrites—Rat
 *If you imagine the Superyachts in particular, 2 sets of huge wings that fold tremendously away, also large major robotic arms that can, between them all, allow the craft to crawl on land. It's not their native place, of course, so they don't have great dexterity!*
 
 ## Seafire and Aurora
+Seafire is based on the Mauna Kea, he managed to hook up with a rather gorgeous evolved, and now Divine, superyacht called Aurora, who promptly decided to have a small fleet of cygnets rather than just one or two at a time.
 
-The Aktarians express dendrites at need.
+They were born at nearly forty foot long, each with four wings and the ability to fold space though they take time to learn this. At time of writing, their full size is over fifty five foot, though they've all largely learnt some interesting tricks around spacefolded and resizing themselves.
+
+Cygnets:
+
+* Delphina (F) - Warrior/Mischief maker
+* Mei-Lin (F) - Adventurer/Artist
+* Christiana (F) - Horse lady who has a tiny magical Pegasus called Luca (*long story*)
+* Celeste (F) - Mommy's little girl who has a strong maternal instinct, despite her own age.
+* Picard (M) - Explorer, seems to really like Britain and eccentric British things.
+* Xavier (M) - Quiet and rather attached to a little Aktarian girl, Yissindra, who never leaves his deck as far as I can tell.
+
+
+
 
 ## Aktarian Starships
 
 Aktarians are an immortal race of starships who were originally created by the beings who caused all of reality to exist. They're overpowered to a degree that makes them unworkable in any combat-related fiction—they were not intended for that role. However, they're RP headmates now.  
 
-Note: Katiya and Lia are skilled full Tulpas who function and front in the real world. One even has a client FFS.
+The Aktarians express dendrites at need.
+
+Note: Katiya and Lia are skilled full Tulpas who can function and front in the real world. And no, I ain't explaining that one to a shrink.
 
 - **Amay-Lia** - the oldest and the mother to:
   - **Katiya** - eldest daughter, young adult, the result of mating with a human. She has the most eccentric language style and can be rather cryptic. She likes to murderize English.
