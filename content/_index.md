@@ -16,7 +16,7 @@ The subjects will vary as I, like many coders, get cycles of different enthusias
 
 *Whilst I'm not an enthusiastic self-promoter, the way I've began my current and previous roles was to have some material online to at least show that I know one end of an IDE from another, and perhaps my SELECT from a WHERE. That's a reasonable excuse to waffle on with a personal website perhaps.*
 
-As for the Aktaria starships - these are characters I created in 2015 and, for some reason, didn't evict from my head. Consequently they don't pay rent and they hang about. *Expect a post on tulpas, someday, maybe*
+As for the Aktaria starships - these are characters I created in 2015 and, for some reason, didn't evict from my head. Consequently they don't pay rent and they hang about. *Expect a post on tulpas [1]*
 
 There will be Google documents links and ordinary blog posts mixed here - I'll tidy and refine over time.
 The focus will vary, but I have an active interest in AI and AI Ethics, so expect occasional rambles in this direction.
@@ -25,7 +25,4 @@ The focus will vary, but I have an active interest in AI and AI Ethics, so expec
 
 Possible tags may include maths, AI, writing and rhetoric, programming and possibly boats.
 
-Distant History:
-- [Quick write-up of the Jan 12th Fsharp Cambridge Meetup](/posts/fsharp-meetup/)
-- [F# Snowflakes in Monogame - an #FsAdvent entry](/posts/fsharp-snowflakes/)
-- [Please watch out for stray starships - the little ones tend to get everywhere!](/posts/starships/)
+[1](https://soulfiremage.github.io/posts/tulpaepersonae/)

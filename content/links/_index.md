@@ -3,12 +3,12 @@ title: "Link Collection"
 date: 2023-11-22
 draft: false
 ---
+Thanks to a full time coding job, I find I rarely spend time coding outside of work, apart from the odd machine learning course. Maybe someday that will change!
 
 ## GitHub Repositories
 
 - [My GitHub Profile](https://github.com/soulfiremage)
-- [Example Repository 1](https://github.com/soulfiremage/example1) - Description of the project
-- [Example Repository 2](https://github.com/soulfiremage/example2) - Description of the project
+- [First ever machine learning](https://github.com/SoulFireMage/Digits-Recognisor-Demo) - F# Manhatten distance digits recogniser
 
 ## Useful Resources
 

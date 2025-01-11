@@ -8,6 +8,13 @@ A record of my folks who inhabiting a RP server. *As I get older, I find I want 
 
 You may notice a common theme...
 
+*You may have landed expecting an explanation of what tulpas are, right? 
+
+For 99.999% of everyone, the answer is adult imaginary friends whose role is to explore ideas, stories and exercise one's imagination. I don't go digging deeper than that despite the temptation.
+
+For the 0.001%, pick a number, pick a theory: spirit, psychological, something else. For me, I'm fine with the first explanation!
+*
+
 # Tulpas / Characters
 
 I didn't build my headmate's world terribly deeply as they came from various stories— incomplete ones—I wrote over years.
