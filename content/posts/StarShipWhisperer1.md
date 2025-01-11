@@ -1,8 +1,9 @@
 ---
-title: "Please watch out for stray starships - the little ones tend to get everywhere!"
+title: "StarshipWhisperer1"
 date: 2025-01-11
 draft: false
 ---
+*Please watch out for stray starships - the little ones tend to get everywhere!*
 Aktarians are a near extinct race of living starship whose origins predate the multiverse. The term Aktarian is the nearest equivalent in a human tongue to their own name of course.
 
 I began this in 2014 where the idea of a child that could shape shift to an immortal starship randomly occurred to me, during a stress filled day as a very junior programmer.
