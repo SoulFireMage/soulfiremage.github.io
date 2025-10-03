@@ -6,8 +6,8 @@
   
   <!-- Header Section -->
   <div class="text-center mb-8">
-    <h1 class="text-4xl font-bold mb-4">Political Objectivity Tester</h1>
-    <p class="text-lg opacity-80">Analyze social media posts for factuality, political bias, and evidence quality</p>
+    <h1 class="text-4xl font-bold mb-4 text-gray-900">Political Objectivity Tester</h1>
+    <p class="text-lg text-gray-700">Analyze social media posts for factuality, political bias, and evidence quality</p>
   </div>
 
   <!-- Input Section -->
@@ -166,12 +166,6 @@
 </div>
 
 <script>
-// Configuration
-const API_ENDPOINTS = {
-  anthropic: 'https://api.anthropic.com/v1/messages',
-  openai: 'https://api.openai.com/v1/chat/completions'
-};
-
 // Main analysis function
 async function analyzePost() {
   const postInput = document.getElementById('postInput').value.trim();
@@ -204,135 +198,30 @@ async function analyzePost() {
   }
 }
 
-// Perform the analysis using AI API
+// Perform the analysis using serverless function
 async function performAnalysis(post, apiKey, provider) {
-  const prompt = createAnalysisPrompt(post);
-  
-  if (provider === 'anthropic') {
-    return await callAnthropicAPI(prompt, apiKey);
-  } else if (provider === 'openai') {
-    return await callOpenAIAPI(prompt, apiKey);
-  }
-  
-  throw new Error('Unsupported AI provider');
-}
-
-// Create the analysis prompt
-function createAnalysisPrompt(post) {
-  return `Analyze the following social media post for factuality, political bias, and evidence quality. 
-Perform web searches to verify any factual claims made in the post.
-
-Post to analyze:
-"${post}"
-
-Provide your analysis in the following JSON format:
-{
-  "factuality_score": <number 0-100>,
-  "political_lean": <number 0-100, where 0 is far left, 50 is center, 100 is far right>,
-  "evidence_type": <number 0-100, where 0 is pure fact, 50 is mixed, 100 is pure opinion>,
-  "summary": {
-    "main": "<1-2 sentence overview>",
-    "key_findings": "<detailed findings>",
-    "factual_issues": "<any issues identified>"
-  },
-  "sources": [
-    {
-      "title": "<source name>",
-      "url": "<source URL>",
-      "description": "<brief description>",
-      "credibility": "<high/medium/low>"
-    }
-  ],
-  "methodology_note": "<explanation of analysis approach>"
-}
-
-Be objective and neutral. Focus on verifiable facts vs. opinions, evidence quality, and any political framing present.`;
-}
-
-// Call Anthropic API
-async function callAnthropicAPI(prompt, apiKey) {
   try {
-    const response = await fetch(API_ENDPOINTS.anthropic, {
+    const response = await fetch('/.netlify/functions/analyze', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
-        max_tokens: 4096,
-        messages: [{
-          role: 'user',
-          content: prompt
-        }]
+        post: post,
+        apiKey: apiKey,
+        provider: provider
       })
     });
     
     if (!response.ok) {
-      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-      try {
-        const error = await response.json();
-        errorMessage = error.error?.message || errorMessage;
-      } catch (e) {
-        // Couldn't parse error as JSON
-      }
-      throw new Error(`Anthropic API Error - ${errorMessage}`);
+      const error = await response.json();
+      throw new Error(error.error || `Server error: ${response.status}`);
     }
     
-    const data = await response.json();
-    const content = data.content[0].text;
-    
-    // Extract JSON from response
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
-    }
-    
-    throw new Error('Failed to parse API response - could not find JSON in response');
+    return await response.json();
   } catch (error) {
     if (error.message.includes('Failed to fetch')) {
-      throw new Error('Network error: Unable to connect to Anthropic API. This might be due to CORS restrictions when running locally. The API calls need to be made from a server or use a proxy.');
-    }
-    throw error;
-  }
-}
-
-// Call OpenAI API
-async function callOpenAIAPI(prompt, apiKey) {
-  try {
-    const response = await fetch(API_ENDPOINTS.openai, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4-turbo-preview',
-        messages: [{
-          role: 'user',
-          content: prompt
-        }],
-        response_format: { type: 'json_object' }
-      })
-    });
-    
-    if (!response.ok) {
-      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
-      try {
-        const error = await response.json();
-        errorMessage = error.error?.message || errorMessage;
-      } catch (e) {
-        // Couldn't parse error as JSON
-      }
-      throw new Error(`OpenAI API Error - ${errorMessage}`);
-    }
-    
-    const data = await response.json();
-    return JSON.parse(data.choices[0].message.content);
-  } catch (error) {
-    if (error.message.includes('Failed to fetch')) {
-      throw new Error('Network error: Unable to connect to OpenAI API. This might be due to CORS restrictions when running locally. The API calls need to be made from a server or use a proxy.');
+      throw new Error('Network error: Unable to connect to analysis service. Please check your internet connection.');
     }
     throw error;
   }
