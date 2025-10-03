@@ -215,15 +215,16 @@ async function performAnalysis(post, apiKey, provider) {
     
     if (!response.ok) {
       let errorMessage = `Server error: ${response.status}`;
+      // Read response as text first, then try to parse as JSON
+      const text = await response.text();
       try {
-        const error = await response.json();
+        const error = JSON.parse(text);
         errorMessage = error.error || errorMessage;
       } catch (e) {
         // Response wasn't JSON, might be HTML error page
-        const text = await response.text();
         if (text.includes('<html>')) {
           errorMessage = 'Server error: The serverless function returned an error page. Check Netlify function logs for details.';
-        } else {
+        } else if (text.length > 0) {
           errorMessage = `Server error: ${response.status} - ${text.substring(0, 100)}`;
         }
       }
