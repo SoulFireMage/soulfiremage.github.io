@@ -23,8 +23,15 @@ theme = 'soulfire'
     name = 'Link Collection'
     url = '/links'
     weight = 4
+  [[menu.main]]
+    name = 'Political Analysis Tool'
+    url = '/political-analysis-tool'
+    weight = 5
 
 [markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
   [markup.highlight]
     style = 'monokai'
     lineNos = true

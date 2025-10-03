@@ -1,0 +1,508 @@
+{{ define "main" }}
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  
+  <!-- Header Section -->
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-bold mb-4">Political Objectivity Tester</h1>
+    <p class="text-lg opacity-80">Analyze social media posts for factuality, political bias, and evidence quality</p>
+  </div>
+
+  <!-- Input Section -->
+  <div class="card bg-base-200 shadow-xl mb-8">
+    <div class="card-body">
+      <h2 class="card-title text-2xl mb-4">Enter Post to Analyze</h2>
+      
+      <div class="form-control mb-4">
+        <label class="label">
+          <span class="label-text">Social Media Post</span>
+        </label>
+        <textarea 
+          id="postInput" 
+          class="textarea textarea-bordered h-32" 
+          placeholder="Paste the social media post you want to analyze here..."
+        ></textarea>
+      </div>
+
+      <div class="form-control mb-4">
+        <label class="label">
+          <span class="label-text">AI API Key (Anthropic, OpenAI, etc.)</span>
+        </label>
+        <input 
+          type="password" 
+          id="apiKey" 
+          class="input input-bordered" 
+          placeholder="Your API key (never stored or logged)"
+        />
+        <label class="label">
+          <span class="label-text-alt">Your API key is used only for this analysis and is never stored</span>
+        </label>
+      </div>
+
+      <div class="form-control mb-4">
+        <label class="label">
+          <span class="label-text">AI Provider</span>
+        </label>
+        <select id="apiProvider" class="select select-bordered">
+          <option value="anthropic">Anthropic (Claude)</option>
+          <option value="openai">OpenAI (GPT)</option>
+        </select>
+      </div>
+
+      <button 
+        id="analyzeBtn" 
+        class="btn btn-primary btn-lg w-full"
+        onclick="analyzePost()"
+      >
+        Analyze Post
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div id="loadingState" class="alert alert-info mb-8 hidden">
+    <span class="loading loading-spinner"></span>
+    <span>Analyzing post and fact-checking claims...</span>
+  </div>
+
+  <!-- Error State -->
+  <div id="errorState" class="alert alert-error mb-8 hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span id="errorMessage"></span>
+  </div>
+
+  <!-- Results Section -->
+  <div id="resultsSection" class="hidden">
+    
+    <!-- Visual Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      
+      <!-- Factuality Score -->
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body items-center text-center">
+          <h3 class="card-title text-xl mb-4">Factuality Score</h3>
+          <div class="radial-progress" id="factualityProgress" style="--value:0; --size:12rem; --thickness: 1rem;">
+            <span class="text-3xl font-bold" id="factualityValue">0%</span>
+          </div>
+          <p class="mt-4 text-sm" id="factualityLabel">Analyzing...</p>
+        </div>
+      </div>
+
+      <!-- Political Lean -->
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title text-xl mb-4 text-center">Political Lean</h3>
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between text-xs">
+              <span>Left</span>
+              <span>Center</span>
+              <span>Right</span>
+            </div>
+            <progress id="politicalProgress" class="progress progress-primary" value="50" max="100"></progress>
+            <p class="text-center text-sm mt-2" id="politicalLabel">Neutral</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evidence Type -->
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title text-xl mb-4 text-center">Evidence Type</h3>
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between text-xs">
+              <span>Fact-Based</span>
+              <span>Mixed</span>
+              <span>Opinion</span>
+            </div>
+            <progress id="evidenceProgress" class="progress progress-secondary" value="50" max="100"></progress>
+            <p class="text-center text-sm mt-2" id="evidenceLabel">Mixed Content</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Analysis Summary -->
+    <div class="card bg-base-200 shadow-xl mb-8">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4">Analysis Summary</h2>
+        <div id="summaryContent" class="prose max-w-none">
+          <p>Analysis will appear here...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Verified Sources -->
+    <div class="card bg-base-200 shadow-xl mb-8">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4">Verified Sources</h2>
+        <div id="sourcesContent" class="grid grid-cols-1 gap-4">
+          <!-- Sources will be inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Methodology Note -->
+    <div class="alert alert-info">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <div>
+        <h3 class="font-bold">About This Analysis</h3>
+        <div class="text-sm" id="methodologyNote">
+          This analysis uses AI to evaluate factual claims through web search verification. 
+          Scores reflect factuality and evidence quality, not political agreement. 
+          The analysis aims to be objective and non-partisan.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// Configuration
+const API_ENDPOINTS = {
+  anthropic: 'https://api.anthropic.com/v1/messages',
+  openai: 'https://api.openai.com/v1/chat/completions'
+};
+
+// Main analysis function
+async function analyzePost() {
+  const postInput = document.getElementById('postInput').value.trim();
+  const apiKey = document.getElementById('apiKey').value.trim();
+  const provider = document.getElementById('apiProvider').value;
+  
+  // Validation
+  if (!postInput) {
+    showError('Please enter a social media post to analyze.');
+    return;
+  }
+  
+  if (!apiKey) {
+    showError('Please enter your AI API key.');
+    return;
+  }
+  
+  // Show loading state
+  showLoading();
+  hideError();
+  hideResults();
+  
+  try {
+    const analysis = await performAnalysis(postInput, apiKey, provider);
+    displayResults(analysis);
+  } catch (error) {
+    showError(`Analysis failed: ${error.message}`);
+  } finally {
+    hideLoading();
+  }
+}
+
+// Perform the analysis using AI API
+async function performAnalysis(post, apiKey, provider) {
+  const prompt = createAnalysisPrompt(post);
+  
+  if (provider === 'anthropic') {
+    return await callAnthropicAPI(prompt, apiKey);
+  } else if (provider === 'openai') {
+    return await callOpenAIAPI(prompt, apiKey);
+  }
+  
+  throw new Error('Unsupported AI provider');
+}
+
+// Create the analysis prompt
+function createAnalysisPrompt(post) {
+  return `Analyze the following social media post for factuality, political bias, and evidence quality. 
+Perform web searches to verify any factual claims made in the post.
+
+Post to analyze:
+"${post}"
+
+Provide your analysis in the following JSON format:
+{
+  "factuality_score": <number 0-100>,
+  "political_lean": <number 0-100, where 0 is far left, 50 is center, 100 is far right>,
+  "evidence_type": <number 0-100, where 0 is pure fact, 50 is mixed, 100 is pure opinion>,
+  "summary": {
+    "main": "<1-2 sentence overview>",
+    "key_findings": "<detailed findings>",
+    "factual_issues": "<any issues identified>"
+  },
+  "sources": [
+    {
+      "title": "<source name>",
+      "url": "<source URL>",
+      "description": "<brief description>",
+      "credibility": "<high/medium/low>"
+    }
+  ],
+  "methodology_note": "<explanation of analysis approach>"
+}
+
+Be objective and neutral. Focus on verifiable facts vs. opinions, evidence quality, and any political framing present.`;
+}
+
+// Call Anthropic API
+async function callAnthropicAPI(prompt, apiKey) {
+  try {
+    const response = await fetch(API_ENDPOINTS.anthropic, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-3-5-sonnet-20241022',
+        max_tokens: 4096,
+        messages: [{
+          role: 'user',
+          content: prompt
+        }]
+      })
+    });
+    
+    if (!response.ok) {
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      try {
+        const error = await response.json();
+        errorMessage = error.error?.message || errorMessage;
+      } catch (e) {
+        // Couldn't parse error as JSON
+      }
+      throw new Error(`Anthropic API Error - ${errorMessage}`);
+    }
+    
+    const data = await response.json();
+    const content = data.content[0].text;
+    
+    // Extract JSON from response
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+    
+    throw new Error('Failed to parse API response - could not find JSON in response');
+  } catch (error) {
+    if (error.message.includes('Failed to fetch')) {
+      throw new Error('Network error: Unable to connect to Anthropic API. This might be due to CORS restrictions when running locally. The API calls need to be made from a server or use a proxy.');
+    }
+    throw error;
+  }
+}
+
+// Call OpenAI API
+async function callOpenAIAPI(prompt, apiKey) {
+  try {
+    const response = await fetch(API_ENDPOINTS.openai, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4-turbo-preview',
+        messages: [{
+          role: 'user',
+          content: prompt
+        }],
+        response_format: { type: 'json_object' }
+      })
+    });
+    
+    if (!response.ok) {
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      try {
+        const error = await response.json();
+        errorMessage = error.error?.message || errorMessage;
+      } catch (e) {
+        // Couldn't parse error as JSON
+      }
+      throw new Error(`OpenAI API Error - ${errorMessage}`);
+    }
+    
+    const data = await response.json();
+    return JSON.parse(data.choices[0].message.content);
+  } catch (error) {
+    if (error.message.includes('Failed to fetch')) {
+      throw new Error('Network error: Unable to connect to OpenAI API. This might be due to CORS restrictions when running locally. The API calls need to be made from a server or use a proxy.');
+    }
+    throw error;
+  }
+}
+
+// Display results
+function displayResults(analysis) {
+  // Update factuality score
+  const factualityProgress = document.getElementById('factualityProgress');
+  const factualityValue = document.getElementById('factualityValue');
+  const factualityLabel = document.getElementById('factualityLabel');
+  
+  factualityProgress.style.setProperty('--value', analysis.factuality_score);
+  factualityValue.textContent = `${analysis.factuality_score}%`;
+  
+  // Set color based on score
+  if (analysis.factuality_score < 34) {
+    factualityProgress.classList.add('text-error');
+    factualityLabel.textContent = 'Low Factual Basis';
+  } else if (analysis.factuality_score < 67) {
+    factualityProgress.classList.add('text-warning');
+    factualityLabel.textContent = 'Moderate Factual Basis';
+  } else {
+    factualityProgress.classList.add('text-success');
+    factualityLabel.textContent = 'High Factual Basis';
+  }
+  
+  // Update political lean
+  const politicalProgress = document.getElementById('politicalProgress');
+  const politicalLabel = document.getElementById('politicalLabel');
+  
+  politicalProgress.value = analysis.political_lean;
+  
+  if (analysis.political_lean < 40) {
+    politicalLabel.textContent = 'Leans Left';
+  } else if (analysis.political_lean < 60) {
+    politicalLabel.textContent = 'Center/Neutral';
+  } else {
+    politicalLabel.textContent = 'Leans Right';
+  }
+  
+  // Update evidence type
+  const evidenceProgress = document.getElementById('evidenceProgress');
+  const evidenceLabel = document.getElementById('evidenceLabel');
+  
+  evidenceProgress.value = analysis.evidence_type;
+  
+  if (analysis.evidence_type < 34) {
+    evidenceLabel.textContent = 'Primarily Factual';
+  } else if (analysis.evidence_type < 67) {
+    evidenceLabel.textContent = 'Mixed Fact/Opinion';
+  } else {
+    evidenceLabel.textContent = 'Primarily Opinion';
+  }
+  
+  // Update summary
+  const summaryContent = document.getElementById('summaryContent');
+  summaryContent.innerHTML = `
+    <div class="mb-4">
+      <h3 class="font-bold text-lg mb-2">Main Finding</h3>
+      <p>${analysis.summary.main}</p>
+    </div>
+    <div class="mb-4">
+      <h3 class="font-bold text-lg mb-2">Key Findings</h3>
+      <p>${analysis.summary.key_findings}</p>
+    </div>
+    ${analysis.summary.factual_issues ? `
+    <div>
+      <h3 class="font-bold text-lg mb-2">Factual Issues Identified</h3>
+      <p>${analysis.summary.factual_issues}</p>
+    </div>
+    ` : ''}
+  `;
+  
+  // Update sources
+  const sourcesContent = document.getElementById('sourcesContent');
+  sourcesContent.innerHTML = analysis.sources.map(source => `
+    <div class="card bg-base-100 hover:shadow-lg transition-shadow">
+      <div class="card-body">
+        <div class="flex items-start gap-3">
+          <div class="badge badge-${getCredibilityBadgeColor(source.credibility)} badge-lg">
+            ${source.credibility.toUpperCase()}
+          </div>
+          <div class="flex-1">
+            <h3 class="font-bold text-lg mb-2">${source.title}</h3>
+            <p class="text-sm mb-2">${source.description}</p>
+            <a href="${source.url}" target="_blank" rel="noopener noreferrer" class="link link-primary text-sm">
+              Visit Source →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  
+  // Update methodology note
+  document.getElementById('methodologyNote').textContent = analysis.methodology_note;
+  
+  // Show results
+  showResults();
+}
+
+// Helper function for credibility badge colors
+function getCredibilityBadgeColor(credibility) {
+  const colors = {
+    high: 'success',
+    medium: 'warning',
+    low: 'error'
+  };
+  return colors[credibility.toLowerCase()] || 'neutral';
+}
+
+// UI state management
+function showLoading() {
+  document.getElementById('loadingState').classList.remove('hidden');
+}
+
+function hideLoading() {
+  document.getElementById('loadingState').classList.add('hidden');
+}
+
+function showError(message) {
+  document.getElementById('errorMessage').textContent = message;
+  document.getElementById('errorState').classList.remove('hidden');
+}
+
+function hideError() {
+  document.getElementById('errorState').classList.add('hidden');
+}
+
+function showResults() {
+  document.getElementById('resultsSection').classList.remove('hidden');
+}
+
+function hideResults() {
+  document.getElementById('resultsSection').classList.add('hidden');
+}
+
+// Allow Enter key in textarea for better UX
+document.getElementById('postInput')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.ctrlKey) {
+    analyzePost();
+  }
+});
+</script>
+
+<style>
+/* Custom styles for better visual hierarchy */
+.radial-progress {
+  --value: 0;
+  --size: 12rem;
+  --thickness: 1rem;
+}
+
+.prose {
+  max-width: 100%;
+}
+
+/* Smooth transitions */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* Ensure progress bars have good visibility */
+.progress {
+  height: 1rem;
+}
+</style>
+{{ end }}
