@@ -214,14 +214,29 @@ async function performAnalysis(post, apiKey, provider) {
     });
     
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || `Server error: ${response.status}`);
+      let errorMessage = `Server error: ${response.status}`;
+      try {
+        const error = await response.json();
+        errorMessage = error.error || errorMessage;
+      } catch (e) {
+        // Response wasn't JSON, might be HTML error page
+        const text = await response.text();
+        if (text.includes('<html>')) {
+          errorMessage = 'Server error: The serverless function returned an error page. Check Netlify function logs for details.';
+        } else {
+          errorMessage = `Server error: ${response.status} - ${text.substring(0, 100)}`;
+        }
+      }
+      throw new Error(errorMessage);
     }
     
     return await response.json();
   } catch (error) {
     if (error.message.includes('Failed to fetch')) {
       throw new Error('Network error: Unable to connect to analysis service. Please check your internet connection.');
+    }
+    if (error.message.includes('JSON')) {
+      throw new Error('Server error: Received invalid response from analysis service. The serverless function may not be deployed correctly.');
     }
     throw error;
   }

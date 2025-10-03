@@ -21,12 +21,14 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Create the analysis prompt
+    // Create the analysis prompt (properly escape the post text)
+    const escapedPost = post.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    
     const prompt = `Analyze the following social media post for factuality, political bias, and evidence quality. 
 Perform web searches to verify any factual claims made in the post.
 
 Post to analyze:
-"${post}"
+"${escapedPost}"
 
 Provide your analysis in the following JSON format:
 {
