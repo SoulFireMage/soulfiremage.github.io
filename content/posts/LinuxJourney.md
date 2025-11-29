@@ -108,8 +108,10 @@ Separate Posts (To be Continued)...
 
 *It should be noted, removing roadblocks in the manner described has a different set of consequences. If I was intending to be a Linux admin, or a lead engineer in a Linux focussed dev team, this is NOT the route I recommend as using AI to discover and run commands avoids something deeply crucial: muscle memory and mental memory for solving the problems encountered in this domain.
 
-![Services Dashboard](https://soulfiremage.github.io/posts/image.png)
-
-### Memory Graph {#memory-graph}
+### Memory Graph
 
 ![Memory Graph Visualisation](https://soulfiremage.github.io/posts/image-1.jpg)
+
+### Services Dashboard
+
+![Services Dashboard](https://soulfiremage.github.io/posts/image.png)

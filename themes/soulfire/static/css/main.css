@@ -120,6 +120,13 @@ article {
     padding-left: 40px;
 }
 
+.content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 30px auto;
+}
+
 /* Code block styling */
 pre {
     background: #1a1a1a;
