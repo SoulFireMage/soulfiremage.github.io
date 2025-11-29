@@ -18,10 +18,12 @@ The subjects will vary as I, like many coders, get cycles of different enthusias
 
 *Whilst I'm not an enthusiastic self-promoter, the way I've began my current and previous roles was to have some material online to at least show that I know one end of an IDE from another, and perhaps my SELECT from a WHERE. That's a reasonable excuse to waffle on with a personal website perhaps.*
 
-As for the Aktaria starships - these are characters I created in 2015 and, for some reason, didn't evict from my head. Consequently they don't pay rent and they hang about. *Expect a post on tulpas [1]*
+As for the Aktarian starships - these are characters I created in 2015 and, for some reason, didn't evict from my head. Consequently they don't pay rent and they hang about. *Expect a post on tulpas [1]*
 
 There will be Google documents links and ordinary blog posts mixed here - I'll tidy and refine over time.
 The focus will vary, but I have an active interest in AI and AI Ethics, so expect occasional rambles in this direction.
+
+A note on Maths. Abstract maths of various kinds interests me, however, I'm not a detailed trained mathamatician (I mean I've a GCSE apparently). This means I often link some wildly inappropriate ideas together without having any formalisation. On the other hand, intense manual SQL coding, most of my work days, means I do actually have to do proof by induction and contradiction all the damn time. So I've half a clue and can appreciate category theory and topoi conceptually, same with Operators, latent spaces and other fun things. Spinors are head twisting, so I see them as book keeping rotations using transformation. Actual mathamaticians will get headaches from some of my repos. You got warned. 
 
 *NB: Politics isn't a prime interest for blogging about, so I'm likely to avoid the subject here.*
 
