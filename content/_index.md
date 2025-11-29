@@ -8,6 +8,8 @@ A revamped version of my original site. Upgrades! Now using Hugo as I was findin
 
 ## About me
 
+Currently (October-November 2025) exploring Linux and AI again. This time, I'm exploring ideas quite rapidly with the help of Claude Code and other models, including Lm studio models.
+
  I began learning to code in 2010, in and around a day job that needed. The languages were Visual Basic and SQL. Persistance and exploration meant, that despite starting approximately 15 years later than most programmers I've spoken with since, I managed to turn it into my day job since roughly 2014.
 
 I'm not a terribly diligent Github contributor as most code is actually for my job. However, I intend to post gists, odd bits of exploration, stories and articles here.
