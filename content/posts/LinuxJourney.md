@@ -112,4 +112,4 @@ Separate Posts (To be Continued)...
 
 ### Memory Graph {#memory-graph}
 
-![Memory Graph Visualisation](https://soulfiremage.github.io/posts/image-1.png)
+![Memory Graph Visualisation](https://soulfiremage.github.io/posts/image-1.jpg)
