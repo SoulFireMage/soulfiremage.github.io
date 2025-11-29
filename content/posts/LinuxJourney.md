@@ -63,7 +63,7 @@ Experimental: DiscoRL Meta-Learner
 * Built the **Services Dashboard** (Flask \+ PostgreSQL, port 5001\) to track all running services  
 * Added Docker services using port range 889x pattern  
 * Set up **Neo4j** (port 7474/7687) for graph database experiments  
-* Built **OpenMemory** system — graph-based memory for Claude instances with MCP integration (\~2 hours, collaborative build)  
+* Built **OpenMemory** system — graph-based memory for Claude instances with MCP integration (~2 hours, collaborative build) - [Memory Graph screenshot below](#memory-graph)
 * Created **Memory Graph visualisation** (port 8893\) <-This was I mentioned earlier
 * Set up **RLM** (Recursive Language Model) for infinite context processing <- I got an MCP for this, but I've yet to prove it works. I'm a magpie, sue me!
 * Created **CLAUDE.md** multi-machine configuration system  
@@ -106,4 +106,10 @@ Separate Posts (To be Continued)...
 **ConceptExplorer** — "Meanwhile I was building this graph-walk thing for exploring latent structure, which I showed to Kimi with zero context while tired..."  
 **Algebra-GAN** — "...and 4 hours later two AIs had designed, implemented, debugged, and analysed a system that learns non-commutative magmas from MNIST, discovering that the 'natural algebra' of handwritten digits is a 9-shaped attractor basin"
 
-\*It should be noted, removing roadblocks in the manner described has a different set of consequences. If I was intending to be a Linux admin, or a lead engineer in a Linux focussed dev team, this is NOT the route I recommend as using AI to discover and run commands avoids something deeply crucial: muscle memory and mental memory for solving the problems encountered in this domain.![alt text](https://soulfiremage.github.io/posts/image.png)
+*It should be noted, removing roadblocks in the manner described has a different set of consequences. If I was intending to be a Linux admin, or a lead engineer in a Linux focussed dev team, this is NOT the route I recommend as using AI to discover and run commands avoids something deeply crucial: muscle memory and mental memory for solving the problems encountered in this domain.
+
+![Services Dashboard](https://soulfiremage.github.io/posts/image.png)
+
+### Memory Graph {#memory-graph}
+
+![Memory Graph Visualisation](https://soulfiremage.github.io/posts/image-1.png)
