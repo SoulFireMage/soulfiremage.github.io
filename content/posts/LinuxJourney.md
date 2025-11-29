@@ -1,4 +1,9 @@
-  
+---
+title: "Linux Journey - New Linux User Adventures"
+date: 2025-11-29T11:00:00Z
+draft: false
+---
+
 **New Linux user adventures \- October 9 \- November 29th 2025**
 
 **AI as an amplifier and roadblock remover\***
