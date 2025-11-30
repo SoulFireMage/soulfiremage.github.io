@@ -19,19 +19,19 @@ It was useful to me, at least! :)
 
 ### How to Reproduce
 
-1.  Use **LM Studio** (or Ollama) and obtain the following model:
+1. Use **LM Studio** (or Ollama) and obtain the following model:
     <https://huggingface.co/MarselM/C2S-Scale-Gemma-2-27B-GGUF>
-2.  Setup the LM Studio server (see screenshot below).
-3.  Feed the API to an agentic LLM (like Claude Code or Interpreter).
+2. Setup the LM Studio server (see screenshot below).
+3. Feed the API to an agentic LLM (like Claude Code or Interpreter).
 
-![LM Studio Setup](https://soulfiremage.github.io/posts/lmstudio.png)
+![LM Studio Setup](#lm-studio)
 
 ### The Experiment
 
 I presented Claude with the challenge. I gave it the local server address and the documentation for the model.
 
 **My Prompt:**
-> "Hi Claude, I've got lm studio and a model called c2s-scale-gemma-2-27b whose output I can't use... my lm studio is here and running: http://192.168.0.122:1234. My challenge for you is using this information, talk to her and find a question to ask her and then interpret the results. It's a hard challenge as you'll get strings back that aren't english... my theory is an ordinary user can borrow your intelligence to make sense of the narrow intelligence of a hyper specialised llm. Think you are up for it?"
+> "Hi Claude, I've got lm studio and a model called c2s-scale-gemma-2-27b whose output I can't use... my lm studio is here and running: <http://192.168.0.122:1234>. My challenge for you is using this information, talk to her and find a question to ask her and then interpret the results. It's a hard challenge as you'll get strings back that aren't english... my theory is an ordinary user can borrow your intelligence to make sense of the narrow intelligence of a hyper specialised llm. Think you are up for it?"
 
 **The Exchange (Claude interacting with Local LLM):**
 
@@ -76,6 +76,7 @@ Claude's conclusion:
 This is remarkable! Look at what it generated for a pancreatic beta cell:
 
   Key beta cell markers it produced:
+  
   - INS - Insulin! The #1 most expressed gene - exactly correct for beta cells
   - IAPP - Islet amyloid polypeptide (amylin) - co-secreted with insulin
   - PCSK1N - Prohormone convertase involved in insulin processing
