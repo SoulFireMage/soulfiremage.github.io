@@ -1,5 +1,5 @@
 ---
-title: "CareerArticle"
+title: "Career Article"
 date: 2025-03-20T16:42:55Z
 draft: true
 ---

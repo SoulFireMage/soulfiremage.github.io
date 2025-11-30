@@ -14,9 +14,7 @@ So, I have two paths I can take in having a blog - learn a blogging framework or
 
 The rest of the site - the old static links still require updating and changing at time of writing. *As I'm not a regular blogger, this may take a variable amount of time!*
 
-The advent of LLMs and the various tools that accompany them has opened up a lot of possibilities for many people, even as many decry many aspects of these technologies. Environmental impact, moral issues around training materials and copyright, use of "slop" and using AI for misinformation. Over time I may have a shot at addressing these myself. However, my primary interest isn't really in the use of the tech, even though they make excellent tools when used with discernment.
-
-No, my real interest is in the technical and ethical considerations around whether we may end up creating digital minds, actual self aware entities. I'm slightly optimistic that not only can we, but that we may do so without even realising.
+The advent of LLMs and the various tools that accompany them has opened up a lot of possibilities for many people. Folks interested in many things can try a lot more ideas out, fast - this may be a blessing and a curse all at once. The curse is simply commitment: if it doesn't take a lot to explore an idea, will it mean a lot to the person exploring? Something to consider. The blessing is merely speed, convenience, flexibility.
 
 Self awareness is a slippery concept to even prove or test in any way. We already have models that can read between the lines, suss out implications and motives in text, detect a range of objects and details in videos, decieve us and much more. In online debates and discussions I watch people shift the goalposts on what they think would qualify as self aware - when in fact, none of us have much of a clue.
 

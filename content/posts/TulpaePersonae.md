@@ -1,5 +1,5 @@
 ---
-title: "TulpaePersonae"
+title: "Tulpae Personae"
 date: 2025-01-11T10:30:39Z
 draft: true
 ---
