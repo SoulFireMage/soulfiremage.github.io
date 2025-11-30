@@ -1,14 +1,52 @@
 baseURL = 'https://soulfiremage.github.io/'
 languageCode = 'en-us'
 title = 'Richard Griffiths - Home'
-theme = 'soulfire'
+theme = 'PaperMod'
 
 [permalinks]
-  posts = '/posts/:filename/'
+  posts = '/posts/:contentbasename/'
+
+[params]
+  # PaperMod specific settings
+  env = "production"
+  description = "Richard Griffiths - Software Developer, Writer, Explorer of Ideas"
+  author = "Richard Griffiths"
+  
+  # Home page profile
+  [params.profileMode]
+    enabled = true
+    title = "Richard Griffiths"
+    subtitle = "Software Developer | Writer | Explorer of Ideas"
+    imageUrl = "/images/wing-left.png"
+    imageWidth = 120
+    imageHeight = 120
+    
+  # Show reading time, word count, etc.
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  
+  # Table of contents
+  ShowToc = true
+  TocOpen = false
+  
+  # Home info mode (alternative to profile mode)
+  [params.homeInfoParams]
+    Title = "Welcome"
+    Content = "Software Developer, Writer, and Explorer of Ideas"
+  
+  # Social icons
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/SoulFireMage"
 
 [menu]
   [[menu.main]]
-    name = 'About Me'
+    name = 'Home'
     url = '/'
     weight = 1
   [[menu.main]]
@@ -20,13 +58,17 @@ theme = 'soulfire'
     url = '/stories'
     weight = 3
   [[menu.main]]
-    name = 'Link Collection'
+    name = 'Links'
     url = '/links'
     weight = 4
   [[menu.main]]
     name = 'Political Analysis Tool'
     url = '/political-analysis-tool'
     weight = 5
+  [[menu.main]]
+    name = 'Search'
+    url = '/search'
+    weight = 6
 
 [markup]
   [markup.goldmark]
@@ -35,3 +77,8 @@ theme = 'soulfire'
   [markup.highlight]
     style = 'monokai'
     lineNos = true
+    noClasses = false
+
+# Enable search
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
