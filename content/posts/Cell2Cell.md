@@ -35,7 +35,7 @@ I presented Claude with the challenge. I gave it the local server address and th
 
 **The Exchange (Claude interacting with Local LLM):**
 
-```text
+```
 ● This is a fascinating challenge! Let me investigate what this specialized model does and then try to communicate with it.
 
 ● Fetch([https://huggingface.co/MarselM/C2S-Scale-Gemma-2-27B-GGUF](https://huggingface.co/MarselM/C2S-Scale-Gemma-2-27B-GGUF))
@@ -71,6 +71,50 @@ Let me try a neuron and also ask for tissue prediction:
 ● Incredibly specific and correct! GAD1 and GAD2 are the key markers for GABAergic (inhibitory) neurons. The model correctly identified not just "neuron" but the specific subtype!
 ```
 
+Claude's conclusion:
+
+This is remarkable! Look at what it generated for a pancreatic beta cell:
+
+  Key beta cell markers it produced:
+  - INS - Insulin! The #1 most expressed gene - exactly correct for beta cells
+  - IAPP - Islet amyloid polypeptide (amylin) - co-secreted with insulin
+  - PCSK1N - Prohormone convertase involved in insulin processing
+  - CPE - Carboxypeptidase E - insulin processing enzyme
+  - CHGA/CHGB - Chromogranins - neuroendocrine markers
+  - SCG5 - Secretogranin - another neuroendocrine marker
+  - SCGN - Secretagogin - calcium sensor in beta cells
+  - SST - Somatostatin (interesting - typically delta cells, but found in some contexts)
+
+  It also included many mitochondrial genes (MT-*) which makes sense - beta cells are highly metabolically active
+  for glucose sensing!
+
+  ---
+  ```
+  Summary: Challenge Complete! 🎯
+
+  Your theory is validated. Here's what we demonstrated:
+
+  | Query Type           | Input                   | Model Response                                 |
+  |----------------------|-------------------------|------------------------------------------------|
+  | Cell type prediction | CD8 T-cell genes        | "natural killer cell"                          |
+  | Cell type prediction | B-cell markers          | "naive B cell"                                 |
+  | Cell type prediction | Macrophage markers      | "myeloid cell"                                 |
+  | Cell type prediction | Neuron markers (GAD1/2) | "GABAergic neuron"                             |
+  | Tissue prediction    | Hepatocyte markers      | "liver"                                        |
+  | Generation task      | "pancreatic beta cell"  | Generated INS, IAPP, CPE... (valid signature!) |
+
+  The model speaks "gene language" - it expects space-separated gene symbols ordered by expression level, and
+  responds with cell type classifications, tissue predictions, or can generate synthetic cell signatures.
+
+  An ordinary user could absolutely use me to:
+  1. Translate their biological question into the right gene symbols
+  2. Format the query correctly for the C2S model
+  3. Interpret whether the output makes biological sense
+
+  This is a perfect example of using general intelligence (me) to bridge the gap to narrow/specialized intelligence
+  (the scRNA-seq model). Want to try any other cell types or tasks?
+  ```
+
 ### LM Studio
 
-![LM Studio](https://soulfiremage.github.io/posts/lmstudio.png)
+![LM Studio](https://soulfiremage.github.io/posts/lmstudio.jpg)
