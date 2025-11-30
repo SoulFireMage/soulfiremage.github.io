@@ -3,15 +3,24 @@
 ## Quick Reference: Common Commands
 
 ### Adding New Content
-1. Create new .md files in the appropriate directory:
-   ```
-   content/posts/your-new-post.md      # For blog posts
-   content/stories/your-story.md       # For stories
-   content/non-fiction/your-article.md # For non-fiction
-   ```
-   Hugo will automatically detect new .md files - no extra commands needed!
 
-2. Include this front matter at the top of new files:
+**Using Hugo CLI (recommended):**
+```powershell
+hugo new content/posts/YourPostName.md
+hugo new content/stories/YourStory.md
+hugo new content/non-fiction/YourArticle.md
+```
+This creates the file with front matter from your archetype template automatically!
+
+**Manual method:** Create new .md files directly in the appropriate directory:
+```
+content/posts/your-new-post.md      # For blog posts
+content/stories/your-story.md       # For stories
+content/non-fiction/your-article.md # For non-fiction
+```
+Hugo will automatically detect new .md files - no extra commands needed!
+
+**Front matter** (added automatically by `hugo new`, or include manually):
    ```yaml
    ---
    title: "Your Title Here"
