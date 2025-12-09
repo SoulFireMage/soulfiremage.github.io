@@ -1,5 +1,5 @@
 ---
-title: "Homotopy_and_Proteins"
+title: "Homotopy and Proteins"
 date: 2025-12-09T19:16:54Z
 draft: true
 ---
