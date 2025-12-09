@@ -1,0 +1,313 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{booktabs}
+
+\geometry{margin=1in}
+
+\title{\textbf{Topological Invariants of Sequence-Derived Constraint Structures:}\\
+A Hypothesis for Predicting Protein Function Without Structural Simulation}
+
+\author{Richard Griffiths\\ Independent Researcher}
+
+\date{December 2025 -- Version 2.1}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Predicting protein function typically requires either full 3D structure prediction or comparison with known homologues. Both approaches treat function as emergent from folding. This paper presents a testable hypothesis: \emph{protein functional class is encoded in topological invariants of the constraint structure that sequences specify}---not in the sequence string itself, but in the pattern of coevolutionary couplings, contact requirements, and folding pathway restrictions that any viable sequence must satisfy. If correct, functional classification could be performed without structural simulation, offering significant computational savings. We provide concrete definitions of candidate invariants, clarify what is meant by ``constraint structure,'' address known biological challenges (sequence-divergent homologues, intrinsically disordered proteins, convergent evolution), propose operational experimental criteria, and compare against modern baselines including transformer-based methods. The objective is a falsifiable framework suitable for computational biology groups to evaluate.
+\end{abstract}
+
+\section{Introduction}
+
+Contemporary protein function prediction relies on two paradigms:
+\begin{enumerate}[label=(\roman*)]
+    \item inferring function \emph{via structure}, using methods such as AlphaFold \cite{alphafold} or ESMFold \cite{esmfold}; or
+    \item inferring function via sequence homology or learned embeddings \cite{esm2}.
+\end{enumerate}
+
+Both approaches have achieved remarkable success. Structure-based methods now approach experimental accuracy; transformer-based sequence models match or exceed homology methods on many functional classification tasks. Yet both treat function as information that becomes accessible only after geometric inference or high-dimensional embedding.
+
+This paper explores whether a \emph{third} approach is viable: extracting topological invariants directly from sequence-derived constraint structures, bypassing both explicit structure prediction and black-box embedding.
+
+\subsection{The Central Reframing}
+
+An earlier version of this hypothesis proposed that invariants exist ``at sequence level.'' This framing is inadequate. Protein families such as TIM barrels exhibit conserved structure and function despite sequence identity below 10\% \cite{timbarrel}. If invariants lived in the sequence string, such divergence would destroy them.
+
+The refined hypothesis is that invariants live not in the sequence itself, but in the \textbf{constraint structure} the sequence specifies: the pattern of ``what must interact with what'' that any viable sequence for a given fold or function must satisfy. Two sequences with 10\% identity can encode \emph{isomorphic constraint graphs}. The letters diverged; the topology of constraints did not.
+
+\paragraph{Operational definition.}  
+Because constraint structure is not directly observable, we define it through empirical proxies: coevolutionary coupling matrices, predicted contact maps, k-mer adjacency complexes, or attention-derived interaction graphs. The hypothesis does not rely on any specific extraction method; it concerns the invariants preserved across them.
+
+\section{Candidate Invariants}
+
+We propose four candidate invariant families, each computable from sequence-derived objects without explicit 3D structure prediction.
+
+\subsection{Coevolutionary Coupling Topology}
+
+Direct Coupling Analysis (DCA) \cite{dca} extracts pairwise dependencies among residue positions. The coupling matrix $J_{ij}$ captures compatibility constraints needed to preserve function.
+
+\textbf{Invariant candidates:}
+\begin{itemize}
+    \item Persistent homology of the thresholded coupling graph
+    \item Betti numbers $\beta_0$, $\beta_1$, $\beta_2$
+    \item Spectral properties of the coupling Laplacian
+\end{itemize}
+
+\textbf{Prediction:} TIM barrel sequences, despite $<$10\% sequence identity, should exhibit quasi-isometric coupling graphs.
+
+\subsection{k-mer Simplicial Complex}
+
+Construct a simplicial complex where vertices represent codons or k-mers, and simplices reflect co-occurrence or adjacency patterns.
+
+\textbf{Invariant candidates:}
+\begin{itemize}
+    \item Persistent homology barcodes
+    \item Euler characteristic
+    \item Clique dimension distribution
+\end{itemize}
+
+This approach captures ``local grammar'' independent of global alignment.
+
+\subsection{Predicted Contact Map Topology}
+
+Coevolution-derived contact predictions \cite{contactpred} can be treated as graphs prior to geometric embedding.
+
+\textbf{Invariant candidates:}
+\begin{itemize}
+    \item Graph homology
+    \item Degree and clustering spectra
+    \item Modularity and community structure
+\end{itemize}
+
+\subsection{Attention Topology from Learned Models}
+
+Transformer models such as ESM-2 \cite{esm2} induce attention matrices that implicitly encode constraints.
+
+\textbf{Invariant candidates:}
+\begin{itemize}
+    \item Persistent homology of attention graphs across layers
+    \item Information-theoretic measures of attention flow
+\end{itemize}
+
+If ESM-2's performance reflects its capacity to learn constraint topology, making these invariants explicit should explain its strengths and weaknesses.
+
+\section{Addressing Biological Challenges}
+
+\subsection{Sequence-Divergent Homologues}
+
+\textbf{Challenge:} TIM barrels share fold and function despite extreme sequence divergence \cite{timbarrel}.
+
+\textbf{Response:} This is \emph{expected} under the constraint-topology framing. Any sequence that satisfies the barrel's interaction constraints will fold appropriately. Constraint topology, not letters, is conserved.
+
+\textbf{Test:} Coupling topology across divergent TIM barrels should cluster tightly.
+
+\subsection{Intrinsically Disordered Proteins}
+
+\textbf{Challenge:} Approximately 30\% of eukaryotic proteins are intrinsically disordered \cite{idp}.
+
+\textbf{Response:} IDPs should form a distinct invariant class with sparse, high-entropy constraint structures. Their separation in invariant space supports, rather than contradicts, the framework.
+
+\subsection{Convergent Evolution}
+
+\textbf{Challenge:} Different global folds can yield the same catalytic function \cite{convergent}.
+
+\textbf{Response:} Global invariants will fail in these cases. Constraint topology is more suited to functions tied to global architecture (e.g., channels, barrels, coiled-coils). For convergent enzymes, local invariants around active-site neighborhoods may be more appropriate.
+
+\textbf{Explicit limitation:} The hypothesis is not expected to capture functions realizable via diverse global architectures.
+
+\section{Functorial Framing}
+
+We model the biological expression chain as:
+\[
+\mathcal{S} \xrightarrow{F_1} \mathcal{M} \xrightarrow{F_2} \mathcal{A} 
+\xrightarrow{F_3} \mathcal{P} \xrightarrow{F_4} \mathcal{Q},
+\]
+where $\mathcal{S}$ = sequences, $\mathcal{M}$ = mRNA, $\mathcal{A}$ = amino acid chains, $\mathcal{P}$ = folded structures, and $\mathcal{Q}$ = quaternary assemblies.
+
+An invariant $I$ satisfies $I(F_i(x)) = I(x)$ for all $x$.
+
+\subsection{The Kernel of Folding}
+
+Two sequences lie in the kernel of the composed functor $F = F_4 \circ F_3 \circ F_2 \circ F_1$ if they fold to functionally equivalent proteins. Neutral evolution provides natural samples of $\ker(F)$.
+
+\textbf{Concrete example:}  
+TIM barrel sequences with 90\% divergence but preserved fold inhabit the same kernel class. Their constraint structures should therefore exhibit topological equivalence.
+
+\subsection{Adjoint-Like Behavior}
+
+If an approximate left adjoint to $F$ exists, it would correspond to ``free'' generation of sequences from functional specifications---consistent with the success of inverse folding models such as ProteinMPNN \cite{inversefolding}.
+
+\section{Experimental Program}
+
+\subsection{Phase 1: Algebraic Structure Discovery}
+
+Train a regularised sequence-to-function model. Extract learned operations and test for:
+\begin{itemize}
+    \item closure,
+    \item associativity,
+    \item existence of a small generating set.
+\end{itemize}
+
+\subsection{Phase 2: Invariant Extraction and Clustering}
+
+Compute topological features from:
+\begin{enumerate}
+    \item DCA coupling topology,
+    \item k-mer complexes,
+    \item attention-derived graphs,
+    \item delay embeddings.
+\end{enumerate}
+
+Validate by consistency, discriminability, and mutation stability.
+
+\subsection{Phase 3: Predictive Validation}
+
+Compare invariant-based classification against:
+\begin{itemize}
+    \item random baseline,
+    \item CNN + BLAST,
+    \item ESM-2 embeddings,
+    \item AF2-derived structure-based annotation.
+\end{itemize}
+
+\textbf{Explainability criterion:}  
+Correlating invariants with where ESM-2 succeeds or fails supports the claim even without exceeding ESM-2 accuracy.
+
+\subsection{Phase 4: Synthetic Biology Validation}
+
+Synthetic proteins offer a controlled environment. Divergence between synthetic and natural families illuminates what biological constraints the model captures.
+
+\section{Falsification Criteria}
+
+The hypothesis is unsupported if:
+\begin{enumerate}
+    \item learned operations do not compress into an algebraic structure,
+    \item topological features do not cluster by function,
+    \item invariants are unstable under neutral mutations,
+    \item predictive performance does not exceed CNN + BLAST,
+    \item no relationship with ESM-2’s internal structure emerges.
+\end{enumerate}
+
+Each failure mode yields scientifically meaningful information.
+
+\section{Relationship to Existing Work}
+
+The hypothesis connects to:
+\begin{itemize}
+    \item structure prediction (AlphaFold, ESMFold),
+    \item transformer embeddings (ESM-2),
+    \item topological data analysis \cite{persistence},
+    \item coevolutionary methods \cite{dca},
+    \item algebraic frameworks in biology \cite{baez}.
+\end{itemize}
+\subsection*{Recent Related Work}
+
+Recent advances in sequence-to-function prediction further motivate the search for
+interpretable, topology-aware approaches. Several 2024--2025 methods integrate 
+structural or contact-derived information to improve functional classification.
+DPFunc \cite{dpfunc2025} incorporates domain-guided structural features and 
+demonstrates that purely sequence-based models remain limited in capturing 
+functionally relevant constraints. Similarly, TAWFN \cite{tawfn2024} and related 
+deep-learning frameworks show improved performance when auxiliary structural priors are introduced. 
+
+Meanwhile, contact prediction from sequence alone continues to advance through 
+graph-based and attention-based architectures such as PCP-GC-LM \cite{pcpgclm2024} 
+and Attention-UNet models \cite{unetcontact2024}, which infer residue--residue 
+interaction patterns without requiring solved structures. These developments 
+support the central premise of this work: that \emph{sequence-derived constraint 
+information carries significant functional signal}. 
+
+However, none of these approaches attempt to extract or characterise the 
+\emph{topological invariants} of these constraint structures. The present 
+hypothesis differs in proposing that such invariants may be both 
+function-determining and preserved across extreme sequence divergence, offering a 
+conceptually unified and potentially more interpretable route to functional 
+prediction.
+
+\section{Implications if Validated}
+
+\subsection{Computational Efficiency}
+
+Invariant extraction is $O(L)$ or $O(\text{MSA size})$, avoiding expensive geometric inference.
+
+\subsection{Interpretability}
+
+Topological invariants are mathematically characterisable, enhancing transparency.
+
+\subsection{Protein Design}
+
+Understanding the invariant--function map enables rational design by specifying desired invariants.
+
+\subsection{Generalisation}
+
+The constraint-topology lens may apply to regulatory networks, metabolic pathways, developmental constraints, and neural circuits.
+
+\section{Conclusion}
+
+We present a refined, testable hypothesis: protein functional class is encoded in topological invariants of sequence-derived constraint structures. These invariants can be preserved across extreme sequence divergence and may explain the success of coevolutionary and transformer-based models. Regardless of outcome, investigating this hypothesis clarifies the role of topology in biological information processing and may inform new computational strategies for protein science.
+
+\section*{Acknowledgments}
+
+This version benefited from critiques that strengthened invariant definitions, clarified biological limitations, and sharpened the experimental program.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{alphafold}
+Jumper, J., et al. ``Highly accurate protein structure prediction with AlphaFold.'' \emph{Nature}, 596:583--589, 2021.
+
+\bibitem{esmfold}
+Lin, Z., et al. ``Evolutionary-scale prediction of atomic-level protein structure with a language model.'' \emph{Science}, 379:1123--1130, 2023.
+
+\bibitem{esm2}
+Lin, Z., et al. ``Language models of protein sequences at the scale of evolution enable accurate structure prediction.'' \emph{bioRxiv}, 2022.
+
+\bibitem{timbarrel}
+Nagano, N., Orengo, C.A., \& Thornton, J.M. ``One fold with many functions: the evolutionary relationships between TIM barrel families.'' \emph{J.\ Mol.\ Biol.}, 321:741--765, 2002.
+
+\bibitem{dca}
+Morcos, F., et al. ``Direct-coupling analysis of residue coevolution captures native contacts across many protein families.'' \emph{PNAS}, 108:E1293--E1301, 2011.
+
+\bibitem{contactpred}
+Jones, D.T., et al. ``MetaPSICOV: combining coevolution methods for accurate prediction of contacts and long range hydrogen bonding.'' \emph{Bioinformatics}, 31:999--1006, 2015.
+
+\bibitem{idp}
+Dunker, A.K., et al. ``Intrinsically disordered protein.'' \emph{J.\ Mol.\ Graph.\ Model.}, 19:26--59, 2001.
+
+\bibitem{convergent}
+Doolittle, R.F. ``Convergent evolution: the need to be explicit.'' \emph{Trends Biochem.\ Sci.}, 19:15--18, 1994.
+
+\bibitem{inversefolding}
+Dauparas, J., et al. ``Robust deep learning-based protein sequence design using ProteinMPNN.'' \emph{Science}, 378:49--56, 2022.
+
+\bibitem{ripser}
+Bauer, U. ``Ripser: efficient computation of Vietoris-Rips persistence barcodes.'' \emph{J.\ Appl.\ Comput.\ Topol.}, 5:391--423, 2021.
+
+\bibitem{persistence}
+Carlsson, G. ``Topology and data.'' \emph{Bull.\ Amer.\ Math.\ Soc.}, 46:255--308, 2009.
+
+\bibitem{baez}
+Baez, J.C. \& Pollard, B.S. ``A compositional framework for reaction networks.'' \emph{Rev.\ Math.\ Phys.}, 29:1750028, 2017.
+
+\bibitem{dpfunc2025}
+Wang, X., et al. ``DPFunc: accurately predicting protein function via deep learning with domain-guided structure information.'' \emph{Nature Communications}, 2025.
+
+\bibitem{tawfn2024}
+Meng, Z., et al. ``TAWFN: a deep learning framework for protein function prediction.'' \emph{Bioinformatics}, 40(10):btae571, 2024.
+
+\bibitem{pcpgclm2024}
+Ouyang, Q., et al. ``PCP-GC-LM: Single-sequence-based protein contact prediction via graph-convolutional language models.'' \emph{BMC Bioinformatics}, 25:448, 2024.
+
+\bibitem{unetcontact2024}
+Zhang, Y., et al. ``Using Attention-UNet Models to Predict Protein Contact Maps.'' \emph{Journal of Computational Biology}, 2024.
+
+\end{thebibliography}
+
+\end{document}
