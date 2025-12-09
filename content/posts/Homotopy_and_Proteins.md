@@ -22,6 +22,6 @@ So, we took this idea, whilst eating chicken soup, and mulled over the least ene
 
 So, the paper is provided as an original source document and a PDF. At one point I did consider publishing somewhere more than my own website, but seems credentials carry more weight so for now, I'll publish here and share directly. If it happens to land conceptually somewhere useful to a working researcher, I'd be glad to hear of it. I've attempted to give credit where it's due in the paper.
 
-[Homotopic Invariant in Protein Sequences PDF](content/Papers/Homotopical_Invariants_in_Protein_Sequences%202.1.pdf)
+[Homotopic Invariant in Protein Sequences PDF](/Papers/Homotopical_Invariants_in_Protein_Sequences_2.1.pdf)
 
-[Homotopic Invariant in Protein Sequences TeX version](content/Papers/Homotopical%20Invariants%20in%20Protein%20Sequences%202.1.tex)
+[Homotopic Invariant in Protein Sequences TeX version](/Papers/Homotopical%20Invariants%20in%20Protein%20Sequences%202.1.tex)
