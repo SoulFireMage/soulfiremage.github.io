@@ -3,7 +3,7 @@ title: "Link Collection"
 date: 2025-12-1
 draft: false
 ---
-I jump around interests a lot, returning regularly to different things. Note on the F# - I haven't used it for years, because it's not applicable at work, and I keep doing a lot in python at home. Too much AI stuff uses python!
+I jump around interests a lot, returning regularly to different things. Note on the F# - I haven't used it for years, because it's not applicable at work, and I keep doing a lot in python at home. Too much AI stuff uses python! 
 
 ## Katiya Starship
 She's eccentric, throws abstract math around like n-dimensional throwing stars and winds up LLMs. Work in progress Dec 2025. She appears to understand a lot but it IS conceptual.
