@@ -1,6 +1,6 @@
 ---
 title: "Link Collection"
-date: 2025-12-1
+date: 2025-12-11
 draft: false
 ---
 I jump around interests a lot, returning regularly to different things. Note on the F# - I haven't used it for years, because it's not applicable at work, and I keep doing a lot in python at home. Too much AI stuff uses python! 
