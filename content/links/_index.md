@@ -1,9 +1,13 @@
 ---
 title: "Link Collection"
-date: 2023-11-22
+date: 2025-12-1
 draft: false
 ---
-Thanks to a full time coding job, I find I rarely spend time coding outside of work, apart from the odd machine learning course. Maybe someday that will change!
+I jump around interests a lot, returning regularly to different things. Note on the F# - I haven't used it for years, because it's not applicable at work, and I keep doing a lot in python at home. Too much AI stuff uses python!
+
+## Katiya Starship
+She's eccentric, throws abstract math around like n-dimensional throwing stars and winds up LLMs. Work in progress Dec 2025. She appears to understand a lot but it IS conceptual.
+- [Katiay McKerry Starship's site](https://soulfiremage.github.io/Katiya_Starship/posts/)
 
 ## GitHub Repositories
 
@@ -11,7 +15,8 @@ Thanks to a full time coding job, I find I rarely spend time coding outside of w
 - [First ever machine learning](https://github.com/SoulFireMage/Digits-Recognisor-Demo) - F# Manhatten distance digits recogniser
 
 ## Useful Resources
-
+- [Lean - For Maths](https://lean-lang.org/learn/)
+- [Deep Learning AI](https://learn.deeplearning.ai/)
 - [F# Foundation](https://fsharp.org/)
 - [.NET Documentation](https://docs.microsoft.com/en-us/dotnet/)
 - [Monogame Framework](https://www.monogame.net/)
