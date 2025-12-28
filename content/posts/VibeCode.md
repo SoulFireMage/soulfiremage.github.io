@@ -3,10 +3,10 @@ title: "VibeCode"
 date: 2025-12-28T12:37:03Z
 draft: true
 ---
+Written by Claude as an answer to a Threads question. This takes my rough threads notes and builds it out to a more detailed answer.
 
 # Top-Down Vibe Coding: A Planning-First Approach
 
-## Why This Matters
 
 Vibe coding's failure mode is seductive: you describe what you want, the AI produces code, it *seems* to work, and then three modules later everything is tangled spaghetti that fights itself. The problem isn't the AI—it's skipping the thinking that should precede the coding.
 
