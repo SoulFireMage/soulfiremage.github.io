@@ -1,3 +1,6 @@
+Not to be taken seriously. It's some fun had with AI. 
+
+Honestly. If you can't tell by now, don't bother with the paper, I was playing about with ideas. There is not announce of credibility in this, just enthusiasm for an idea at the time. To be removed. 🤣🤣 
 ---
 title: "Homotopy and Proteins"
 date: 2025-12-09T19:16:54Z
