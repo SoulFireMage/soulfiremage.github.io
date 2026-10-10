@@ -1,8 +1,13 @@
 ---
-title: "AGISteps"
-date: 2025-01-30T08:20:50Z
+title: AGISteps
+date: 2025-01-30T08:20:00
 draft: true
+description: Total ramble on AGI - founded on absolutely nothing, read at your risk
+tags: []
+categories: []
+authors: []
 ---
+
 # The Path to Computational Sapience: A Revised Technical Framework
 
 ## What This Is (And Isn't)
