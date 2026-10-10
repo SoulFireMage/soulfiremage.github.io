@@ -16,6 +16,8 @@ https://soulfiremage.github.io/admin/ runs [Sveltia CMS](https://sveltiacms.app/
 
 Ignore the **Sign In with GitHub** button. It needs an OAuth relay server, which this site doesn't run.
 
+A live word count appears at the bottom right while you type in the body (code, links, HTML and shortcodes are not counted).
+
 The body editor opens in raw Markdown, because posts contain inline HTML, shortcodes and LaTeX that the rich-text mode could mangle. You can switch modes for each edit. Uploaded images go to `static/images/` and are served from `/images/...`.
 
 ## 2. Edit buttons on every page
