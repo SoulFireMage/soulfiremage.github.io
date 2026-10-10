@@ -1,0 +1,52 @@
+{{- /*
+  Owner-only edit buttons. Hidden for normal visitors; they appear once this
+  browser has opened /admin/ or visited any page with ?edit=on (?edit=off hides it).
+  "Edit here" opens the page in the site editor (/admin/); "GitHub" opens
+  GitHub's own editor, which uses your existing github.com login.
+  Lives in extend_head (not the footer) because PaperMod caches the footer per page kind.
+*/ -}}
+{{- $repo := "https://github.com/SoulFireMage/soulfiremage.github.io" }}
+{{- $path := "" }}
+{{- $cmsLink := "" }}
+{{- with .File }}
+  {{- $path = .Path | replaceRE `\\` "/" }}
+  {{- $section := index (split $path "/") 0 }}
+  {{- if and (in (slice "posts" "stories" "non-fiction") $section) (ne .LogicalName "_index.md") }}
+    {{- $cmsLink = printf "#/collections/%s/entries/%s" $section .ContentBaseName }}
+  {{- else }}
+    {{- $files := dict "_index.md" "home" "links/_index.md" "links" "posts/_index.md" "posts-index" "stories/_index.md" "stories-index" "non-fiction/_index.md" "non-fiction-index" "political-analysis-tool.md" "political-analysis-tool" }}
+    {{- with index $files $path }}
+      {{- $cmsLink = printf "#/collections/pages/entries/%s" . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $links := slice }}
+{{- with $cmsLink }}{{ $links = $links | append (dict "t" "✎ Edit here" "h" (printf "%s%s" ("admin/" | relURL) .) "d" "Edit this page in the site editor") }}{{ end }}
+{{- with $path }}{{ $links = $links | append (dict "t" "GitHub" "h" (printf "%s/edit/master/content/%s" $repo .) "d" "Edit this page's Markdown on GitHub") }}{{ end }}
+{{- $links = $links | append (dict "t" "+ New post" "h" (printf "%s#/collections/posts/new" ("admin/" | relURL)) "d" "Write a new post") }}
+<style>
+  #sfm-edit { position: fixed; left: 16px; bottom: 16px; z-index: 100; display: flex; gap: 6px; flex-wrap: wrap; font-size: 14px; }
+  #sfm-edit a { padding: 6px 12px; border-radius: 999px; background: var(--primary); color: var(--theme); box-shadow: 0 2px 8px rgba(0,0,0,.25); text-decoration: none; }
+  #sfm-edit a:hover { opacity: .85; }
+</style>
+<script>
+  (function () {
+    try {
+      var p = new URLSearchParams(location.search).get('edit');
+      if (p === 'on') localStorage.setItem('sfm-editor', '1');
+      if (p === 'off') localStorage.removeItem('sfm-editor');
+      if (!localStorage.getItem('sfm-editor')) return;
+    } catch (e) { return; }
+    var links = {{ $links | jsonify | safeJS }};
+    document.addEventListener('DOMContentLoaded', function () {
+      var bar = document.createElement('div');
+      bar.id = 'sfm-edit';
+      links.forEach(function (l) {
+        var a = document.createElement('a');
+        a.href = l.h; a.title = l.d; a.textContent = l.t;
+        bar.appendChild(a);
+      });
+      document.body.appendChild(bar);
+    });
+  })();
+</script>

@@ -1,0 +1,79 @@
+# Sveltia CMS config — https://sveltiacms.app/en/docs
+# Every save is a commit to master, which triggers the Hugo GitHub Pages build.
+backend:
+  name: github
+  repo: SoulFireMage/soulfiremage.github.io
+  branch: master
+  commit_messages:
+    create: 'Create {{collection}} “{{slug}}” (via site editor)'
+    update: 'Update {{collection}} “{{slug}}” (via site editor)'
+    delete: 'Delete {{collection}} “{{slug}}” (via site editor)'
+    uploadMedia: 'Upload “{{path}}” (via site editor)'
+    deleteMedia: 'Delete “{{path}}” (via site editor)'
+
+site_url: https://soulfiremage.github.io
+display_url: https://soulfiremage.github.io
+logo_url: /images/wing-left.png
+
+media_folder: static/images
+public_folder: /images
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: content/posts
+    create: true
+    slug: '{{slug}}'
+    preview_path: 'posts/{{slug | lower}}/'
+    sortable_fields: [date, title]
+    view_filters:
+      - { label: Drafts, field: draft, pattern: true }
+    fields: &post_fields
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, required: false }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Description, name: description, widget: string, required: false }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: Categories, name: categories, widget: list, required: false }
+      - { label: Authors, name: authors, widget: list, required: false }
+      # Raw Markdown first: posts contain inline HTML, shortcodes and LaTeX,
+      # which a rich-text round trip could mangle. Switch per edit if wanted.
+      - &body { label: Body, name: body, widget: markdown, modes: [raw, rich_text] }
+
+  - name: stories
+    label: Stories
+    label_singular: Story
+    folder: content/stories
+    create: true
+    slug: '{{slug}}'
+    preview_path: 'stories/{{slug | lower}}/'
+    fields: *post_fields
+
+  - name: non-fiction
+    label: Non Fiction
+    label_singular: Article
+    folder: content/non-fiction
+    create: true
+    slug: '{{slug}}'
+    preview_path: 'non-fiction/{{slug | lower}}/'
+    fields: *post_fields
+
+  - name: pages
+    label: Pages
+    files:
+      - { label: Home, name: home, file: content/_index.md, fields: [{ label: Title, name: title, widget: string }, { label: Date, name: date, widget: datetime, required: false }, { label: Draft, name: draft, widget: boolean, required: false }, *body] }
+      - { label: Links, name: links, file: content/links/_index.md, fields: [{ label: Title, name: title, widget: string }, { label: Date, name: date, widget: datetime, required: false }, { label: Draft, name: draft, widget: boolean, required: false }, *body] }
+      - { label: Posts index, name: posts-index, file: content/posts/_index.md, fields: [{ label: Title, name: title, widget: string }, { label: Date, name: date, widget: datetime, required: false }, { label: Draft, name: draft, widget: boolean, required: false }, *body] }
+      - { label: Stories index, name: stories-index, file: content/stories/_index.md, fields: [{ label: Title, name: title, widget: string }, { label: Date, name: date, widget: datetime, required: false }, { label: Draft, name: draft, widget: boolean, required: false }, *body] }
+      - { label: Non-fiction index, name: non-fiction-index, file: content/non-fiction/_index.md, fields: [{ label: Title, name: title, widget: string }, { label: Date, name: date, widget: datetime, required: false }, { label: Draft, name: draft, widget: boolean, required: false }, *body] }
+      - label: Political Analysis Tool
+        name: political-analysis-tool
+        file: content/political-analysis-tool.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Date, name: date, widget: datetime, required: false }
+          - { label: Draft, name: draft, widget: boolean, required: false }
+          - { label: Type, name: type, widget: string }
+          - { label: Description, name: description, widget: string, required: false }
+          - *body
