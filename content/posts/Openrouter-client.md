@@ -1,3 +1,13 @@
+---
+title: OpenRouter client
+date: 2026-10-10T10:05:00
+draft: false
+description: Text and image enabled client for open router byok
+tags: []
+categories: []
+authors: []
+---
+
 ***Open Router PWA client***
 
 New tool built today, completely vibe code on a mobile by Claude Code using Fable. Features a chat history and key storage, locally, and allows you to use all the models available via your openrouter api key. All storage is to your device. 
