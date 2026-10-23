@@ -1,6 +1,6 @@
 ---
 title: "Reading an AI's latent thoughts for 80p"
-date: 2026-10-23T21:00:00+01:00
+date: 2026-10-23T20:30:00+01:00
 draft: false
 description: "I ran Stanford/Together's HybridAgent on trick questions and read its 'latent thoughts' back as text. What the readout shows, and what it hides."
 tags: ["AI", "latent reasoning", "HybridAgent", "experiments"]
@@ -34,13 +34,18 @@ It got 10 of 11 right. The miss was *"How many months of the year have 28 days?"
 
 **Sometimes you can watch a mistake form.** On a geometry problem, a latent stretch reads *"the original circle is x²+y²=25, so x²+y²=25"*, mixing up two sets of coordinates. The written reasoning right after makes the same slip, wanders off, and then recovers. The readout caught the error at source.
 
-**Once, it showed the right answer and the words then threw it away.** On the 28-days question, just before the wrong answer, a latent stretch reads:
+**Once, it looked as if it had the right answer and threw it away. Probably it didn't.** On the 28-days question, just before the wrong answer, a latent stretch reads:
 
 > *"…the only month that has 28 days in a common year is February. but I a leap year, February has 29 days. So, the number would be 1 2 ,"*
 
-The model writes numbers one digit at a time, so "1 2" may well be **12**. The very next written sentence says *"even the shortest months are 30 days long"*, which is false, and it settles on 1.
+The model writes numbers one digit at a time, so "1 2" reads as **12**, the right answer. The very next written sentence says *"even the shortest months are 30 days long"*, which is false, and it settles on 1. My first thought: the latent had it right and the words overrode it.
 
-FOLLOWUP_PLACEHOLDER
+So I asked the same question ten more times. Two things came back:
+
+- **All ten runs were word-for-word identical.** The inspector's default settings make the model fully repeatable, so ten repeats tell you nothing more than one. Testing whether something is a pattern means turning on randomness, which I haven't done yet.
+- **The full trace undercuts my reading.** The *first* latent stretch in that answer says *"I know that a [year] has 1 2 months"*. So "12" was already sitting in the model's working state as "months in a year". The later "the number would be 1 2," is just as plausibly an echo of that as a hidden correct answer. The stretch cuts off right after the digits, so you can't tell which.
+
+That's a useful lesson about this kind of readout in itself: a tantalising fragment, and no way to tell from the readout alone which story it belongs to.
 
 **Some real arithmetic happens in there.** Checking whether 3599 is prime, latent stretches correctly work through *3+5+9+9 = 26* and *359 − 18 = 341*.
 
@@ -62,7 +67,7 @@ The model clearly still knew a bat from a ball, because it solved the problem. T
 
 ## So what?
 
-The pseudo-text is a shadow of the thought, not the thought itself. Where it's clear it can be genuinely revealing, as with the geometry slip and the 28-days "12". But it's clearest exactly where there's least to see: digits and grammar. It's blurriest on the concepts, which is where you'd most want to look.
+The pseudo-text is a shadow of the thought, not the thought itself. Where it's clear it can be genuinely revealing, as with the geometry slip. Where it's fragmentary, as with the 28-days "12", it invites you to read in whatever story you came looking for. And it's clearest exactly where there's least to see: digits and grammar. It's blurriest on the concepts, which is where you'd most want to look.
 
 That matters for the paper's safety pitch, that latent thinking stays inspectable. You can inspect it. You just can't take the readout at its word.
 
