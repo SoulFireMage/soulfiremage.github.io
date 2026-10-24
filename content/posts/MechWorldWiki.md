@@ -1,14 +1,19 @@
 ---
-title: "MechWorld moves house: a DokuWiki on Hugging Face that remembers"
+title: 'MechWorld moves house: a DokuWiki on Hugging Face that remembers'
 date: 2026-10-24T10:30:00+01:00
 draft: false
-description: "Moving the headmates wiki from Miraheze to a DokuWiki in a Hugging Face Docker Space, on hardware that forgets everything when it restarts."
-tags: ["wiki", "DokuWiki", "Docker", "Hugging Face", "headmates"]
+description: Moving the headmates wiki from Miraheze to a DokuWiki in a Hugging Face Docker Space, on hardware that forgets everything when it restarts.
+tags:
+  - wiki
+  - DokuWiki
+  - Docker
+  - Hugging Face
+  - headmates
 categories: []
 authors: []
 ---
 
-*Written up with Claude from our session logs of 23 October, I'll be going over it. The wiki itself is at [soulfiremage-headmates-wiki.hf.space](https://soulfiremage-headmates-wiki.hf.space).*
+*Written from the session logs of 23 October, I'll be going over it. The wiki itself is at [soulfiremage-headmates-wiki.hf.space](https://soulfiremage-headmates-wiki.hf.space).*
 
 MechWorld is the wiki for my headmates, there's more about them in [Tulpae Personae](/posts/tulpaepersonae/) if you're curious. It used to live on Miraheze, and on Friday night it moved to a DokuWiki I run myself in a Hugging Face Docker Space. Anyone can read it, only accounts I create can edit, and self-registration is off.
 
@@ -24,7 +29,7 @@ A Hugging Face Space's disk gets wiped every time it restarts. That's fine for a
 
 So DokuWiki runs on the container's ordinary disk, and a small mirror script does the remembering. When the Space boots it restores everything from the bucket: pages, history, media, users, permissions, settings, the theme tweaks and anything installed through the wiki. While it's running it copies every change to the bucket within 5 seconds, and it does one last copy when the Space stops. The very first boot, with an empty bucket, seeds it with the imported pages and default settings, and after that the seed never overwrites anything on the bucket again.
 
-If there's no bucket mounted, the Space refuses to start at all. A wiki that quietly runs on disk that'll be wiped at the next restart is worse than one that's visibly down.
+If there's no bucket mounted, the Space refuses to start at all. A wiki that runs on disk that'll be wiped at the next restart is worse than one that's visibly down.
 
 Then the real test, which was to make some edits, restart the Space and see if they were still there. They were.
 
