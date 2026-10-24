@@ -3,12 +3,17 @@ title: "Talk to a Cell: Cell2Sentence for folks who aren't biologists"
 date: 2026-10-24T10:20:00+01:00
 draft: false
 description: "Last year I got Claude to translate for a gene-expression model on my own GPU. Now it's a public Hugging Face Space: plain English in, a real cell to C2S, an honest answer out."
-tags: ["LLM", "Bioinformatics", "Cell2Sentence", "Hugging Face", "Gradio"]
+tags:
+  - LLM
+  - Bioinformatics
+  - Cell2Sentence
+  - Hugging Face
+  - Gradio
 categories: []
 authors: []
 ---
 
-*Written up with Claude from our session logs of 24 October, I'll be going over it. Try it at [huggingface.co/spaces/SoulFireMage/talk-to-a-cell](https://huggingface.co/spaces/SoulFireMage/talk-to-a-cell), and the code is on GitHub as [talk-to-a-cell](https://github.com/SoulFireMage/talk-to-a-cell).*
+*Written from the session logs of 24 October, I'll be going over it. Try it at [huggingface.co/spaces/SoulFireMage/talk-to-a-cell](https://huggingface.co/spaces/SoulFireMage/talk-to-a-cell), and the code is on GitHub as [talk-to-a-cell](https://github.com/SoulFireMage/talk-to-a-cell).*
 
 Last November I wrote up [Cell2Cell](/posts/cell2cell/), where a specialised single-cell model was running in LM Studio on my own GPU, speaking genes rather than English, and Claude acted as translator so I could actually use it. It worked first time, and was useful to me at least, but it needed my machine, my GPU and me sat there at it. This week it turned into something anyone can open in a browser.
 
