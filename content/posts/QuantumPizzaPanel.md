@@ -1,14 +1,19 @@
 ---
-title: "Quantumpizza gets peer reviewed, by three AIs"
+title: Quantumpizza gets peer reviewed, by three AIs
 date: 2026-10-24T10:10:00+01:00
 draft: false
-description: "My 'lonely spinor neuron' from last November wasn't actually a spinor. Claude worked out why, three other models had a go blind, and then we finally ran the experiment the file had been promising."
-tags: ["AI", "spinors", "geometric algebra", "experiments", "OpenRouter"]
+description: My 'lonely spinor neuron' from last November wasn't actually a spinor. Claude worked out why, three other models had a go blind, and then we finally ran the experiment the file had been promising.
+tags:
+  - AI
+  - spinors
+  - geometric algebra
+  - experiments
+  - OpenRouter
 categories: []
 authors: []
 ---
 
-*Written up with Claude from our session logs of 23 October, I'll be going over it. The code is on GitHub as [Quantumpizza](https://github.com/SoulFireMage/Quantumpizza-).*
+*Written from our session logs of 23 October, I'll be going over it. The code is on GitHub as [Quantumpizza](https://github.com/SoulFireMage/Quantumpizza-).*
 
 Quantumpizza is a Sunday afternoon repo from last November, where Claude, Gemini and Kimi dared each other into spinor networks, hyperbolic networks, gauge transformers and a "Calabi-Yau brain", all in Python. It's vibe code grade and the README says so. It also already admits the uncomfortable truth, that on digital hardware everything comes down to multiply-accumulate, so any clever structure only pays off when it happens to match the problem.
 
