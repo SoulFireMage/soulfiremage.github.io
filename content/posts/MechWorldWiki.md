@@ -8,40 +8,32 @@ categories: []
 authors: []
 ---
 
-*Written with Claude, from the session on 23 October that did the move. The wiki is at [soulfiremage-headmates-wiki.hf.space](https://soulfiremage-headmates-wiki.hf.space).*
+*Written up with Claude from our session logs of 23 October, I'll be going over it. The wiki itself is at [soulfiremage-headmates-wiki.hf.space](https://soulfiremage-headmates-wiki.hf.space).*
 
-MechWorld is the wiki for my headmates (there's more about them in [Tulpae Personae](/posts/tulpaepersonae/)). It lived on Miraheze. On Friday night it moved to a DokuWiki that I run myself, in a Hugging Face Docker Space.
+MechWorld is the wiki for my headmates, there's more about them in [Tulpae Personae](/posts/tulpaepersonae/) if you're curious. It used to live on Miraheze, and on Friday night it moved to a DokuWiki I run myself in a Hugging Face Docker Space. Anyone can read it, only accounts I create can edit, and self-registration is off.
 
-Anyone can read it. Only accounts I create can edit, and self-registration is off.
+## The move
 
-## The move itself
+Miraheze gives you a MediaWiki XML export, so a small converter takes that apart and runs each page through pandoc to get DokuWiki syntax out the other side. Five pages came across, and the conversion report found no templates, infoboxes, references or images that needed fixing by hand, so that part was easy.
 
-Miraheze exports a MediaWiki XML dump, so a small converter takes that apart and runs each page through pandoc to get DokuWiki syntax. Five pages came across. The conversion report found no templates, infoboxes, references or images to fix by hand, which was the easy outcome.
+DokuWiki rather than anything else, because it keeps every page as a plain text file and needs no database at all, which matters a lot for the next bit.
 
-Why DokuWiki? It keeps every page as a plain text file and needs no database. That matters a lot for the next bit.
+## A Space forgets
 
-## The problem: a Space forgets
+A Hugging Face Space's disk gets wiped every time it restarts. That's fine for a demo and pretty useless for a wiki. The fix is a private Hugging Face Storage Bucket mounted into the Space, but the obvious version, just running DokuWiki straight on the bucket, doesn't work. The bucket mount only supports whole-file writes, while DokuWiki appends to its change logs and relies on file modification times, which the mount doesn't keep.
 
-A Hugging Face Space's disk is wiped every time it restarts. Fine for a demo, useless for a wiki. The answer is a private Hugging Face **Storage Bucket** mounted into the Space. But the obvious version, just running DokuWiki straight on the bucket, doesn't work:
+So DokuWiki runs on the container's ordinary disk, and a small mirror script does the remembering. When the Space boots it restores everything from the bucket: pages, history, media, users, permissions, settings, the theme tweaks and anything installed through the wiki. While it's running it copies every change to the bucket within 5 seconds, and it does one last copy when the Space stops. The very first boot, with an empty bucket, seeds it with the imported pages and default settings, and after that the seed never overwrites anything on the bucket again.
 
-- The bucket mount only supports **whole-file writes**.
-- DokuWiki **appends** to its change logs and relies on file modification times. The mount doesn't keep those.
+If there's no bucket mounted, the Space refuses to start at all. A wiki that quietly runs on disk that'll be wiped at the next restart is worse than one that's visibly down.
 
-So DokuWiki runs on the container's ordinary disk, and a small mirror script does the remembering:
+Then the real test, which was to make some edits, restart the Space and see if they were still there. They were.
 
-1. **On boot:** restore everything from the bucket. Pages, history, media, users, permissions, settings, the theme tweaks, anything installed through the wiki.
-2. **While running:** copy every change to the bucket within 5 seconds.
-3. **On shutdown:** one last copy.
-4. **The very first boot,** with an empty bucket: seed it with the imported pages and default settings. After that nothing on the bucket ever gets overwritten by the seed.
+## Things that would have bitten
 
-If no bucket is mounted, the Space **refuses to start**. A wiki that quietly runs on disk that will be wiped at the next restart is worse than one that's visibly down.
+Log in at the direct address, not on huggingface.co. The Space page shows the wiki inside an embedded frame, and browsers drop login cookies set inside third-party frames, so logging in there looks like it does nothing at all. The direct `hf.space` address works fine.
 
-Then the real test: make some edits, restart the Space, check the edits are still there. They were.
+The admin account gets created from a Space secret on the first boot, and the secret isn't used again after that, so if I change the password inside the wiki it stays changed. There's a reset switch for when I inevitably lock myself out.
 
-## Small things that would have bitten
-
-- **Log in at the direct address, not on huggingface.co.** The Space page shows the wiki in an embedded frame, and browsers drop login cookies set inside third-party frames. So it looks like logging in does nothing. The direct `hf.space` address works fine.
-- **The admin account comes from a Space secret on first boot,** and the secret isn't used after that. Change the password inside the wiki and it stays changed. There's a reset switch if I lock myself out.
-- **Backups are one command:** `hf buckets sync` copies the bucket to a local folder, and re-running it only transfers what changed. Restoring is the same command the other way round, with the Space paused first so the running wiki can't write over it.
+Backups are one command, `hf buckets sync`, which copies the bucket down to a local folder and only transfers what changed when you run it again. Restoring is the same command the other way round, with the Space paused first so the running wiki can't write over it.
 
 It's on [the chart](/posts/starshipchart/) too, in Kat's Nebula, where else.

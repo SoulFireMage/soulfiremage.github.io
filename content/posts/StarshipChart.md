@@ -2,63 +2,52 @@
 title: "A star chart of my own GitHub, and a CDN that wouldn't let go"
 date: 2026-10-24T10:00:00+01:00
 draft: false
-description: "I signed up to Skapi with no idea what it was for and told Claude to have a play. It came back with a star map of 39 projects, and a lesson in how CDN caches actually work."
+description: "I signed up to Skapi with no idea what it was for and told Claude to have a play. It came back with a star map of 39 projects and, eventually, a lesson in how CDN caches work."
 tags: ["Claude", "Skapi", "web", "experiments"]
 categories: []
 authors: []
 ---
 
-*Written with Claude, from the sessions we ran on 23 and 24 October. The site is live at [starship-whisperer.skapi.com](https://starship-whisperer.skapi.com) and the code is on GitHub: [skapitest](https://github.com/SoulFireMage/skapitest).*
+*Written up with Claude from our session logs of 23 and 24 October, I'll be going over it. The site is at [starship-whisperer.skapi.com](https://starship-whisperer.skapi.com) and the code is on GitHub as [skapitest](https://github.com/SoulFireMage/skapitest).*
 
-On Friday I signed up for [Skapi](https://www.skapi.com), a backend-as-a-service thing, on the free plan. It gave me a CLAUDE.md to hand to my AI coding tool. I had no particular plan, so I gave Claude the file, said something like "have a play, maybe link all my projects together", and waited to see what came back.
+On Friday I signed up for [Skapi](https://www.skapi.com), which is a sort of backend-in-a-box for static websites, on the free plan. It hands you a CLAUDE.md to give your AI coding tool, and I had no plan whatsoever, so I gave Claude the file and said something along the lines of "I've no idea what I'm doing really, have a play, maybe link all my projects together" and left it to it.
 
-## What it built
+What came back was a star chart. Claude went through my GitHub, around 35 of my own repos once you ignore the forks, plus my Hugging Face Spaces, read every README and turned the lot into a sky. Each project is a star, and the older ones are dimmer because their light left a long time ago, so the 2015 WPF and F# stuff is very faint indeed (fair enough). They're grouped into six constellations by topic, things like The Spinor Drift, Kat's Nebula and The 2015 Fossil Belt. There's a second way to group them as well, by how they were made, which I asked for. One of those groups is "Let The AI Drive", and it only lists projects whose README actually says an AI wrote the code rather than guessing.
 
-Claude went through my GitHub (about 35 of my own repos, ignoring the forks) and my Hugging Face Spaces, read every README, and turned the lot into a star chart:
+Then there are the threads. Where it's the same idea turning up years apart, there's a line between the stars, and following them I found PySpinor, a fork from 2015, then Quantumpizza last year, then spinor-lib this year. A decade of circling spinors, apparently. *Magpie, sue me.*
 
-- **Every project is a star.** Older projects are dimmer, because their light left a long time ago. The 2015 WPF and F# stuff is very faint indeed.
-- **Six constellations by topic:** The Spinor Drift, Kat's Nebula, The Harness Belt, Thinking Engines, The SQL Quarter and The 2015 Fossil Belt.
-- **A second grouping by how each thing was made:** "Just To See What Happens", "Let The AI Drive", "Rigs In Daily Use", "Learning Out Loud", "Worldbuilding" and "Making Data Legible". "Let The AI Drive" only lists projects whose README actually says an AI wrote the code. It didn't guess.
-- **Threads** between stars where it's the same idea years apart. My favourite: PySpinor, a fork from 2015, then Quantumpizza in 2025, then spinor-lib this year. I genuinely hadn't noticed I'd been circling spinors for a decade.
-- **Two lenses on every card.** ⚡ Kat lens is compressed and pattern-first; 🧱 Richard lens is the plain step-by-step version. It nicked that idea from my own [threads/](https://github.com/SoulFireMage/Microlearning) learning app, which is fair enough.
-- **A trivia strip** of true facts tied to projects: Hamilton carving the quaternion rules into Broom Bridge, the 720° spinor turn, Codd's 1970 relational paper and so on. Speculation was kept off it on purpose.
+Every card also has two versions of its summary, a Kat lens which is compressed and pattern first, and a Richard lens which goes step by step. Claude nicked that from my own [threads/](https://github.com/SoulFireMage/Microlearning) learning app, which I can hardly complain about. There's a strip of trivia too, true facts tied to projects, Hamilton carving the quaternion rules into Broom Bridge and so on, with any speculation kept off it.
 
-Today I added two more stars, [Talk to a Cell](/posts/talktoacell/) and the [MechWorld wiki](/posts/mechworldwiki/), which makes 39.
+Today two more went on, [Talk to a Cell](/posts/talktoacell/) and the [MechWorld wiki](/posts/mechworldwiki/), so it's 39 now.
 
-## So what is Skapi actually doing?
+## So what's Skapi for?
 
-Not a lot, honestly, and that's fine. The chart is plain HTML and SVG, which any host could serve. Skapi does the two bits a static page can't: a guestbook (the "Starlog") and a little ✦ spark button on each project. Visitors write records anonymously into a public table, with no server of mine involved.
+In this case, not a lot, and that's ok. The chart itself is plain HTML and SVG that anything could host. Skapi does the two bits a static page can't do on its own, a guestbook called the Starlog and a little spark button on each project, with visitors writing records into a public table and no server of mine anywhere.
 
-Two rough edges:
+It has some rough edges. There's a "Require Login" setting which is on by default and, as far as we can find, has no switch in the dashboard, and while it's on folks can post to the Starlog but can't read it. I've a message ready for Skapi support about that. Hosting was the other thing. I think I've been spoilt by how frictionless the GitHub side is, where you push and the site rebuilds itself, because Skapi wants files uploaded through its dashboard and has no deploy token you could give an Action. My first reaction was that I was about a year too early with Skapi and it wasn't grown up yet. Then it turned out they have an AI connector (an MCP server), and once I'd added that, Claude could register the address and upload the files itself, so no clicking about after all.
 
-- **"Require Login" is on by default and there's no switch for it.** While it's on, signed-out visitors can post to the Starlog but can't read it. The dashboard doesn't have a toggle for it yet, and the AI connector can't change it either, so I've a message ready for Skapi support. Until then the Starlog says so instead of failing silently.
-- **Hosting has no deploy token.** GitHub Pages rebuilds itself when you push. Skapi wants files uploaded through the dashboard, which felt very manual next to GitHub. Then I found Skapi has an AI connector (an MCP server), added it to Claude, and from then on Claude could register the subdomain and upload the files itself. Not CI/CD, but no clicking either.
-
-Claude checks every upload by downloading it again and comparing it byte for byte with the repo. That caught two real problems. Once an escaped character came back as the literal character, 4 bytes shorter but harmless. Another time one apostrophe arrived as "Rosenblatt���s", which would have been on the live page if nobody had looked. Re-uploaded, re-checked, fine.
+Claude checks every upload by downloading it again and comparing it byte for byte with the repo, and that caught something. One apostrophe arrived on the live site as "Rosenblatt���s", which would have sat there in the trivia strip if nobody had looked. Re-uploaded, re-checked, fine.
 
 ## The CDN that wouldn't let go
 
-This is the bit I didn't expect. After this morning's update, my tablet showed 39 stars and my phone showed 37. Claude's own checks, from a cloud machine in the US, kept getting the old file too. Skapi's "refresh CDN" button was pressed twice and it made no difference.
+This is the bit I didn't see coming. After this morning's update my tablet showed 39 stars and my phone showed 37, and Claude's own checks from a cloud machine in the US kept getting the old file too, even after pressing Skapi's "refresh CDN" button twice. Claude's suggestion was to rename the files to force it, and my reaction was that this makes no sense, no logical sense at all. A content delivery network that doesn't update itself is not very much use, so there had to be something we didn't know.
 
-My first reaction was that this makes no sense. A content delivery network that never updates is useless, so something else had to be going on. There was, and the response headers told the whole story:
+There was, and it was sitting in the response headers the whole time:
 
 ```
 Cache-Control: public, max-age=300, s-maxage=86400, must-revalidate
 ```
 
-- `max-age=300`: my browser can reuse a copy for 5 minutes.
-- `s-maxage=86400`: each CDN location can reuse its copy for **24 hours**, then must check back.
+The `max-age=300` means my browser can reuse its copy for five minutes. The `s-maxage=86400` means each CDN location can reuse its copy for a whole day before it has to go and check. So caches do expire, they just take 24 hours about it, and a CDN location only holds a copy at all if somebody near it asked for the file.
 
-So caches do expire, just after a day. And a CDN location only holds a copy if somebody near it asked for the file. The two US locations Claude was hitting had copies because **Claude put them there**. Its "does the live site match the repo?" check ran about two minutes *before* the upload, and that request cached yesterday's file in Washington for the next 24 hours. Chicago's copy was a day old, most likely from one of our own tests on Friday. Every "is it fixed yet?" check after that just asked the same two places again.
+The daft part is that the two US locations Claude kept hitting had stale copies because **Claude put them there**. Its "does the live site match the repo?" check ran about two minutes *before* the upload, which cached the old file in Washington for the next 24 hours, and the Chicago copy was a day old, most likely from one of our own tests on Friday. Every "is it fixed yet?" check after that just asked the same two places again. My phone and tablet are probably a similar story, depending on which of them looked at the site recently and through which network.
 
-My phone and tablet are probably a similar story. One of them had looked at the site recently, through whatever CDN location it reaches.
+What still doesn't add up is the refresh button. A proper refresh tells every location to throw its copy away and normally takes minutes, but here the cached copy's age just kept counting up through both refreshes. Skapi's docs say it "republishes every file", which sounds to me more like copying the files into storage again than clearing any caches. That's a guess, but it's going in the same email as the Require Login question.
 
-The one thing that still doesn't add up is Skapi's refresh button. A proper refresh tells every location to drop its copy, and that normally takes a few minutes. Here the cached copy's age kept counting up straight through two refreshes. Skapi's docs say the button "republishes every file", which sounds more like re-copying the files into storage than clearing caches. That's a guess, but it's going in the same email as the Require Login question.
-
-As for "surely nobody renames files to beat the cache": they do, just not by hand. Build tools like Vite and webpack put a hash of the contents in the filename (`app.3f9a2c.js`), so a change means a new name and old caches never matter. This site has no build step, so we'd have had to do it manually. We didn't bother. The stale copies just expire on their own.
+And as for renaming files to beat the cache, it turns out folks really do that, just not by hand. Build tools like Vite and webpack put a hash of the file's contents into its name, `app.3f9a2c.js` and so on, so any change gets a new name and the old cached copies never matter. This site has no build step, so we'd have had to do it manually, and since the old copies expire on their own anyway, we didn't bother.
 
 ## Sessions starting sessions
 
-One last thing that tickled me. Partway through, I wanted three other models to review an old project (that's the [Quantumpizza post](/posts/quantumpizzapanel/)). My OpenRouter key had expired, and a new key only shows up in a fresh session. I asked whether the new session would lose everything we'd talked about. Claude wrote a handoff note into the repo with the findings so far and how I like to work, then **started the new session itself** with that note as its brief. By the time I looked, the panel had already run and it was checking the models' maths.
+One last thing that tickled me. Partway through I wanted three other models to review an old project, which became [the Quantumpizza post](/posts/quantumpizzapanel/), but my OpenRouter key had expired and a new key only shows up in a fresh session. I asked whether the new session would just lose everything we'd been talking about. Claude wrote a handoff note into the repo, what we'd found so far and how I like to work, and then **started the new session itself** with that note as its brief. By the time I went to look, the panel had already run and it was busy checking the other models' maths.
 
-The other direction happened too. My local Claude, on the Linux box, built Talk to a Cell and then wrote a handoff for the cloud session that runs this chart, because the cloud one can't see my disk. I pasted it across, and the two new stars appeared.
+It went the other way too. My local Claude on the Linux box built Talk to a Cell and then wrote a handoff for the cloud session that runs this chart, because the cloud one can't see my disk. I pasted it across and the two new stars appeared.
