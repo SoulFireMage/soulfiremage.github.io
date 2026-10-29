@@ -4,7 +4,7 @@ Two ways to edit, both of which commit to `master` so the normal Hugo GitHub Act
 
 ## 1. Site editor (`/admin/`), WordPress-style
 
-https://soulfiremage.github.io/admin/ runs [Sveltia CMS](https://sveltiacms.app/en/docs), a browser app with no server of its own. It edits the Markdown in this repo through the GitHub API.
+https://starship-whisperer.com/admin/ runs [Sveltia CMS](https://sveltiacms.app/en/docs), a browser app with no server of its own. It edits the Markdown in this repo through the GitHub API.
 
 **One-time sign-in (per browser):**
 1. Create a fine-grained token at https://github.com/settings/personal-access-tokens/new
@@ -28,7 +28,7 @@ After you've opened `/admin/` once in a browser, pages on the site show a small 
 - **GitHub**: opens that page's Markdown in GitHub's own web editor, using your normal github.com login (no token needed).
 - **+ New post**: opens a blank post in the site editor.
 
-Ordinary visitors never see the bar. To toggle it by hand, add `?edit=on` or `?edit=off` to any page URL.
+Ordinary visitors never see the bar. Browsers remember the bar (and your editor sign-in) separately for each web address, so after a domain change you need to open `/admin/` once on the new address. To toggle it by hand, add `?edit=on` or `?edit=off` to any page URL.
 
 ## Notes
 - The deploy workflow builds with `--buildDrafts`, so `draft: true` posts are still published on GitHub Pages.
