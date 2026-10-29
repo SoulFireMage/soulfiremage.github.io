@@ -1,5 +1,5 @@
 ---
-title: "Home"
+title: Home
 date: 2024-12-19
 draft: false
 ---
@@ -10,13 +10,17 @@ A revamped version of my original site. Upgrades! Now using Hugo as I was findin
 
 ***About Me***
 
-Currently (Late 2025) exploring Linux and AI again. This time, I'm moving quite rapidly with the help of Claude Code and other models, including local LLMs via LM Studio.
+Currently (Late 2026) exploring Linux and AI again. This time, I'm moving quite rapidly with the help of Claude Code and other models, including local LLMs via LM Studio.
 
-I began learning to code in 2010, squeezing it in around a day job that required it. The languages were Visual Basic and SQL. Persistence and exploration meant that, despite starting approximately 15 years later than most programmers I've spoken with since, I managed to turn it into my day job around 2014.
+A lot of the more recent projects are AI-assisted rather than handwritten. Something about having a shower thought, discussing it with one AI or another, then asking Claude Code to build it has some appeal. There are small downsides to this and another article on this will follow soon enough. 
+
+I began learning to code in 2010, squeezing it in around a day job that required it. The languages were Visual Basic and SQL. 
+
+Persistence and exploration meant that, despite starting approximately 15 years later than most programmers I've spoken with since, I managed to turn it into my day job around 2014.
 
 I'm not a terribly diligent Github contributor as most of my code is for my actual job. However, I intend to post gists, odd bits of exploration, stories, and articles here.
 
-The subjects will vary as I, like many coders, go through cycles of different enthusiasms—often a bit short-lived and intense. An article may come of this point in its own right.
+The subjects will vary as I, like many coders, go through cycles of different enthusiasms—often a bit short-lived and intense.  
 
 Whilst I'm not an enthusiastic self-promoter, the way I've begun my current and previous roles was to have some material online to at least show that I know one end of an IDE from another, and perhaps my SELECT from a WHERE. That's a reasonable excuse to waffle on with a personal website, perhaps.
 
