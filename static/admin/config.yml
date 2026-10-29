@@ -77,3 +77,27 @@ collections:
           - { label: Type, name: type, widget: string }
           - { label: Description, name: description, widget: string, required: false }
           - *body
+
+  - name: site-data
+    label: Front page
+    files:
+      - label: Front page projects
+        name: projects
+        file: data/projects.yaml
+        fields:
+          - label: Projects
+            name: projects
+            widget: list
+            summary: '{{fields.title}} ({{fields.group}})'
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Link, name: url, widget: string }
+              - { label: One-line description, name: blurb, widget: text }
+              - label: Group
+                name: group
+                widget: select
+                options:
+                  - { label: 'Explore (featured, at the top)', value: featured }
+                  - { label: On Hugging Face, value: spaces }
+                  - { label: More to explore, value: more }
+              - { label: Emoji, name: emoji, widget: string, required: false }

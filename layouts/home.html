@@ -1,0 +1,87 @@
+{{- /* Front page: hero, project cards (data/projects.yaml), latest posts, then the
+       text of content/_index.md as the About section. */ -}}
+{{- define "main" }}
+{{- $projects := site.Data.projects.projects }}
+{{- $groups := slice
+  (dict "key" "featured" "title" "Explore")
+  (dict "key" "spaces" "title" "On Hugging Face")
+  (dict "key" "more" "title" "More to explore") }}
+
+<header class="sw-hero">
+  <img src="{{ "images/starship-hero-1600.jpg" | relURL }}"
+       srcset="{{ "images/starship-hero-900.jpg" | relURL }} 900w, {{ "images/starship-hero-1600.jpg" | relURL }} 1600w"
+       sizes="(max-width: 760px) 100vw, 1000px"
+       alt="A violet Aktarian starship with swept, blade-like wings against a gold and green nebula" width="1600" height="1078">
+  <div class="sw-hero-text">
+    <h1>Starship Whisperer</h1>
+    <p>Tools, experiments and writing on AI, maths and stories.</p>
+    <p class="sw-byline">by Richard Griffiths</p>
+  </div>
+</header>
+
+{{- range $groups }}
+{{- $key := .key }}
+{{- $title := .title }}
+{{- with where $projects "group" $key }}
+<section class="sw-section">
+  <h2 class="sw-h">{{ $title }}</h2>
+  <div class="sw-grid{{ if eq $key "featured" }} sw-featured{{ end }}">
+    {{- range . }}
+    <a class="sw-card" href="{{ .url }}">
+      <span class="sw-title">{{ with .emoji }}<span aria-hidden="true">{{ . }}</span> {{ end }}{{ .title }}</span>
+      <span class="sw-blurb">{{ .blurb }}</span>
+    </a>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+{{- end }}
+
+{{- $posts := where site.RegularPages "Section" "posts" }}
+{{- with first 5 $posts.ByDate.Reverse }}
+<section class="sw-section">
+  <h2 class="sw-h">Latest writing <a class="sw-more" href="{{ "posts/" | relURL }}">all posts →</a></h2>
+  <ul class="sw-posts">
+    {{- range . }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}
+
+{{- with .Content }}
+<section class="sw-section sw-about post-content">
+  {{ . }}
+</section>
+{{- end }}
+
+<style>
+  .sw-hero { position: relative; margin: 0 0 32px; border-radius: 14px; overflow: hidden; background: #2a2135; }
+  .sw-hero img { display: block; width: 100%; height: clamp(260px, 52vw, 460px); object-fit: cover; object-position: 50% 45%; }
+  .sw-hero-text { position: absolute; inset: auto 0 0 0; padding: 48px 24px 20px; color: #fff;
+    background: linear-gradient(to top, rgba(20, 10, 30, .85), rgba(20, 10, 30, 0)); }
+  .sw-hero h1 { font-size: clamp(30px, 6vw, 48px); line-height: 1.1; margin: 0 0 6px; color: #fff; }
+  .sw-hero p { margin: 0; font-size: 17px; opacity: .95; }
+  .sw-hero .sw-byline { font-size: 14px; opacity: .75; margin-top: 4px; }
+  .sw-section { margin: 0 0 36px; }
+  .sw-h { font-size: 22px; margin: 0 0 14px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .sw-more { font-size: 14px; font-weight: 400; color: var(--secondary); }
+  .sw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .sw-featured { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .sw-card { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: var(--radius);
+    background: var(--entry); border: 1px solid var(--border); transition: transform .1s, border-color .1s; }
+  .sw-card:hover { transform: translateY(-2px); border-color: #9b5de5; }
+  .sw-featured .sw-card { padding: 18px 20px; border-left: 4px solid #9b5de5; }
+  .sw-title { font-weight: 600; color: var(--primary); }
+  .sw-featured .sw-title { font-size: 19px; }
+  .sw-blurb { font-size: 14px; line-height: 1.45; color: var(--secondary); }
+  .sw-posts { list-style: none; padding: 0; margin: 0; }
+  .sw-posts li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .sw-posts time { flex: none; font-size: 14px; color: var(--secondary); }
+  .sw-about { border-top: 1px solid var(--border); padding-top: 24px; line-height: 1.7; }
+  .sw-about p, .sw-about ul, .sw-about ol { margin: 0 0 1em; }
+  .sw-about h2 { font-size: 22px; margin: 1.4em 0 .6em; }
+  .sw-about h3 { font-size: 18px; margin: 1.2em 0 .5em; }
+  @media (max-width: 760px) { .main:has(.sw-hero) { padding-left: 16px; padding-right: 16px; } }
+</style>
+{{- end }}

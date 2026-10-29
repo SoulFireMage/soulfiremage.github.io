@@ -1,6 +1,6 @@
 baseURL = 'https://starship-whisperer.com/'
 languageCode = 'en-us'
-title = 'Richard Griffiths - Home'
+title = 'Starship Whisperer'
 theme = 'PaperMod'
 
 [permalinks]
@@ -9,12 +9,13 @@ theme = 'PaperMod'
 [params]
   # PaperMod specific settings
   env = "production"
-  description = "Richard Griffiths - Software Developer, Writer, Explorer of Ideas"
+  description = "Starship Whisperer: tools, experiments and writing on AI, maths and stories, by Richard Griffiths"
   author = "Richard Griffiths"
   
   # Home page profile
+  # Front page is layouts/home.html; profile mode is off so it isn't used.
   [params.profileMode]
-    enabled = true
+    enabled = false
     title = "Richard Griffiths"
     subtitle = "Software Developer | Writer | Explorer of Ideas"
     imageUrl = "/images/wing-left.png"
@@ -34,10 +35,6 @@ theme = 'PaperMod'
   ShowToc = true
   TocOpen = false
   
-  # Home info mode (alternative to profile mode)
-  [params.homeInfoParams]
-    Title = "Welcome"
-    Content = "Software Developer, Writer, and Explorer of Ideas"
   
   # Social icons
   [[params.socialIcons]]
