@@ -1,68 +1,71 @@
-# Cards on the front page. Editable in /admin/ under "Front page projects".
-# group: featured | spaces | more
 projects:
   - title: Starship Whisperer's Chart
     url: https://starship-whisperer.skapi.com
     blurb: My GitHub and Hugging Face projects drawn as a star map, with constellations, threads between related ideas, and Kat and Richard versions of every summary.
     group: featured
-    emoji: "🌌"
+    emoji: 🌌
   - title: Rhetoric Salle
     url: https://starship-whisperer.com/rhetoric-salle/
     blurb: Training ground for argument, fallacy spotting and sentence craft, with drills, rated skills and AI fencing bouts against personas.
     group: featured
-    emoji: "🤺"
+    emoji: 🤺
   - title: Talk to a Cell
     url: https://huggingface.co/spaces/SoulFireMage/talk-to-a-cell
     blurb: Chat in plain English with Cell2Sentence, a language model that reads cells.
     group: spaces
-    emoji: "🧬"
+    emoji: 🧬
   - title: MechWorld wiki
     url: https://soulfiremage-headmates-wiki.hf.space
     blurb: The headmates wiki, home of the Aktarian Starships.
     group: spaces
-    emoji: "🪐"
+    emoji: 🪐
   - title: spinor-lib demos
     url: https://huggingface.co/spaces/SoulFireMage/spinor-lib
     blurb: Spinors on PyTorch, with three.js scenes of the Bloch sphere, the belt trick and more.
     group: spaces
-    emoji: "🌀"
+    emoji: 🌀
   - title: Mathematical Sight-Reading
     url: https://huggingface.co/spaces/SoulFireMage/math-sight-reading
     blurb: Drill reading dense maths notation the way musicians sight-read sheet music.
     group: spaces
-    emoji: "🎼"
+    emoji: 🎼
   - title: Self-Play Learner Explorer
     url: https://huggingface.co/spaces/SoulFireMage/self-play-learner-explorer
     blurb: Watch a zero-data self-play learner predict bytes, checkpoint by checkpoint.
     group: spaces
-    emoji: "🔬"
+    emoji: 🔬
   - title: Jev Playground
     url: https://huggingface.co/spaces/SoulFireMage/jev-playground
     blurb: Ask Jev and other decision models typed questions and get probabilities back.
     group: spaces
-    emoji: "⚖️"
+    emoji: ⚖️
   - title: UK Inflation Tracker
     url: https://huggingface.co/spaces/SoulFireMage/uk-inflation-tracker
     blurb: Live UK CPI inflation straight from the ONS.
     group: spaces
-    emoji: "📈"
+    emoji: 📈
   - title: UK Crime Tracker
     url: https://huggingface.co/spaces/SoulFireMage/uk-crime-tracker
     blurb: Police-recorded crime by area across England and Wales, per head of population.
     group: spaces
-    emoji: "🗺️"
+    emoji: 🗺️
   - title: OpenRouter client
     url: https://starship-whisperer.com/openrouter-claude/
     blurb: A phone-friendly chat client for any OpenRouter model, keys and history kept on your device.
     group: more
-    emoji: "💬"
+    emoji: 💬
   - title: Katiya Starship's site
     url: https://starship-whisperer.com/Katiya_Starship/posts/
     blurb: Kat's own corner. Abstract maths thrown like n-dimensional throwing stars.
     group: more
-    emoji: "✨"
+    emoji: ✨
+  - title: Eloquacity - Poetry and Prose Practice and Play
+    url: https://starship-whisperer.com/eloquacity/
+    blurb: A site to train sentences, syntax and structure. Same format as the Rhetoric Forge.
+    group: featured
+    emoji: ''
   - title: Amay-Lia and Katiya in 3D
     url: https://sketchfab.com/3d-models/amay-lia-and-katiya-aba9aba42a8a4fab9d07aebd7acc9d4a
     blurb: A 3D model of Amay-Lia and Katiya on Sketchfab. Spin them round in the browser.
     group: more
-    emoji: "🛸"
+    emoji: 🛸
