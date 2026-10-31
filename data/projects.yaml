@@ -74,3 +74,8 @@ projects:
     blurb: Practice understanding systems thinking vocabulary and structure from test. Not diagrams.
     group: featured
     emoji: ''
+  - title: Vertex Forge
+    url: https://starship-whisperer.com/vertex-forge/
+    blurb: "Standard Model drills. This was a whimsical notion: build to train basic particle physics, known as the Standard Model. I say basic. I'm not a physicist. It's just a random idea I had when I learned a few of the particle names many years ago. I thought it'd be a fun idea to build something for basically rote learning particles names and interactions. The site intends to be accurate, has not been peer reviewed, and I will slowly add sources of verification over time."
+    group: featured
+    emoji: ''
