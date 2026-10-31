@@ -69,3 +69,8 @@ projects:
     blurb: A 3D model of Amay-Lia and Katiya on Sketchfab. Spin them round in the browser.
     group: more
     emoji: 🛸
+  - title: Systems Thinking Training
+    url: https://starship-whisperer.com/systemics-forge/
+    blurb: Practice understanding systems thinking vocabulary and structure from test. Not diagrams.
+    group: featured
+    emoji: ''
