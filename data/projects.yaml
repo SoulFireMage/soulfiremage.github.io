@@ -79,3 +79,8 @@ projects:
     blurb: "Standard Model drills. This was a whimsical notion: build to train basic particle physics, known as the Standard Model. I say basic. I'm not a physicist. It's just a random idea I had when I learned a few of the particle names many years ago. I thought it'd be a fun idea to build something for basically rote learning particles names and interactions. The site intends to be accurate, has not been peer reviewed, and I will slowly add sources of verification over time."
     group: featured
     emoji: ''
+  - title: Cobalt Poly
+    url: https://starship-whisperer.com/cobalt-poly/
+    blurb: A 10-voice synthesiser in the browser. Presets, knobs, Moog-style ladder filter, arpeggiator and a live scope. Tap the keys or use your keyboard.
+    group: featured
+    emoji: 🎹
