@@ -84,3 +84,8 @@ projects:
     blurb: A 10-voice synthesiser in the browser. Presets, knobs, Moog-style ladder filter, arpeggiator and a live scope. Tap the keys or use your keyboard.
     group: featured
     emoji: 🎹
+  - title: Starship Designer
+    url: http://starship-whisperer.com/starship-builder/
+    blurb: Design, evolve your own starships via manifold cad. Claude built this for me.
+    group: featured
+    emoji: 🚀
