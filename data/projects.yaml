@@ -89,3 +89,10 @@ projects:
     blurb: Design, evolve your own starships via manifold cad. Claude built this for me.
     group: featured
     emoji: 🚀
+  - title: SoulFireMage's Spell Forge
+    url: https://starship-whisperer.com/spell-forge/
+    blurb: |-
+      Physical spells - Design your own 3D Printable magic spells courtesy of SoulFireMage's Spell Forge. 
+      Not for use with Apocalypse, Demon or Elder God Summoning, Love Spells or Invoking Aktarian Starships. Use as your own risk :P
+    group: featured
+    emoji: 🐦‍🔥
