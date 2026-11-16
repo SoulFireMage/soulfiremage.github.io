@@ -81,7 +81,7 @@ projects:
     emoji: ''
   - title: Cobalt Poly
     url: https://starship-whisperer.com/cobalt-poly/
-    blurb: A 10-voice synthesiser in the browser. Presets, knobs, Moog-style ladder filter, arpeggiator and a live scope. Tap the keys or use your keyboard.
+    blurb: A 10-voice synthesiser in the browser. Ladder filter, cross-mod, chorus, arpeggiator, MIDI in and a live scope. Tap the keys, use your keyboard, or share a patch as a link.
     group: featured
     emoji: 🎹
   - title: Starship Designer

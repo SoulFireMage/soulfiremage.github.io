@@ -1,6 +1,11 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Cobalt Poly</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cobalt Poly: a polysynth in your browser</title>
+<meta name="description" content="A 10-voice subtractive synthesiser that runs in the browser: ladder filter, cross-mod, ring mod, chorus, arpeggiator, MIDI in and shareable patches.">
+<meta property="og:title" content="Cobalt Poly">
+<meta property="og:description" content="A 10-voice polysynth in your browser. Tap the keys, turn the knobs, share a patch as a link.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://starship-whisperer.com/cobalt-poly/">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -44,6 +49,7 @@ body{font-family:var(--f-body);font-size:14px;line-height:1.45;margin:0;
 .brand h1{font-family:var(--f-display);font-size:20px;letter-spacing:.14em;margin:0;font-weight:400;text-wrap:balance}
 .brand h1 b{color:var(--accent);font-weight:400}
 .brand small{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.brand a{color:inherit}
 .ctrls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 select,button{font:inherit;color:var(--ink)}
 .btn,select{background:var(--panel-2);border:1px solid var(--line);border-radius:6px;height:34px;padding:0 12px;cursor:pointer;font-size:13px}
@@ -101,11 +107,13 @@ select,button{font:inherit;color:var(--ink)}
   <header class="bar">
     <div class="brand">
       <h1>COBALT<b>·</b>POLY</h1>
-      <small>10-voice subtractive · Web Audio + AudioWorklet</small>
+      <small>10-voice subtractive · Web Audio + AudioWorklet · <a href="/">starship-whisperer.com</a></small>
     </div>
     <div class="ctrls">
       <select id="preset" aria-label="Preset"></select>
       <button class="btn" id="rand" type="button">Randomise</button>
+      <button class="btn" id="share" type="button">Share patch</button>
+      <button class="btn power" id="midi" type="button" hidden><span class="led" id="mled"></span>MIDI</button>
       <button class="btn power" id="power" type="button"><span class="led" id="pled"></span>AUDIO OFF</button>
     </div>
   </header>
@@ -113,7 +121,7 @@ select,button{font:inherit;color:var(--ink)}
   <section class="screen" aria-label="Oscilloscope and spectrum">
     <canvas id="scope"></canvas>
     <div class="readout"><span id="rNote">—</span><span id="rVoices">0 v</span><span id="rCut"></span></div>
-    <div class="hint" id="hint">Tap a key or press A–; on your keyboard to start. Z / X shift octave. Drag knobs up/down, double-click to reset.</div>
+    <div class="hint" id="hint">Tap a key or press A–; on your keyboard to start. Z / X shift octave. Drag knobs up/down, double-click to reset. Lower on a key = louder.</div>
   </section>
 
   <main class="rack" id="rack"></main>
@@ -149,10 +157,12 @@ const D=[
  {id:'o2oct',m:'osc2',l:'Octave',min:-2,max:2,def:0,step:1,f:sgn},
  {id:'o2semi',m:'osc2',l:'Semi',min:-12,max:12,def:0,step:1,f:sgn},
  {id:'o2fine',m:'osc2',l:'Fine',min:-50,max:50,def:7,f:v=>sgn(Math.round(v))+'¢'},
+ {id:'xmod',m:'osc2',l:'X-Mod',min:0,max:1,def:0,f:pct},
  {id:'m1',m:'mix',l:'Osc 1',min:0,max:1,def:.8,f:pct},
  {id:'m2',m:'mix',l:'Osc 2',min:0,max:1,def:.45,f:pct},
  {id:'msub',m:'mix',l:'Sub',min:0,max:1,def:0,f:pct},
  {id:'mnoise',m:'mix',l:'Noise',min:0,max:1,def:0,f:pct},
+ {id:'mring',m:'mix',l:'Ring',min:0,max:1,def:0,f:pct},
  {id:'cut',m:'filter',l:'Cutoff',min:30,max:18000,def:1800,exp:1,f:hz},
  {id:'res',m:'filter',l:'Reso',min:0,max:1,def:.25,f:pct},
  {id:'fenv',m:'filter',l:'Env amt',min:-4,max:6,def:2.5,f:oct},
@@ -178,6 +188,8 @@ const D=[
  {id:'aoct',m:'arp',l:'Range',min:1,max:3,def:1,step:1,f:v=>v+' oct'},
  {id:'vol',m:'master',l:'Volume',min:0,max:1,def:.7,f:pct},
  {id:'glide',m:'master',l:'Glide',min:0,max:.5,def:0,f:sec},
+ {id:'drift',m:'master',l:'Drift',min:0,max:1,def:.15,f:pct},
+ {id:'vsens',m:'master',l:'Vel sens',min:0,max:1,def:.5,f:pct},
 ];
 const WAVES=['sine','triangle','sawtooth','square'];
 const S=[
@@ -186,13 +198,14 @@ const S=[
  {id:'ftype',m:'filter',opts:['lp12','lp24','ladder','hp','bp'],labels:['LP12','LP24','LADDER','HP','BP'],def:'lp24'},
  {id:'lwave',m:'lfo',opts:WAVES,def:'sine',wave:1},
  {id:'ltgt',m:'lfo',opts:['pitch','filter','amp'],labels:['PITCH','FILTER','AMP'],def:'filter'},
+ {id:'chorus',m:'fx',opts:['off','i','ii','both'],labels:['CH OFF','I','II','I+II'],def:'off'},
  {id:'arp',m:'arp',opts:['off','up','down','updown','random'],labels:['OFF','UP','DOWN','U/D','RND'],def:'off'},
 ];
 const MODS=[
- ['osc1','OSC 1','Shape, supersaw unison and stereo width'],['osc2','OSC 2','Interval and fine detune against Osc 1'],
- ['mix','MIXER',''],['filter','FILTER','LADDER is a 4-pole Moog-style model with tanh saturation, run per voice in an AudioWorklet'],
- ['fenv','FILTER ENV',''],['aenv','AMP ENV',''],['lfo','LFO',''],['fx','DRIVE · DELAY · REVERB',''],
- ['arp','ARPEGGIATOR','16th notes; hold a chord'],['master','MASTER','Glide slides new notes from the last pitch'],
+ ['osc1','OSC 1','Shape, supersaw unison and stereo width'],['osc2','OSC 2','Interval and detune against Osc 1. X-Mod: Osc 2 frequency-modulates Osc 1'],
+ ['mix','MIXER','Ring is Osc 1 × Osc 2'],['filter','FILTER','LADDER is a zero-delay-feedback 4-pole Moog-style model with tanh saturation, run per voice in an AudioWorklet. It self-oscillates in tune near full Reso'],
+ ['fenv','FILTER ENV',''],['aenv','AMP ENV',''],['lfo','LFO',''],['fx','EFFECTS','Chorus I / II / I+II is a two-phase stereo chorus in the Juno style, then drive, delay and reverb'],
+ ['arp','ARPEGGIATOR','16th notes; hold a chord'],['master','MASTER','Glide slides from the last pitch. Drift detunes each voice a little, like analogue oscillators. Vel sens sets how much playing harder opens level and filter'],
 ];
 const P={};D.forEach(d=>P[d.id]=d.def);S.forEach(s=>P[s.id]=s.def);
 const byId={};D.forEach(d=>byId[d.id]=d);
@@ -207,22 +220,41 @@ const PRESETS={
  'Glass pluck':{o1wave:'triangle',o2wave:'square',o2oct:1,m2:.25,ftype:'lp12',cut:1100,res:.3,fenv:3.6,fa:.001,fd:.35,fs:0,fr:.4,aa:.001,ad:.7,as:0,ar:.5,dtime:.3,dfb:.5,dmix:.32,rmix:.35,rsize:3},
  'Supersaw lead':{o1uni:7,o1det:26,spread:1,o2oct:1,m2:.35,ftype:'lp24',cut:3800,res:.18,fenv:1.2,fd:.8,fs:.6,aa:.01,as:.9,ar:.35,ltgt:'pitch',lrate:5.5,ldepth:.12,dmix:.24,rmix:.3,glide:.04},
  'Wobble bass':{o1uni:3,o1det:10,spread:.4,o2oct:-1,m2:.55,msub:.6,ftype:'ladder',cut:220,res:.62,fenv:.6,fd:.3,fs:.6,aa:.003,as:1,ar:.15,ltgt:'filter',lwave:'sine',lrate:4,ldepth:.75,drive:.6,dmix:.05,rmix:.08},
+ 'Juno strings':{o1uni:1,m1:.8,m2:0,msub:.3,ftype:'lp24',cut:2400,res:.1,fenv:.4,fa:.4,fd:1.5,fs:.7,fr:1.2,aa:.35,ad:1,as:.9,ar:1.2,chorus:'i',rmix:.3,rsize:3,dmix:.08,drift:.4},
+ 'FM bell':{o1wave:'sine',o2wave:'sine',o2oct:1,o2semi:7,o2fine:0,xmod:.55,m1:.9,m2:0,ftype:'lp12',cut:2500,res:0,fenv:2.5,ktrk:.6,fa:.001,fd:1.2,fs:0,fr:1.5,aa:.001,ad:2.2,as:0,ar:1.8,rmix:.4,rsize:3.5,dmix:.15,drive:0,vsens:.8,drift:.05},
+ 'Ring clang':{o1wave:'square',o2wave:'sawtooth',o2semi:7,o2fine:13,m1:0,m2:0,mring:.85,ftype:'lp24',cut:1400,res:.3,fenv:3,fa:.001,fd:.4,fs:.1,fr:.4,aa:.001,ad:.6,as:0,ar:.5,drive:.2,dtime:.25,dfb:.35,dmix:.2,rmix:.2},
+ 'Ladder whistle':{o1wave:'sine',o1oct:1,m1:.1,m2:0,ftype:'ladder',cut:523.25,res:1,ktrk:1,fenv:0,aa:.03,ad:.3,as:1,ar:.3,glide:.08,ltgt:'filter',lrate:5.5,ldepth:.01,drive:0,rmix:.4,rsize:3,dmix:.2,drift:0,vol:.5},
  'Brass stab':{o1uni:2,o1det:8,o2fine:-9,m2:.7,ftype:'lp12',cut:650,res:.1,fenv:2.6,fa:.07,fd:.55,fs:.4,fr:.3,aa:.04,ad:.4,as:.8,ar:.25,rmix:.28,drive:.15},
 };
 
 /* ---------- audio engine ---------- */
 let ctx=null, out={}, lfo={}, ladderOK=false, noiseBuf=null;
 const voices=[]; let lastFreq=null;
-const MAXV=10;
+const MAXV=10,RESK=1.08;
+let modW=0; // MIDI mod wheel, added to LFO depth
 const mtof=n=>440*Math.pow(2,(n-69)/12);
+/* Zero-delay-feedback (TPT) ladder: four trapezoidal one-poles with the feedback loop solved per sample,
+   so cutoff is tuned by tan() prewarping and resonance behaves the same at every cutoff. tanh sits on the loop input. */
 const LADDER=`class L extends AudioWorkletProcessor{
 static get parameterDescriptors(){return[{name:'cutoff',defaultValue:1000,minValue:10,maxValue:22000,automationRate:'a-rate'},{name:'detune',defaultValue:0,minValue:-14400,maxValue:14400,automationRate:'a-rate'},{name:'res',defaultValue:0,minValue:0,maxValue:1.2,automationRate:'k-rate'}]}
-constructor(){super();this.s=[new Float64Array(4),new Float64Array(4)]}
-process(I,O,p){const i=I[0],o=O[0];if(!i||!i.length)return false;
-const cu=p.cutoff,de=p.detune,k=p.res[0]*4,sr=sampleRate,N=o[0].length,lim=sr*.45,w=2*Math.PI/sr;
-const g=new Float32Array(N);for(let n=0;n<N;n++){let fc=(cu.length>1?cu[n]:cu[0])*Math.pow(2,(de.length>1?de[n]:de[0])/1200);if(fc>lim)fc=lim;if(fc<10)fc=10;g[n]=1-Math.exp(-w*fc)}
-for(let c=0;c<o.length;c++){const x=i[Math.min(c,i.length-1)],y=o[c],s=this.s[c]||(this.s[c]=new Float64Array(4));
-for(let n=0;n<N;n++){const G=g[n],u=Math.tanh(x[n]*1.4-k*s[3]);s[0]+=G*(u-s[0]);s[1]+=G*(s[0]-s[1]);s[2]+=G*(s[1]-s[2]);s[3]+=G*(s[2]-s[3]);y[n]=s[3]*(1+k*.4)}}
+constructor(){super();this.s=[new Float64Array(4),new Float64Array(4)];this.g=new Float64Array(128);this.live=true;this.port.onmessage=()=>{this.live=false}}
+process(I,O,p){if(!this.live)return false;
+const i=I[0],o=O[0],cu=p.cutoff,de=p.detune,k=p.res[0]*4,N=o[0].length,lim=sampleRate*.49,w=Math.PI/sampleRate;
+let g=this.g;if(g.length<N)g=this.g=new Float64Array(N);
+const ar=cu.length>1||de.length>1,M=ar?N:1;
+for(let n=0;n<M;n++){let fc=(cu.length>1?cu[n]:cu[0])*Math.pow(2,(de.length>1?de[n]:de[0])/1200);if(fc>lim)fc=lim;if(fc<10)fc=10;const t=Math.tan(w*fc);g[n]=t/(1+t)}
+const comp=1+k*.4;
+for(let c=0;c<o.length;c++){const x=i&&i.length?i[Math.min(c,i.length-1)]:null,y=o[c],s=this.s[c]||(this.s[c]=new Float64Array(4));
+let s0=s[0],s1=s[1],s2=s[2],s3=s[3];
+for(let n=0;n<N;n++){const G=ar?g[n]:g[0],G2=G*G,G4=G2*G2,xin=(x?x[n]*1.4:0)+(Math.random()-.5)*2e-5;
+const S=(1-G)*(G2*G*s0+G2*s1+G*s2+s3);
+const u=Math.tanh(xin-k*(G4*xin+S)/(1+k*G4));
+let v=(u-s0)*G,a=v+s0;s0=a+v;
+v=(a-s1)*G;a=v+s1;s1=a+v;
+v=(a-s2)*G;a=v+s2;s2=a+v;
+v=(a-s3)*G;a=v+s3;s3=a+v;
+y[n]=a*comp}
+s[0]=s0;s[1]=s1;s[2]=s2;s[3]=s3}
 return true}}
 registerProcessor('cobalt-ladder',L);`;
 
@@ -246,15 +278,28 @@ async function startAudio(){
   out.comp=ctx.createDynamicsCompressor();out.comp.threshold.value=-10;out.comp.ratio.value=8;out.comp.attack.value=.003;out.comp.release.value=.2;
   out.an=ctx.createAnalyser();out.an.fftSize=2048;out.an.smoothingTimeConstant=.75;
   out.bus.connect(out.trem);out.trem.connect(out.pre);out.pre.connect(out.shaper);out.shaper.connect(out.post);
-  out.post.connect(out.master);
-  out.post.connect(out.dSend);out.dSend.connect(out.delay);out.delay.connect(out.dFilt);out.dFilt.connect(out.dFb);out.dFb.connect(out.delay);
+  // chorus: mono-summed input into two anti-phase modulated delay lines, hard left and right; dry stays stereo
+  out.fx=ctx.createGain();out.chDry=ctx.createGain();out.chWet=ctx.createGain();out.chWet.gain.value=0;
+  out.chL=ctx.createDelay(.05);out.chR=ctx.createDelay(.05);
+  [out.chL,out.chR].forEach(d=>{d.channelCount=1;d.channelCountMode='explicit';d.delayTime.value=.0035});
+  out.chMerge=ctx.createChannelMerger(2);
+  out.chLfo=ctx.createOscillator();out.chLfo.type='triangle';out.chDp=ctx.createGain();out.chDn=ctx.createGain();out.chDp.gain.value=0;out.chDn.gain.value=0;
+  out.chLfo.connect(out.chDp);out.chLfo.connect(out.chDn);out.chDp.connect(out.chL.delayTime);out.chDn.connect(out.chR.delayTime);out.chLfo.start();
+  out.post.connect(out.chDry);out.chDry.connect(out.fx);
+  out.post.connect(out.chL);out.post.connect(out.chR);out.chL.connect(out.chMerge,0,0);out.chR.connect(out.chMerge,0,1);
+  out.chMerge.connect(out.chWet);out.chWet.connect(out.fx);
+  out.fx.connect(out.master);
+  out.fx.connect(out.dSend);out.dSend.connect(out.delay);out.delay.connect(out.dFilt);out.dFilt.connect(out.dFb);out.dFb.connect(out.delay);
   out.dFilt.connect(out.dPan);out.dPan.connect(out.dOut);out.dOut.connect(out.master);
-  out.post.connect(out.rSend);out.rSend.connect(out.conv);out.conv.connect(out.master);
+  out.fx.connect(out.rSend);out.rSend.connect(out.conv);out.conv.connect(out.master);
   out.master.connect(out.comp);out.comp.connect(out.an);out.an.connect(ctx.destination);
   // LFO
   lfo.osc=ctx.createOscillator();lfo.pitch=ctx.createGain();lfo.filter=ctx.createGain();lfo.amp=ctx.createGain();
   lfo.osc.connect(lfo.pitch);lfo.osc.connect(lfo.filter);lfo.osc.connect(lfo.amp);lfo.amp.connect(out.trem.gain);
   lfo.osc.start();
+  // every oscillator's detune listens to one pitch bus: LFO vibrato plus MIDI pitch bend
+  lfo.pbus=ctx.createGain();lfo.pitch.connect(lfo.pbus);
+  out.bend=ctx.createConstantSource();out.bend.offset.value=0;out.bend.connect(lfo.pbus);out.bend.start();
   // ladder worklet
   try{
     if(ctx.audioWorklet){
@@ -263,7 +308,7 @@ async function startAudio(){
     }
   }catch(e){ladderOK=false}
   segRefresh('ftype');
-  ['vol','drive','dtime','dfb','dmix','rmix','lrate','ldepth','lwave'].forEach(applyLive);
+  ['vol','drive','dtime','dfb','dmix','rmix','lrate','ldepth','lwave','chorus'].forEach(applyLive);
   buildImpulse();
   setPower(true);
 }
@@ -292,32 +337,48 @@ function hold(p,t){
 const resQ=(r,type)=>type==='lp24'?.55+r*r*11:.7+r*r*22;
 function baseCut(note){return Math.min(19000,Math.max(25,P.cut*Math.pow(2,(note-60)/12*P.ktrk)))}
 
-function noteOn(note,t){
-  t=Math.max(t||0,ctx.currentTime);
-  // steal
-  const live=voices.filter(v=>!v.dead);
-  if(live.length>=MAXV){const o=live.find(v=>v.rel)||live[0];release(o,t,.02)}
-  const v={note,oscs:[],o1:[],t0:t,rel:false,dead:false};
+const fmDepth=v=>P.xmod*P.xmod*v.f1*5;
+// Release-time "hold". Firefox has no cancelAndHoldAtTime, and param.value can't stand in for it when t is in the
+// future (arp notes are released before they start), so rebuild the attack ramp up to t instead.
+function relHold(p,t,t0,A,pk){
+  if(p.cancelAndHoldAtTime){p.cancelAndHoldAtTime(t);return}
+  p.cancelScheduledValues(t);
+  if(t<t0+A)p.linearRampToValueAtTime(pk*Math.max(0,(t-t0)/A),t);
+}
+function noteOn(note,t,vel){
+  t=Math.max(t||0,ctx.currentTime);if(vel==null)vel=.8;
+  // steal: a voice already being stolen stops counting, so fast playing can't pile up extra voices
+  const live=voices.filter(v=>!v.dead&&!v.stolen);
+  if(live.length>=MAXV){const o=live.find(v=>v.rel)||live[0];o.stolen=true;release(o,t,.02)}
+  const v={note,oscs:[],o1:[],taps:[],t0:t,rel:false,dead:false};
+  const tap=(src,p)=>{src.connect(p);v.taps.push([src,p])};
+  const rnd=()=>Math.random()*2-1,dr=P.drift;
   const f0=mtof(note);curF0=f0;
+  v.dr=rnd()*dr*12; // per-voice pitch drift in cents
   v.f1=f0*Math.pow(2,P.o1oct);
   const mix=ctx.createGain();
-  // osc1 unison
   const n=P.o1uni|0;v.g1=ctx.createGain();v.g1.gain.value=P.m1/Math.sqrt(n);v.g1.connect(mix);
+  // osc2 is also the modulator for X-Mod (linear FM of osc1) and the ring modulator
+  v.osc2=ctx.createOscillator();v.osc2.type=P.o2wave;
+  glideTo(v.osc2.frequency,f0*Math.pow(2,P.o2oct+P.o2semi/12),t);v.d2=v.dr+rnd()*dr*4;v.osc2.detune.value=P.o2fine+v.d2;
+  v.g2=ctx.createGain();v.g2.gain.value=P.m2;v.osc2.connect(v.g2);v.g2.connect(mix);tap(lfo.pbus,v.osc2.detune);
+  v.fm=ctx.createGain();v.fm.gain.value=fmDepth(v);v.osc2.connect(v.fm);
+  v.ring=ctx.createGain();v.ring.gain.value=0;v.osc2.connect(v.ring.gain);
+  v.gr=ctx.createGain();v.gr.gain.value=P.mring/Math.sqrt(n);v.ring.connect(v.gr);v.gr.connect(mix);
+  // osc1 unison; stacked oscillators start at random phase so the attack isn't the same phase-locked zap every note
   for(let i=0;i<n;i++){
     const o=ctx.createOscillator(),pn=ctx.createStereoPanner();
-    o.type=P.o1wave;const pos=n>1?i/(n-1)*2-1:0;
-    o.detune.value=pos*P.o1det;pn.pan.value=pos*P.spread;
+    o.type=P.o1wave;const pos=n>1?i/(n-1)*2-1:0,d=v.dr+rnd()*dr*4;
+    o.detune.value=pos*P.o1det+d;pn.pan.value=pos*P.spread;
     glideTo(o.frequency,v.f1,t);
-    o.connect(pn);pn.connect(v.g1);lfo.pitch.connect(o.detune);
-    v.oscs.push(o);v.o1.push({o,pn,pos});
+    o.connect(pn);pn.connect(v.g1);pn.connect(v.ring);v.fm.connect(o.frequency);tap(lfo.pbus,o.detune);
+    o._ph=n>1?Math.random()/v.f1:0;
+    v.oscs.push(o);v.o1.push({o,pn,pos,d});
   }
-  // osc2
-  v.osc2=ctx.createOscillator();v.osc2.type=P.o2wave;
-  glideTo(v.osc2.frequency,f0*Math.pow(2,P.o2oct+P.o2semi/12),t);v.osc2.detune.value=P.o2fine;
-  v.g2=ctx.createGain();v.g2.gain.value=P.m2;v.osc2.connect(v.g2);v.g2.connect(mix);lfo.pitch.connect(v.osc2.detune);v.oscs.push(v.osc2);
+  v.oscs.push(v.osc2);
   // sub
-  v.sub=ctx.createOscillator();v.sub.type='square';glideTo(v.sub.frequency,v.f1/2,t);
-  v.gs=ctx.createGain();v.gs.gain.value=P.msub*.6;v.sub.connect(v.gs);v.gs.connect(mix);lfo.pitch.connect(v.sub.detune);v.oscs.push(v.sub);
+  v.sub=ctx.createOscillator();v.sub.type='square';glideTo(v.sub.frequency,v.f1/2,t);v.sub.detune.value=v.dr;
+  v.gs=ctx.createGain();v.gs.gain.value=P.msub*.6;v.sub.connect(v.gs);v.gs.connect(mix);tap(lfo.pbus,v.sub.detune);v.oscs.push(v.sub);
   // noise
   v.nz=ctx.createBufferSource();v.nz.buffer=noiseBuf;v.nz.loop=true;
   v.gn=ctx.createGain();v.gn.gain.value=P.mnoise*.5;v.nz.connect(v.gn);v.gn.connect(mix);v.oscs.push(v.nz);
@@ -329,24 +390,26 @@ function noteOn(note,t){
   if(type==='ladder'){
     const lad=new AudioWorkletNode(ctx,'cobalt-ladder',{numberOfInputs:1,numberOfOutputs:1,outputChannelCount:[2]});
     v.lad=lad;v.fFreq.push(lad.parameters.get('cutoff'));v.fDet.push(lad.parameters.get('detune'));
-    lad.parameters.get('res').value=P.res*1.04;head=tail=lad;
+    lad.parameters.get('res').value=P.res*RESK;head=tail=lad;
   }else{
     const mk=()=>{const b=ctx.createBiquadFilter();b.type=type==='hp'?'highpass':type==='bp'?'bandpass':'lowpass';b.Q.value=type==='bp'?1+P.res*12:resQ(P.res,type);return b};
     const b1=mk();head=tail=b1;v.bq=[b1];
     if(type==='lp24'){const b2=mk();b1.connect(b2);tail=b2;v.bq.push(b2)}
     v.bq.forEach(b=>{v.fFreq.push(b.frequency);v.fDet.push(b.detune)});
   }
-  const bc=baseCut(note);
-  v.fFreq.forEach(p=>p.setValueAtTime(bc,t));
-  v.fDet.forEach(p=>{v.env.connect(p);lfo.filter.connect(p)});
+  // cutoff follows glide too, so a key-tracked (or self-oscillating) filter slides with the pitch
+  const bc=baseCut(note),gl=P.glide>0.002&&lastFreq,fdr=rnd()*dr*250;
+  v.fFreq.forEach(p=>{if(gl){p.setValueAtTime(Math.min(19000,Math.max(25,bc*Math.pow(lastFreq/f0,P.ktrk))),t);p.exponentialRampToValueAtTime(bc,t+P.glide)}else p.setValueAtTime(bc,t)});
+  v.fDet.forEach(p=>{p.value=fdr;v.env.connect(p);tap(lfo.filter,p)});
   mix.connect(head);
   v.amp=ctx.createGain();v.amp.gain.value=0;tail.connect(v.amp);v.amp.connect(out.bus);
-  // envelopes
-  const peak=.24;
+  // envelopes; velocity .8 is the reference level, so the Vel sens knob doesn't change a fixed-velocity keyboard
+  const vf=1-P.vsens+P.vsens*vel*1.25;
+  const peak=v.pk=.24*vf;v.aa=P.aa;
   const g=v.amp.gain;g.setValueAtTime(0,t);g.linearRampToValueAtTime(peak,t+P.aa);g.setTargetAtTime(peak*P.as,t+P.aa,P.ad/3);
-  const amt=P.fenv*1200,e=v.env.offset;e.setValueAtTime(0,t);e.linearRampToValueAtTime(amt,t+P.fa);e.setTargetAtTime(amt*P.fs,t+P.fa,P.fd/3);
-  v.oscs.forEach(o=>o.start(t));v.env.start(t);
-  v.nodes=[mix,v.amp,head,tail];
+  const amt=v.famt=P.fenv*1200*(.4+.6*vf),e=v.env.offset;v.fa=P.fa;e.setValueAtTime(0,t);e.linearRampToValueAtTime(amt,t+P.fa);e.setTargetAtTime(amt*P.fs,t+P.fa,P.fd/3);
+  v.oscs.forEach(o=>o.start(t+(o._ph||0)));v.env.start(t);
+  v.nodes=[mix,head,tail,v.amp,v.fm,v.ring,v.gr];
   voices.push(v);
   lastFreq=f0;
   return v;
@@ -364,15 +427,19 @@ function release(v,t,fast){
   t=Math.max(t||0,ctx.currentTime);
   v.rel=true;
   const r=fast||P.ar,fr=fast||P.fr;
-  hold(v.amp.gain,t);v.amp.gain.setTargetAtTime(0,t,r/4);
-  hold(v.env.offset,t);v.env.offset.setTargetAtTime(0,t,fr/4);
+  relHold(v.amp.gain,t,v.t0,v.aa,v.pk);v.amp.gain.setTargetAtTime(0,t,r/4);
+  relHold(v.env.offset,t,v.t0,v.fa,v.famt);v.env.offset.setTargetAtTime(0,t,fr/4);
   const stop=t+r*1.6+.05;
   v.stopAt=stop;
   v.oscs.forEach(o=>{try{o.stop(stop)}catch(e){}});
   try{v.env.stop(stop)}catch(e){}
   v.oscs[0].onended=()=>{v.dead=true;
     v.oscs.forEach(o=>{try{o.disconnect()}catch(e){}});
-    try{v.amp.disconnect();v.env.disconnect()}catch(e){}
+    // also drop the global LFO / bend taps into this voice and tell the ladder processor to stop, so nothing lingers
+    v.taps.forEach(([a,p])=>{try{a.disconnect(p)}catch(e){}});
+    v.nodes.forEach(x=>{try{x.disconnect()}catch(e){}});
+    try{v.env.disconnect()}catch(e){}
+    if(v.lad)try{v.lad.port.postMessage(0)}catch(e){}
     const i=voices.indexOf(v);if(i>=0)voices.splice(i,1);
   };
 }
@@ -382,21 +449,26 @@ function applyLive(id){
   const vs=liveVoices();
   switch(id){
     case 'cut':case 'ktrk':vs.forEach(v=>v.fFreq.forEach(p=>{hold(p,now);p.setTargetAtTime(baseCut(v.note),now,T)}));break;
-    case 'res':vs.forEach(v=>{if(v.lad)v.lad.parameters.get('res').setTargetAtTime(P.res*1.04,now,T);
+    case 'res':vs.forEach(v=>{if(v.lad)v.lad.parameters.get('res').setTargetAtTime(P.res*RESK,now,T);
       if(v.bq)v.bq.forEach(b=>b.Q.setTargetAtTime(v.ftype==='bp'?1+P.res*12:resQ(P.res,v.ftype),now,T))});break;
     case 'm1':vs.forEach(v=>v.g1.gain.setTargetAtTime(P.m1/Math.sqrt(v.o1.length),now,T));break;
     case 'm2':vs.forEach(v=>v.g2.gain.setTargetAtTime(P.m2,now,T));break;
     case 'msub':vs.forEach(v=>v.gs.gain.setTargetAtTime(P.msub*.6,now,T));break;
     case 'mnoise':vs.forEach(v=>v.gn.gain.setTargetAtTime(P.mnoise*.5,now,T));break;
-    case 'o1det':case 'spread':vs.forEach(v=>v.o1.forEach(x=>{x.o.detune.setTargetAtTime(x.pos*P.o1det,now,T);x.pn.pan.setTargetAtTime(x.pos*P.spread,now,T)}));break;
-    case 'o1oct':vs.forEach(v=>{const f=mtof(v.note)*Math.pow(2,P.o1oct);v.o1.forEach(x=>x.o.frequency.setTargetAtTime(f,now,T));v.sub.frequency.setTargetAtTime(f/2,now,T)});break;
+    case 'o1det':case 'spread':vs.forEach(v=>v.o1.forEach(x=>{x.o.detune.setTargetAtTime(x.pos*P.o1det+x.d,now,T);x.pn.pan.setTargetAtTime(x.pos*P.spread,now,T)}));break;
+    case 'o1oct':vs.forEach(v=>{const f=v.f1=mtof(v.note)*Math.pow(2,P.o1oct);v.fm.gain.setTargetAtTime(fmDepth(v),now,T);v.o1.forEach(x=>x.o.frequency.setTargetAtTime(f,now,T));v.sub.frequency.setTargetAtTime(f/2,now,T)});break;
     case 'o2oct':case 'o2semi':vs.forEach(v=>v.osc2.frequency.setTargetAtTime(mtof(v.note)*Math.pow(2,P.o2oct+P.o2semi/12),now,T));break;
-    case 'o2fine':vs.forEach(v=>v.osc2.detune.setTargetAtTime(P.o2fine,now,T));break;
+    case 'o2fine':vs.forEach(v=>v.osc2.detune.setTargetAtTime(P.o2fine+v.d2,now,T));break;
+    case 'xmod':vs.forEach(v=>v.fm.gain.setTargetAtTime(fmDepth(v),now,T));break;
+    case 'mring':vs.forEach(v=>v.gr.gain.setTargetAtTime(P.mring/Math.sqrt(v.o1.length),now,T));break;
+    case 'chorus':{const m={off:[.5,0,0],i:[.513,.00185,1],ii:[.863,.00185,1],both:[9.75,.00025,1]}[P.chorus];
+      out.chLfo.frequency.setTargetAtTime(m[0],now,.05);out.chDp.gain.setTargetAtTime(m[1],now,.05);out.chDn.gain.setTargetAtTime(-m[1],now,.05);
+      out.chWet.gain.setTargetAtTime(m[2]?.8:0,now,.03);out.chDry.gain.setTargetAtTime(m[2]?.8:1,now,.03);break}
     case 'o1wave':vs.forEach(v=>v.o1.forEach(x=>x.o.type=P.o1wave));break;
     case 'o2wave':vs.forEach(v=>v.osc2.type=P.o2wave);break;
     case 'lrate':lfo.osc.frequency.setTargetAtTime(P.lrate,now,.02);break;
     case 'lwave':lfo.osc.type=P.lwave;break;
-    case 'ldepth':case 'ltgt':{const d=P.ldepth;
+    case 'ldepth':case 'ltgt':{const d=Math.min(1,P.ldepth+modW);
       lfo.pitch.gain.setTargetAtTime(P.ltgt==='pitch'?d*80:0,now,T);
       lfo.filter.gain.setTargetAtTime(P.ltgt==='filter'?d*3000:0,now,T);
       lfo.amp.gain.setTargetAtTime(P.ltgt==='amp'?d*.5:0,now,T);
@@ -415,17 +487,24 @@ function applyLive(id){
 /* ---------- note routing + arpeggiator ---------- */
 const held=new Map(); // note -> voice (direct play)
 let arpNotes=[],arpOrder=[],arpTimer=null,arpNext=0,arpIdx=0,arpDir=1,latch=false,physDown=new Set();
-function press(note){
+let lastVel=.8;
+function press(note,vel){
+  if(vel==null)vel=.8;
   physDown.add(note);
   startAudio().then(()=>{
+    // the first tap can be over before audio has finished starting: don't leave that note stuck on
+    const still=physDown.has(note);
+    lastVel=vel;
     if(P.arp!=='off'&&!arpTimer)arpSet();
     if(P.arp!=='off'){
+      if(!still&&!latch)return;
       if(latch&&physDown.size===1)arpOrder=[];
       if(!arpOrder.includes(note))arpOrder.push(note);
       arpNotes=[...arpOrder];
     }else{
-      if(held.has(note))release(held.get(note),0);
-      held.set(note,noteOn(note,0));
+      if(held.has(note)){release(held.get(note),0);held.delete(note)}
+      const v=noteOn(note,0,vel);
+      if(still)held.set(note,v);else release(v,ctx.currentTime+.12);
     }
     readNote(note);
   });
@@ -462,7 +541,7 @@ function arpTick(){
       else{ // up/down without repeating ends
         const L=s.length;const cyc=L>1?2*L-2:1;const k=arpIdx++%cyc;n=s[k<L?k:cyc-k];
       }
-      const v=noteOn(n,arpNext);release(v,arpNext+step*P.agate);
+      const v=noteOn(n,arpNext,lastVel);release(v,arpNext+step*P.agate);
       const d=(arpNext-ctx.currentTime)*1000;setTimeout(()=>{flash();readNote(n)},Math.max(0,d));
     }else arpIdx=0;
     arpNext+=step;
@@ -471,7 +550,7 @@ function arpTick(){
 const arpLed=document.getElementById('arpLed');
 function flash(){arpLed.classList.add('on');setTimeout(()=>arpLed.classList.remove('on'),60)}
 function panic(){
-  held.forEach(v=>release(v,0,.03));held.clear();arpOrder=[];arpNotes=[];physDown.clear();
+  held.forEach(v=>release(v,0,.03));held.clear();arpOrder=[];arpNotes=[];physDown.clear();sus.clear();mDown.clear();
   liveVoices().forEach(v=>release(v,0,.03));
   document.querySelectorAll('.down').forEach(e=>e.classList.remove('down'));
 }
@@ -537,6 +616,10 @@ function applyPatch(p){
   S.forEach(s=>{P[s.id]=p[s.id]!==undefined?p[s.id]:s.def;segRefresh(s.id);applyLive(s.id)});
   document.getElementById('rCut').textContent=hz(P.cut);save();
 }
+// only known parameters, clamped to range: used for anything that comes from storage or a shared link
+function clean(p){const o={};if(!p||typeof p!=='object')return o;
+  D.forEach(d=>{let v=p[d.id];if(typeof v!=='number'||!isFinite(v))return;v=Math.min(d.max,Math.max(d.min,v));if(d.step)v=Math.round(v/d.step)*d.step;o[d.id]=v});
+  S.forEach(s=>{if(s.opts.includes(p[s.id]))o[s.id]=p[s.id]});return o}
 let saveT=0;function save(){clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem('cobalt-poly-patch',JSON.stringify(P))}catch(e){}},300)}
 
 /* presets & random */
@@ -547,7 +630,8 @@ sel.addEventListener('change',()=>{if(sel.value)applyPatch(PRESETS[sel.value])})
 rack.addEventListener('pointerdown',()=>{sel.value=''},true);
 document.getElementById('rand').addEventListener('click',()=>{
   const r=()=>Math.random(),p={};
-  D.forEach(d=>{if(['bpm','vol','agate','aoct','glide'].includes(d.id)){p[d.id]=P[d.id];return}p[d.id]=fromN(d,r())});
+  D.forEach(d=>{if(['bpm','vol','agate','aoct','glide','vsens'].includes(d.id)){p[d.id]=P[d.id];return}p[d.id]=fromN(d,r())});
+  p.xmod=r()<.7?0:r()*.6;p.mring=r()<.75?0:r()*.7;p.drift=r()*.5;
   p.aa=fromN(byId.aa,r()*.5);p.as=.4+r()*.6;p.cut=fromN(byId.cut,.3+r()*.6);p.res=r()*.8;p.o1uni=1+Math.floor(r()*5);
   p.m1=.5+r()*.5;p.mnoise=r()<.7?0:r()*.3;p.drive=r()*.5;p.ldepth=r()<.5?0:r()*.6;p.o2oct=Math.round(r()*2-1);p.dfb=r()*.6;
   S.forEach(s=>p[s.id]=s.opts[Math.floor(r()*s.opts.length)]);p.arp=P.arp;if(p.ftype==='ladder'&&ctx&&!ladderOK)p.ftype='lp24';
@@ -580,9 +664,11 @@ function buildKeys(){
 function keyVis(n,on){const e=kb.querySelector(`[data-n="${n}"]`);if(e)e.classList.toggle('down',on)}
 const ptr=new Map();
 const noteAt=(x,y)=>{const el=document.elementFromPoint(x,y);const k=el&&el.closest&&el.closest('.kw,.kbk');return k&&kb.contains(k)?+k.dataset.n:null};
-kb.addEventListener('pointerdown',e=>{e.preventDefault();kb.setPointerCapture(e.pointerId);const n=noteAt(e.clientX,e.clientY);ptr.set(e.pointerId,n);if(n!=null)press(n)});
+// velocity from where on the key you touch: near the bottom edge is hardest
+const velAt=(e,n)=>{const k=kb.querySelector(`[data-n="${n}"]`);if(!k)return .8;const r=k.getBoundingClientRect();return Math.min(1,Math.max(.3,.3+.75*(e.clientY-r.top)/r.height))};
+kb.addEventListener('pointerdown',e=>{e.preventDefault();kb.setPointerCapture(e.pointerId);const n=noteAt(e.clientX,e.clientY);ptr.set(e.pointerId,n);if(n!=null)press(n,velAt(e,n))});
 kb.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;const n=noteAt(e.clientX,e.clientY),p=ptr.get(e.pointerId);
-  if(n!==p){if(p!=null)lift(p);if(n!=null)press(n);ptr.set(e.pointerId,n)}});
+  if(n!==p){if(p!=null)lift(p);if(n!=null)press(n,velAt(e,n));ptr.set(e.pointerId,n)}});
 const pend=e=>{if(!ptr.has(e.pointerId))return;const p=ptr.get(e.pointerId);if(p!=null)lift(p);ptr.delete(e.pointerId)};
 kb.addEventListener('pointerup',pend);kb.addEventListener('pointercancel',pend);
 const shift=d=>{const nb=Math.min(84,Math.max(24,base+d));if(nb===base)return;panic();base=nb;buildKeys()};
@@ -595,6 +681,43 @@ window.addEventListener('keydown',e=>{
   const i=KC.indexOf(k);if(i<0)return;e.preventDefault();const n=base+i;qwerty.set(k,n);press(n)});
 window.addEventListener('keyup',e=>{const k=e.key.toLowerCase();if(qwerty.has(k)){lift(qwerty.get(k));qwerty.delete(k)}});
 window.addEventListener('blur',()=>{qwerty.forEach(n=>lift(n));qwerty.clear()});
+
+/* ---------- MIDI in ---------- */
+// notes with velocity, pitch bend (±2 semitones), mod wheel → LFO depth, sustain pedal, CC74 cutoff, CC71 resonance, CC7 volume
+const midiBtn=document.getElementById('midi'),mled=document.getElementById('mled');
+let midi=null,pedal=false,mledT=0;const sus=new Set(),mDown=new Set();
+function midiMsg(e){
+  const st=e.data[0],d1=e.data[1],d2=e.data[2],c=st&0xf0;
+  if(st>=0xf0)return; // clock, active sensing
+  mled.classList.add('on');clearTimeout(mledT);mledT=setTimeout(()=>mled.classList.remove('on'),80);
+  if(c===0x90&&d2>0){mDown.add(d1);sus.delete(d1);press(d1,d2/127)}
+  else if(c===0x80||c===0x90){mDown.delete(d1);if(pedal)sus.add(d1);else lift(d1)}
+  else if(c===0xE0){if(ctx)out.bend.offset.setTargetAtTime(((d2<<7|d1)-8192)/8192*200,ctx.currentTime,.005)}
+  else if(c===0xB0){
+    if(d1===1){modW=d2/127;applyLive('ldepth')}
+    else if(d1===64){pedal=d2>=64;if(!pedal){sus.forEach(n=>{if(!mDown.has(n))lift(n)});sus.clear()}}
+    else if(d1===74)setParam('cut',fromN(byId.cut,d2/127));
+    else if(d1===71)setParam('res',fromN(byId.res,d2/127));
+    else if(d1===7)setParam('vol',fromN(byId.vol,d2/127));
+    else if(d1===120||d1===123)panic();
+  }
+}
+function midiBind(){let n=0;midi.inputs.forEach(i=>{i.onmidimessage=midiMsg;n++});midiBtn.lastChild.textContent=n?'MIDI: '+n+' in':'MIDI: no device'}
+if(navigator.requestMIDIAccess){midiBtn.hidden=false;midiBtn.addEventListener('click',async()=>{
+  startAudio();
+  if(midi){midiBind();return}
+  try{midi=await navigator.requestMIDIAccess();midi.onstatechange=midiBind;midiBind()}catch(e){midiBtn.lastChild.textContent='MIDI blocked'}
+})}
+
+/* ---------- share a patch as a link ---------- */
+const shareBtn=document.getElementById('share');
+shareBtn.addEventListener('click',async()=>{
+  const o={};D.forEach(d=>{if(P[d.id]!==d.def)o[d.id]=+(+P[d.id]).toPrecision(4)});S.forEach(x=>{if(P[x.id]!==x.def)o[x.id]=P[x.id]});
+  const url=location.href.split('#')[0]+'#p='+btoa(JSON.stringify(o)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  let msg='Link copied';
+  try{await navigator.clipboard.writeText(url)}catch(e){try{history.replaceState(null,'',url)}catch(_){}msg='Link is in the address bar'}
+  shareBtn.textContent=msg;setTimeout(()=>{shareBtn.textContent='Share patch'},1800);
+});
 
 /* ---------- scope ---------- */
 const cv=document.getElementById('scope'),cx=cv.getContext('2d');
@@ -633,9 +756,13 @@ function draw(){
 ['pointerup','touchend','keydown','click'].forEach(ev=>window.addEventListener(ev,()=>{if(ctx&&ctx.state==='suspended'&&document.getElementById('pled').classList.contains('on'))ctx.resume()},true));
 /* ---------- boot ---------- */
 let saved=null;try{saved=JSON.parse(localStorage.getItem('cobalt-poly-patch')||'null')}catch(e){}
+// a patch in the link wins over the last saved one; the hash is then dropped so later edits aren't overwritten on reload
+function fromHash(){try{const m=location.hash.match(/[#&]p=([\w-]+)/);if(!m)return null;const p=clean(JSON.parse(atob(m[1].replace(/-/g,'+').replace(/_/g,'/'))));history.replaceState(null,'',location.href.split('#')[0]);return p}catch(e){return null}}
+const shared=fromHash();
+window.addEventListener('hashchange',()=>{const p=fromHash();if(p){applyPatch(p);sel.value=''}});
 buildKeys();
-applyPatch(saved&&typeof saved==='object'?saved:PRESETS['Init saw']);
-if(saved)sel.value='';
+applyPatch(shared||(saved&&typeof saved==='object'?clean(saved):PRESETS['Init saw']));
+if(shared||saved)sel.value='';
 readCols();draw();
 })();
 </script>
